@@ -16,7 +16,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Heading as="h1" variant="heading10">
-        Welcome to Wonderful World of Connie!
+        Welcome to The Wonderful World of Connie!
       </Heading>
 
       <Paragraph>
