@@ -1,7 +1,7 @@
 import { Anchor } from "@twilio-paste/core/anchor";
 import { Box } from "@twilio-paste/core/box";
 import { Heading } from "@twilio-paste/core/heading";
-import { List, ListItem, UnorderedList } from "@twilio-paste/core/list";
+import { ListItem, UnorderedList } from "@twilio-paste/core/list";
 import { Paragraph } from "@twilio-paste/core/paragraph";
 import { Separator } from "@twilio-paste/core/separator";
 import type { NextPage } from "next";
