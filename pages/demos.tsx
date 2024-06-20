@@ -7,7 +7,7 @@ import { Separator } from "@twilio-paste/core/separator";
 import type { NextPage } from "next";
 import Head from "next/head";
 
-const demos = () => {
+const Demos: NextPage = () => {
   return (
     <Box as="main" padding="space70">
       <Head>
@@ -46,7 +46,7 @@ const demos = () => {
         </ListItem>
       </UnorderedList>
     </Box>
-  )
-}
+  );
+};
 
-export default demos
+export default Demos
