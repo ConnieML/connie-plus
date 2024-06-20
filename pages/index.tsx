@@ -16,7 +16,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Heading as="h1" variant="heading10">
-      👋 Welcome to Connie!
+      👋 Welcome to Connie+
       </Heading>
 
       <Paragraph>
@@ -49,7 +49,7 @@ const Home: NextPage = () => {
         </ListItem>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="/demos" showExternal>
+            <Anchor href="/demos">
               Feature Demos
             </Anchor>
           </Heading>
