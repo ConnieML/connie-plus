@@ -1,7 +1,7 @@
 import { Anchor } from "@twilio-paste/core/anchor";
 import { Box } from "@twilio-paste/core/box";
 import { Heading } from "@twilio-paste/core/heading";
-import { ListItem, UnorderedList } from "@twilio-paste/core/list";
+import { List, ListItem, UnorderedList } from "@twilio-paste/core/list";
 import { Paragraph } from "@twilio-paste/core/paragraph";
 import { Separator } from "@twilio-paste/core/separator";
 import type { NextPage } from "next";
@@ -16,12 +16,11 @@ const Home: NextPage = () => {
       </Head>
 
       <Heading as="h1" variant="heading10">
-        Welcome to The Wonderful World of Connie!
+      👋 Welcome to Connie!
       </Heading>
 
       <Paragraph>
-        A playground for everything Connie where you learn about features and test them out before deploying into production. Start by editing{" "}
-        <code>pages/index.tsx</code>
+      This is a temporary home page intended to get you and your team up and running in your new Connie account quickly and easly. It's also, intended to be playground where you can explore the wonderful world of Connie in 'safe mode'. So go ahead and start clicking!
       </Paragraph>
       <Separator orientation="horizontal" verticalSpacing="space120" />
 
@@ -32,7 +31,7 @@ const Home: NextPage = () => {
       <UnorderedList>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="https://paste.twilio.design" showExternal>
+            <Anchor href="https://connieconnect.com" showExternal>
               Connie Docs For CBO Staff
             </Anchor>
           </Heading>
@@ -47,6 +46,22 @@ const Home: NextPage = () => {
             </Anchor>
           </Heading>
           <Paragraph>Find in-depth information about Connie systems & setting.</Paragraph>
+        </ListItem>
+        <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="/demos" showExternal>
+              Feature Demos
+            </Anchor>
+          </Heading>
+          <Paragraph>Explore Connie features to that help CBOs connect & engage.</Paragraph>
+        </ListItem>
+        <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="/demos" showExternal>
+              Road Map
+            </Anchor>
+          </Heading>
+          <Paragraph>Learn about upcoming version releases & request new features. .</Paragraph>
         </ListItem>
         <ListItem>
           <Heading as="h3" variant="heading30">
