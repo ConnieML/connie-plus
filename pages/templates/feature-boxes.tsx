@@ -6,10 +6,10 @@ import { Card } from '@twilio-paste/core/card';
 import { MediaObject, MediaBody, MediaFigure } from '@twilio-paste/core/media-object';
 import { Anchor } from '@twilio-paste/core/anchor';
 import { Button } from '@twilio-paste/core/button';
-import { ProductUsageIcon } from '@twilio-paste/icons/cjs/ProductUsageIcon';
+import { ProductMessagingIcon } from '@twilio-paste/icons/cjs/ProductMessagingIcon';
 import { ProductVoiceIcon } from '@twilio-paste/icons/cjs/ProductVoiceIcon';
 import { ProductChatIcon } from '@twilio-paste/icons/cjs/ProductChatIcon';
-import { AddListIcon } from '@twilio-paste/icons/cjs/AddListIcon';
+import { ProductFaxIcon } from '@twilio-paste/icons/cjs/ProductFaxIcon';
 import { PinIcon } from '@twilio-paste/icons/cjs/PinIcon';
 import { UnpinIcon } from '@twilio-paste/icons/cjs/UnpinIcon';
 import type { NextPage } from "next";
@@ -26,24 +26,24 @@ const Demos: NextPage = () => {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Heading as="h1" variant="heading10">
-    👋 Hello There!
+      Get To Know Connie!
     </Heading><Paragraph>
-    Welcome to Connie! This is a temporary landing page intended to get you get up and running in your new Connie account quickly and easly. It's also, intended to be playground where you can explore the wonderful world of Connie in 'safe mode'. So go ahead and start clicking! You can return to this page anytime by clicking {' '}
+        Use this menu to explore, add and remove products from your sidebar. Or go{' '}
         <Anchor href="/">Home</Anchor>.
       </Paragraph><Heading as="h2" variant="heading20">
-        Get To Know Connie
+        Programmable Communications
       </Heading><Grid gutter="space30" marginBottom="space50">
         <Column>
           <Card>
             <MediaObject as="div">
               <MediaFigure as="div" spacing="space50">
-                <ProductUsageIcon decorative={true} size="sizeIcon50" />
+                <ProductMessagingIcon decorative={true} size="sizeIcon50" />
               </MediaFigure>
               <MediaBody as="div">
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/templates/feature-infos">Start Here!</Anchor>
+                      <Anchor href="#">Messaging</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -52,8 +52,8 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Learn the basics here and you'll be a Connie pro in no time.</Paragraph>
-                <Anchor href="https://bit.ly/connie-docs" showExternal>
+                <Paragraph>Send and receive text messages from your app</Paragraph>
+                <Anchor href="#" showExternal>
                   docs
                 </Anchor>
               </MediaBody>
@@ -64,13 +64,13 @@ const Demos: NextPage = () => {
           <Card>
             <MediaObject as="div">
               <MediaFigure as="div" spacing="space50">
-                <AddListIcon decorative={true} size="sizeIcon50" />
+                <ProductVoiceIcon decorative={true} size="sizeIcon50" />
               </MediaFigure>
               <MediaBody as="div">
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/templates/feature-infos">Integrate Tools & Data</Anchor>
+                      <Anchor href="#">Voice</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -79,8 +79,8 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Access your work tools and customers records right here in this window!</Paragraph>
-                <Anchor href="https://bit.ly/connie-docs" showExternal>
+                <Paragraph>Make, receive, and control calls using code</Paragraph>
+                <Anchor href="#" showExternal>
                   docs
                 </Anchor>
               </MediaBody>
@@ -92,13 +92,13 @@ const Demos: NextPage = () => {
           <Card>
             <MediaObject as="div">
               <MediaFigure as="div" spacing="space50">
-                <ProductVoiceIcon decorative={true} size="sizeIcon50" />
+                <ProductChatIcon decorative={true} size="sizeIcon50" />
               </MediaFigure>
               <MediaBody as="div">
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/templates/feature-infos">Voice Tasks</Anchor>
+                      <Anchor href="#">Chat</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -107,8 +107,8 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Learn to accept, create, and manage customer calls as tasks in Connie.</Paragraph>
-                <Anchor href="https://bit.ly/connie-docs" showExternal>
+                <Paragraph>Add scalable chat to any app with SDKs for mobile and web</Paragraph>
+                <Anchor href="#" showExternal>
                   docs
                 </Anchor>
               </MediaBody>
@@ -119,13 +119,13 @@ const Demos: NextPage = () => {
           <Card>
             <MediaObject as="div">
               <MediaFigure as="div" spacing="space50">
-                <ProductChatIcon decorative={true} size="sizeIcon50" />
+                <ProductFaxIcon decorative={true} size="sizeIcon50" />
               </MediaFigure>
               <MediaBody as="div">
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/templates/feature-infos">Messaging & Email Tasks</Anchor>
+                      <Anchor href="#">Fax</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -134,8 +134,8 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Send and receive SMS, Social Media, Webchat messages as tasks in Connie.</Paragraph>
-                <Anchor href="https://bit.ly/connie-docs" showExternal>
+                <Paragraph>Send and receive faxes between your app and a fax machine</Paragraph>
+                <Anchor href="#" showExternal>
                   docs
                 </Anchor>
               </MediaBody>

@@ -10,11 +10,18 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@twilio-paste/core": "^20.4.0",
-    "@twilio-paste/icons": "^12.2.0",
+    "-": "^0.0.1",
+    "@twilio-paste/core": "^20.13.0",
+    "@twilio-paste/data-visualization-library": "^5.0.0",
+    "@twilio-paste/icons": "^12.5.0",
+    "@twilio-paste/tabs-primitive": "^2.0.1",
+    "add": "^2.0.6",
     "next": "^14.0.0",
+    "or": "^0.2.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-hook-form": "^7.52.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
