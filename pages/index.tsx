@@ -125,7 +125,7 @@ const Demos: NextPage = () => {
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/templates/feature-infos">Messaging & Email Tasks</Anchor>
+                      <Anchor href="/messaging-email-tasks">Messaging & Email Tasks</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
