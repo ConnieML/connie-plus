@@ -1,20 +1,12 @@
-# Example app with [Paste](https://paste.twilio.design) and Typescript
+<a  href="https://www.connieconnect.com">
+<img  src="https://i.postimg.cc/MGd7M6Cp/connie-logo-white-thin-deja-Vu-Sans.png"  alt="Connie SaaS For Nonprofits"  width="250"  />
+</a>
 
-This example features how to use [Paste](https://paste.twilio.design) as the component library within a Next.js app with typescript.
+# Connie Plus
 
-Next.js and Paste have built-in TypeScript declarations, so we'll get autocompletion for their modules straight away.
+This is a Next.JS webapp that uses [Paste](https://paste.twilio.design) as the component library with typescript. Next.js and Paste have built-in TypeScript declarations, so we'll get autocompletion for their modules straight away.
 
 We are connecting the Next.js `_app.tsx` with `Paste`'s Theme Provider so the pages can have app-wide styles.
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com):
-
-[![Edit paste-nextjs-template in Codesandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/twilio-labs/paste/tree/main/templates/paste-nextjs-template)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://codesandbox.io/s/github/twilio-labs/paste/tree/main/templates/paste-nextjs-template)
-
-[![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://codesandbox.io/s/github/twilio-labs/paste/tree/main/templates/paste-nextjs-template)
 
 ## How to use
 
