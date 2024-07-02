@@ -8,9 +8,17 @@ This is a Next.JS webapp that uses [Paste](https://paste.twilio.design) as the c
 
 We are connecting the Next.js `_app.tsx` with `Paste`'s Theme Provider so the pages can have app-wide styles.
 
-## How to use
+## How to use ...
+Note: Ensure node version compatibility. (node v20)
+1. Install dependencies with: "npm install" or "yarn"
+2. Run a local dev version: "npm run dev" or "yarn dev"
 
-### Using `create-next-app`
+3. Create a production build: "npm build"
+4. Run a local production version: "npm run start"
+
+
+
+### Start From Scratch Using `create-next-app`
 
 Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
 

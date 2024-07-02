@@ -43,7 +43,7 @@ const Demos: NextPage = () => {
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/templates/feature-infos">Start Here!</Anchor>
+                      <Anchor href="/starthere">Start Here!</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -70,7 +70,7 @@ const Demos: NextPage = () => {
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/templates/feature-infos">Tools & Data</Anchor>
+                      <Anchor href="/tools-data">Tools & Data</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">

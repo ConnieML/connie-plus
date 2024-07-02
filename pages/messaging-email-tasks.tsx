@@ -37,7 +37,7 @@ const Demos: NextPage = () => {
             </Anchor>
           </Heading>
           <Paragraph>
-            Broadcast messaging allows you to easily scale SMS / Text based messaging capabilities. Create one message and deliver it to multiple recipients with one click. 
+            Broadcast messaging allows you to easily scale SMS / Text based messaging capabilities. Create one message and deliver it to multiple recipients with one click. If you'd like to demo the Broadcast feature, click the link above. This feature requires supervisor authorization, but for the demo use Connie/Connie. To dowload a .csv file template, please click <Anchor href="https://d2k4o22g5zxquf.cloudfront.net/downloads/connie-demo-csv.csv" showExternal>here</Anchor>.
           </Paragraph>
         </ListItem>
         <ListItem>
