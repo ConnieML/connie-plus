@@ -19,35 +19,25 @@ const Demos: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Heading as="h1" variant="heading10">
-        Messaging & Email Based Tasks
+        Docs TEMPLATE Page
       </Heading>
       <Paragraph>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Return to home page by clicking {' '}  <Anchor href="/">Home</Anchor>.
       </Paragraph>
       <Separator orientation="horizontal" verticalSpacing="space120" />
       <Heading as="h2" variant="heading20">
-        Connie Messaging & Email Features
+        Connie Demo links
       </Heading>
 
       <UnorderedList>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="https://outbound-messaging-v2-6965-dev.twil.io/index.html#/login" showExternal>
-            📡 Broadcast Messaging
+            <Anchor href="https://connieconnect.com" showExternal>
+              Broadcast Messaging
             </Anchor>
           </Heading>
           <Paragraph>
-            Broadcast messaging allows you to easily scale SMS / Text based messaging capabilities. Create one message and deliver it to multiple recipients with one click. If you'd like to demo the Broadcast feature, click the link above. This feature requires supervisor authorization, but for the demo use Connie/Connie. To dowload a .csv file template, please click <Anchor href="https://d2k4o22g5zxquf.cloudfront.net/downloads/connie-demo-csv.csv" showExternal>here</Anchor>.
-          </Paragraph>
-        </ListItem>
-        <ListItem>
-          <Heading as="h3" variant="heading30">
-            <Anchor href="https://outbound-messaging-v2-6965-dev.twil.io/index.html#/login" showExternal>
-            ⏱️ Rapid Response
-            </Anchor>
-          </Heading>
-          <Paragraph>
-            Agents can select from a pre-determined list of responses and provide high quality answers to frequently asked questions with one click.
+            Start here. Find in-depth information about how to get started using Connie.
           </Paragraph>
         </ListItem>
         <ListItem>

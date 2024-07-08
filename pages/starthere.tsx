@@ -41,7 +41,7 @@ const Home: NextPage = () => {
         </ListItem>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="https://docs.google.com/presentation/d/1dDe1JF2AGNrY7Cdhwk00NxGBLe5baS1c/edit?usp=sharing&ouid=100905596054709529716&rtpof=true&sd=true" showExternal>
+            <Anchor href="https://docs.google.com/presentation/d/10FvsaIWYulWj72B2wUdXjw0mvJ-bB8uc/edit?usp=sharing&ouid=100905596054709529716&rtpof=true&sd=true" showExternal>
               Connie Docs For CBO System Admins
             </Anchor>
           </Heading>

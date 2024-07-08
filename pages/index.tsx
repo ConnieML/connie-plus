@@ -98,7 +98,7 @@ const Demos: NextPage = () => {
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/templates/feature-infos">Voice Tasks</Anchor>
+                      <Anchor href="/voice-tasks">Voice Tasks</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
