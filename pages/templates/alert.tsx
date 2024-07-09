@@ -5,6 +5,7 @@ import { Box } from "@twilio-paste/core/box";
 import { Stack } from "@twilio-paste/core/stack";
 import { Alert } from "@twilio-paste/core/alert";
 import { Theme } from "@twilio-paste/core/theme";
+import type { NextPage } from "next";
 
 // import { PrototypeAnchor } from '../components/site/PrototypeAnchor';
 const Demos: NextPage = () => {
