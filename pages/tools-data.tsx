@@ -36,6 +36,29 @@ const Demos: NextPage = () => {
       </Paragraph>
       <Separator orientation="horizontal" verticalSpacing="space120" />
       <Heading as="h2" variant="heading20">
+        Connie Admin Tools
+      </Heading>
+
+      <UnorderedList>
+        <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="https://connie-telco-manager-3988-dev.twil.io/index.html" showExternal>
+            ☎️ Voice Management / Telco Tools (Available Now!)
+            </Anchor>
+          </Heading>
+          <Paragraph></Paragraph>
+        </ListItem>
+        <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="" showExternal>
+            Integration Tools (Coming Soon!)
+            </Anchor>
+          </Heading>
+          <Paragraph></Paragraph>
+        </ListItem>
+      </UnorderedList>
+      <Separator orientation="horizontal" verticalSpacing="space120" />
+      <Heading as="h2" variant="heading20">
         Connie Messaging & Email Tools
       </Heading>
 

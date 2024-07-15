@@ -2,7 +2,7 @@
 <img  src="https://i.postimg.cc/MGd7M6Cp/connie-logo-white-thin-deja-Vu-Sans.png"  alt="Connie SaaS For Nonprofits"  width="250"  />
 </a>
 
-# Connie Plus
+# ➕ Connie Plus
 
 This is a Next.JS webapp that uses [Paste](https://paste.twilio.design) as the component library with typescript. Next.js and Paste have built-in TypeScript declarations, so we'll get autocompletion for their modules straight away.
 
