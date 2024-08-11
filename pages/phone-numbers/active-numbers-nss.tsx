@@ -33,7 +33,7 @@ export default function Home() {
           <Tr>
             <Th>Number</Th>
             <Th>Friendly Name</Th>
-            <Th colSpan="4">Capabilities</Th>
+            <Th>Capabilities</Th>
             <Th>Configuration</Th>
             <Th>Actions</Th>
           </Tr>
@@ -47,14 +47,14 @@ export default function Home() {
             </Td>
             <Td>nss_frontdoor</Td>
             <Td>
-              <VoiceCapableIcon title="Voice capable" />
+              <VoiceCapableIcon title="Voice capable" decorative={false} />
             </Td>
             <Td>&nbsp;</Td>
             <Td>
-              <SMSCapableIcon title="SMS capable" />
+              <SMSCapableIcon title="SMS capable" decorative={false} />
             </Td>
             <Td>
-              <MMSCapableIcon title="MMS capable" />
+              <MMSCapableIcon title="MMS capable" decorative={false} />
             </Td>
             <Td>
               <Text as="dl">
@@ -74,14 +74,14 @@ export default function Home() {
                     Messaging
                   </Box>
                   <Text as="dd">
-                    <Text color="colorTextWeak">Proxy Service:</Text> <Anchor href="#">Coming Soon!</Anchor>
+                    <Text color="colorTextWeak" as={'symbol'}>Proxy Service:</Text> <Anchor href="#">Coming Soon!</Anchor>
                   </Text>
                 </Box>
               </Text>
             </Td>
             <Td>
               <Button variant="destructive_link">
-                <DeleteIcon title="Delete" />
+                <DeleteIcon title="Delete" decorative={false} />
               </Button>
             </Td>
           </Tr>
@@ -94,7 +94,7 @@ export default function Home() {
             <Td>nss_fax</Td>
             <Td>&nbsp;</Td>
             <Td>
-              <FaxCapableIcon title="Fax capable" />
+              <FaxCapableIcon title="Fax capable" decorative={false} />
             </Td>
             <Td>&nbsp;</Td>
             <Td>&nbsp;</Td>
@@ -105,7 +105,7 @@ export default function Home() {
                     Voice
                   </Box>
                   <Text as="dd">
-                    <Text color="colorTextWeak">Callback URL:</Text> mailto:fax@connie.host
+                    <Text color="colorTextWeak" as={'symbol'}>Callback URL:</Text> mailto:fax@connie.host
                   </Text>
                 </Box>
                 <Box display="flex">
@@ -113,7 +113,7 @@ export default function Home() {
                     Messaging
                   </Box>
                   <Text as="dd">
-                    <Text color="colorTextWeak">Connie Workflow:</Text>{' '}
+                    <Text color="colorTextWeak" as={'symbol'}>Connie Workflow:</Text>{' '}
                     <Anchor href="#">Coming Soon!</Anchor>
                   </Text>
                 </Box>
@@ -121,7 +121,7 @@ export default function Home() {
             </Td>
             <Td>
               <Button variant="destructive_link">
-                <DeleteIcon title="Delete" />
+                <DeleteIcon title="Delete" decorative={false} />
               </Button>
             </Td>
           </Tr>
@@ -133,14 +133,14 @@ export default function Home() {
             </Td>
             <Td>nss_h2h</Td>
             <Td>
-              <VoiceCapableIcon title="Voice capable" />
+              <VoiceCapableIcon title="Voice capable" decorative={false} />
             </Td>
             <Td>&nbsp;</Td>
             <Td>
-              <SMSCapableIcon title="SMS capable" />
+              <SMSCapableIcon title="SMS capable" decorative={false} />
             </Td>
             <Td>
-              <MMSCapableIcon title="MMS capable" />
+              <MMSCapableIcon title="MMS capable" decorative={false} />
             </Td>
             <Td>
               <Text as="dl">
@@ -160,14 +160,14 @@ export default function Home() {
                     Messaging
                   </Box>
                   <Text as="dd">
-                    <Text color="colorTextWeak">Proxy Service:</Text> <Anchor href="#">Coming Soon!</Anchor>
+                    <Text color="colorTextWeak" as={'symbol'}>Proxy Service:</Text> <Anchor href="#">Coming Soon!</Anchor>
                   </Text>
                 </Box>
               </Text>
             </Td>
             <Td>
               <Button variant="destructive_link">
-                <DeleteIcon title="Delete" />
+                <DeleteIcon title="Delete" decorative={false} />
               </Button>
             </Td>
           </Tr>
@@ -179,14 +179,14 @@ export default function Home() {
             </Td>
             <Td>nss_daycare</Td>
             <Td>
-              <VoiceCapableIcon title="Voice capable" />
+              <VoiceCapableIcon title="Voice capable" decorative={false} />
             </Td>
             <Td>&nbsp;</Td>
             <Td>
-              <SMSCapableIcon title="SMS capable" />
+              <SMSCapableIcon title="SMS capable" decorative={false} />
             </Td>
             <Td>
-              <MMSCapableIcon title="MMS capable" />
+              <MMSCapableIcon title="MMS capable" decorative={false} />
             </Td>
             <Td>
               <Text as="dl">
@@ -206,14 +206,14 @@ export default function Home() {
                     Messaging
                   </Box>
                   <Text as="dd">
-                    <Text color="colorTextWeak">Proxy Service:</Text> <Anchor href="#">Coming Soon!</Anchor>
+                    <Text color="colorTextWeak" as={'symbol'}>Proxy Service:</Text> <Anchor href="#">Coming Soon!</Anchor>
                   </Text>
                 </Box>
               </Text>
             </Td>
             <Td>
               <Button variant="destructive_link">
-                <DeleteIcon title="Delete" />
+                <DeleteIcon title="Delete" decorative={false} />
               </Button>
             </Td>
           </Tr>
