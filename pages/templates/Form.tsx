@@ -9,6 +9,7 @@ import { TextArea } from "@twilio-paste/core/textarea";
 import { Select, Option } from "@twilio-paste/core/select";
 import { Radio, RadioGroup } from "@twilio-paste/core/radio-group";
 import { Checkbox, CheckboxGroup } from "@twilio-paste/core/checkbox";
+import type { NextPage } from "next";
 
 const Demos: NextPage = () => {
   const [inputValue, setInputValue] = React.useState("");
