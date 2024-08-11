@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { Theme } from "@twilio-paste/core/theme";
 import { Box } from "@twilio-paste/core/box";
 import { Card } from "@twilio-paste/core/card";
