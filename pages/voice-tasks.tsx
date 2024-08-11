@@ -30,10 +30,30 @@ const Demos: NextPage = () => {
       </Heading>
 
       <UnorderedList>
+      <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="https://outbound-messaging-v2-6965-dev.twil.io/index.html#/login" showExternal>
+            🔄 Connie Direct (Inbound / Outbound)
+            </Anchor>
+          </Heading>
+          <Paragraph>
+            Direct voice let's you accept, place and manage live phone calls from one, unified screen.
+          </Paragraph>
+        </ListItem>
         <ListItem>
           <Heading as="h3" variant="heading30">
             <Anchor href="https://outbound-messaging-v2-6965-dev.twil.io/index.html#/login" showExternal>
-            🖱️ Click To Call Connie
+            🇶 Connie Queue - Callback & Voicmail
+            </Anchor>
+          </Heading>
+          <Paragraph>
+          Fully customizable workflows that deliver callback requests and voicemails as tasks.
+          </Paragraph>
+        </ListItem>
+        <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="https://outbound-messaging-v2-6965-dev.twil.io/index.html#/login" showExternal>
+            🖱 Click To Call Connie
             </Anchor>
           </Heading>
           <Paragraph>

@@ -42,8 +42,8 @@ const Demos: NextPage = () => {
       <UnorderedList>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="https://connie-telco-manager-3988-dev.twil.io/index.html" showExternal>
-            ☎️ Voice Management / Telco Tools (Available Now!)
+            <Anchor href="/phone-numbers/active-numbers-nss">
+            🔄 Channel Manager: Voice, Messaging, Fax
             </Anchor>
           </Heading>
           <Paragraph></Paragraph>
