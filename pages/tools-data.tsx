@@ -42,7 +42,7 @@ const Demos: NextPage = () => {
       <UnorderedList>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="./channel-manager/nss-channelmanager">
+            <Anchor href="/channel-manager/nss-channelmanager">
             🔄 Channel Manager: Voice, Messaging, Fax
             </Anchor>
           </Heading>
