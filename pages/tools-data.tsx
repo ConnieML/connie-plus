@@ -42,10 +42,11 @@ const Demos: NextPage = () => {
       <UnorderedList>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="/channel-manager/nss-channel-manager">
+            <Anchor href="./channel-manager/nss-channelmanager">
             🔄 Channel Manager: Voice, Messaging, Fax
             </Anchor>
           </Heading>
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
           <Paragraph></Paragraph>
         </ListItem>
         <ListItem>
@@ -54,7 +55,7 @@ const Demos: NextPage = () => {
             Integration Tools (Coming Soon!)
             </Anchor>
           </Heading>
-          <Paragraph></Paragraph>
+          <Paragraph />
         </ListItem>
       </UnorderedList>
       <Separator orientation="horizontal" verticalSpacing="space120" />
@@ -69,7 +70,7 @@ const Demos: NextPage = () => {
             Data Integration Partners (Available Now!)
             </Anchor>
           </Heading>
-          <Paragraph></Paragraph>
+          <Paragraph />
         </ListItem>
         <ListItem>
           <Heading as="h3" variant="heading30">
@@ -77,7 +78,7 @@ const Demos: NextPage = () => {
             Email, eFax Integrations (Available Now!)
             </Anchor>
           </Heading>
-          <Paragraph></Paragraph>
+          <Paragraph />
         </ListItem>
         <ListItem>
           <Heading as="h3" variant="heading30">
@@ -85,7 +86,7 @@ const Demos: NextPage = () => {
             Social Media Integrations (Available Now!)
             </Anchor>
           </Heading>
-          <Paragraph></Paragraph>
+          <Paragraph />
         </ListItem>
         <ListItem>
           <Heading as="h3" variant="heading30">
@@ -93,7 +94,7 @@ const Demos: NextPage = () => {
             Web Framework Integrations (Wordpress, React) (Available Now!)
             </Anchor>
           </Heading>
-          <Paragraph></Paragraph>
+          <Paragraph />
         </ListItem>
       </UnorderedList>
       <Separator orientation="horizontal" verticalSpacing="space120" />

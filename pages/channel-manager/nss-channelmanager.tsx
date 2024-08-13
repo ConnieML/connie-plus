@@ -10,16 +10,17 @@ import { DeleteIcon } from '@twilio-paste/icons/cjs/DeleteIcon';
 import { FaxCapableIcon } from '@twilio-paste/icons/cjs/FaxCapableIcon';
 import { SMSCapableIcon } from '@twilio-paste/icons/cjs/SMSCapableIcon';
 import { MMSCapableIcon } from '@twilio-paste/icons/cjs/MMSCapableIcon';
-import { EmailIcon } from "@twilio-paste/icons/esm/EmailIcon";
+import { EmailIcon } from "@twilio-paste/icons/cjs/EmailIcon";
 import { VoiceCapableIcon } from '@twilio-paste/icons/cjs/VoiceCapableIcon';
-import { AttachmentIcon } from "@twilio-paste/icons/esm/AttachmentIcon";
-import { LoadingIcon } from "@twilio-paste/icons/esm/LoadingIcon";
-import { ArrowDownIcon } from "@twilio-paste/icons/esm/ArrowDownIcon";
-import { WebCapableIcon } from "@twilio-paste/icons/esm/WebCapableIcon";
+import { AttachmentIcon } from "@twilio-paste/icons/cjs/AttachmentIcon";
+import { LoadingIcon } from "@twilio-paste/icons/cjs/LoadingIcon";
+import { ArrowDownIcon } from "@twilio-paste/icons/cjs/ArrowDownIcon";
+import { WebCapableIcon } from "@twilio-paste/icons/cjs/WebCapableIcon";
 import { Paragraph } from "@twilio-paste/core/paragraph";
 import { Separator } from "@twilio-paste/core/separator";
+import type { NextPage } from 'next';
 
-export default function Home() {
+const NssChannelManager: NextPage = () => {
   return (
     <Box as="main" padding="space70">
     <>
@@ -298,7 +299,7 @@ export default function Home() {
               <EmailIcon title="Email capable" decorative={false} />
             </Td>
             <Td>
-            <LoadingIcon title="Inbound & Outbound capable" decorative={false} />
+              <LoadingIcon title="Inbound & Outbound capable" decorative={false} />
             </Td>
             <Td>
               <AttachmentIcon title="Attachment capable" decorative={false} />
@@ -407,10 +408,10 @@ export default function Home() {
               <WebCapableIcon title="Desktop & Mobile" decorative={false} />
             </Td>
             <Td>
-            <ArrowDownIcon title="Inbound capable" decorative={false}> </ArrowDownIcon>
+              <ArrowDownIcon title="Inbound capable" decorative={false}> </ArrowDownIcon>
             </Td>
             <Td>
-            <AttachmentIcon title="Attachment capable" decorative={false} />
+              <AttachmentIcon title="Attachment capable" decorative={false} />
             </Td>
             <Td>
               &nbsp;
@@ -455,10 +456,10 @@ export default function Home() {
               <WebCapableIcon title="Desktop & Mobile" decorative={false} />
             </Td>
             <Td>
-            <ArrowDownIcon title="Inbound capable" decorative={false}> </ArrowDownIcon>
+              <ArrowDownIcon title="Inbound capable" decorative={false}> </ArrowDownIcon>
             </Td>
             <Td>
-            <AttachmentIcon title="Attachment capable" decorative={false} />
+              <AttachmentIcon title="Attachment capable" decorative={false} />
             </Td>
             <Td>
               &nbsp;
@@ -496,3 +497,4 @@ export default function Home() {
     </Box>
   );
 }
+export default NssChannelManager
