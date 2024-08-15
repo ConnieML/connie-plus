@@ -52,11 +52,13 @@ const NssChannelManager: NextPage = () => {
               <br />
               Las Vegas, NV
             </Td>
-            <Td>nss_frontdoor</Td>
+            <Td>nss_Intake-Direct</Td>
             <Td>
               <VoiceCapableIcon title="Voice capable" decorative={false} />
             </Td>
-            <Td>&nbsp;</Td>
+            <Td>
+              <LoadingIcon title="Inbound & Outbound capable" decorative={false} />
+            </Td>
             <Td>
               <SMSCapableIcon title="SMS capable" decorative={false} />
             </Td>
@@ -103,7 +105,7 @@ const NssChannelManager: NextPage = () => {
               <FaxCapableIcon title="Fax capable" decorative={false} />
             </Td>
             <Td>
-              <FaxCapableIcon title="Fax capable" decorative={false} />
+              <ArrowDownIcon title="Inbound Only" decorative={false} />
             </Td>
             <Td>&nbsp;</Td>
             <Td>&nbsp;</Td>

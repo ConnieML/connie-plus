@@ -51,6 +51,16 @@ const Demos: NextPage = () => {
         </ListItem>
         <ListItem>
           <Heading as="h3" variant="heading30">
+            <Anchor href="/data-center/">
+            📊 Data & Reporting Center
+            </Anchor>
+          </Heading>
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
+          <Paragraph></Paragraph>
+        </ListItem>
+
+        <ListItem>
+          <Heading as="h3" variant="heading30">
             <Anchor href="" showExternal>
             Integration Tools (Coming Soon!)
             </Anchor>
