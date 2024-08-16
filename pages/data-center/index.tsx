@@ -8,6 +8,7 @@ import { Anchor } from '@twilio-paste/core/anchor';
 import { Button } from '@twilio-paste/core/button';
 import { DataBarChartIcon } from '@twilio-paste/icons/cjs/DataBarChartIcon';
 import { DatabaseIcon } from '@twilio-paste/icons/cjs/DatabaseIcon';
+import { PlayIcon } from "@twilio-paste/icons/cjs/PlayIcon";
 import { PinIcon } from '@twilio-paste/icons/cjs/PinIcon';
 import { UnpinIcon } from '@twilio-paste/icons/cjs/UnpinIcon';
 import type { NextPage } from "next";
@@ -37,6 +38,61 @@ const Demos: NextPage = () => {
           <Card>
             <MediaObject as="div">
               <MediaFigure as="div" spacing="space50">
+                <DataBarChartIcon decorative={true} size="sizeIcon50" />
+              </MediaFigure>
+              <MediaBody as="div">
+                <Heading as="h2" variant="heading30">
+                  <MediaObject verticalAlign="center">
+                    <MediaBody>
+                      <Anchor href="#">Reports</Anchor>
+                    </MediaBody>
+                    <MediaFigure align="end" spacing="space40">
+                      <Button variant="link">
+                        <UnpinIcon decorative={false} title="Unpin Voice from navigation" size="sizeIcon50" />
+                      </Button>
+                    </MediaFigure>
+                  </MediaObject>
+                </Heading>
+                <Paragraph>Preformatted Dashboard and KPI reports.</Paragraph>
+                <Anchor href="#" showExternal>
+                  docs
+                </Anchor>
+              </MediaBody>
+            </MediaObject>
+          </Card>
+        </Column>
+
+        <Column>
+          <Card>
+            <MediaObject as="div">
+              <MediaFigure as="div" spacing="space50">
+                <PlayIcon decorative={true} size="sizeIcon50" />
+              </MediaFigure>
+              <MediaBody as="div">
+                <Heading as="h2" variant="heading30">
+                  <MediaObject verticalAlign="center">
+                    <MediaBody>
+                      <Anchor href="#">Playback Machine</Anchor>
+                    </MediaBody>
+                    <MediaFigure align="end" spacing="space40">
+                      <Button variant="link">
+                        <UnpinIcon decorative={false} title="Unpin Voice from navigation" size="sizeIcon50" />
+                      </Button>
+                    </MediaFigure>
+                  </MediaObject>
+                </Heading>
+                <Paragraph>Retrieve & playback recordings.</Paragraph>
+                <Anchor href="#" showExternal>
+                  docs
+                </Anchor>
+              </MediaBody>
+            </MediaObject>
+          </Card>
+        </Column>
+        <Column>
+          <Card>
+            <MediaObject as="div">
+              <MediaFigure as="div" spacing="space50">
                 <DatabaseIcon decorative={true} size="sizeIcon50" />
               </MediaFigure>
               <MediaBody as="div">
@@ -53,40 +109,15 @@ const Demos: NextPage = () => {
                   </MediaObject>
                 </Heading>
                 <Paragraph>Access unfiltered data sets</Paragraph>
-                <Anchor href="#" showExternal>
+                <Anchor href="" showExternal>
                   docs
                 </Anchor>
               </MediaBody>
             </MediaObject>
           </Card>
         </Column>
-        <Column>
-          <Card>
-            <MediaObject as="div">
-              <MediaFigure as="div" spacing="space50">
-                <DataBarChartIcon decorative={true} size="sizeIcon50" />
-              </MediaFigure>
-              <MediaBody as="div">
-                <Heading as="h2" variant="heading30">
-                  <MediaObject verticalAlign="center">
-                    <MediaBody>
-                      <Anchor href="#">Reports</Anchor>
-                    </MediaBody>
-                    <MediaFigure align="end" spacing="space40">
-                      <Button variant="link">
-                        <UnpinIcon decorative={false} title="Unpin Voice from navigation" size="sizeIcon50" />
-                      </Button>
-                    </MediaFigure>
-                  </MediaObject>
-                </Heading>
-                <Paragraph>Access preformatted Dashboard and KPI reports or build your own!</Paragraph>
-                <Anchor href="#" showExternal>
-                  docs
-                </Anchor>
-              </MediaBody>
-            </MediaObject>
-          </Card>
-        </Column>
+
+
       </Grid>
     </Box>
   </>
