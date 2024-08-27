@@ -51,7 +51,7 @@ const Demos: NextPage = () => {
         </ListItem>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="/data-center/">
+            <Anchor href="https://connie-datacenter-2156.twil.io/nss-dashboard-1.html" showExternal>
             📊 Data & Reporting Center
             </Anchor>
           </Heading>
