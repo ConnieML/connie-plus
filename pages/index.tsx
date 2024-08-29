@@ -7,7 +7,7 @@ import { MediaObject, MediaBody, MediaFigure } from '@twilio-paste/core/media-ob
 import { Anchor } from '@twilio-paste/core/anchor';
 import { Button } from '@twilio-paste/core/button';
 import { ProductUsageIcon } from '@twilio-paste/icons/cjs/ProductUsageIcon';
-import { ProductVoiceIcon } from '@twilio-paste/icons/cjs/ProductVoiceIcon';
+import { AgentIcon } from "@twilio-paste/icons/cjs/AgentIcon";
 import { ProductChatIcon } from '@twilio-paste/icons/cjs/ProductChatIcon';
 import { AddListIcon } from '@twilio-paste/icons/cjs/AddListIcon';
 import { PinIcon } from '@twilio-paste/icons/cjs/PinIcon';
@@ -92,13 +92,13 @@ const Demos: NextPage = () => {
           <Card>
             <MediaObject as="div">
               <MediaFigure as="div" spacing="space50">
-                <ProductVoiceIcon decorative={true} size="sizeIcon50" />
+                <AgentIcon decorative={true} size="sizeIcon50" />
               </MediaFigure>
               <MediaBody as="div">
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/voice-tasks">Voice Tasks</Anchor>
+                      <Anchor href="/agent-tools-data">Staff Agent Tools & Data</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -107,7 +107,7 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Learn to accept, create, and manage customer calls as tasks in Connie.</Paragraph>
+                <Paragraph>Access work tools, forms and more right here in this window!</Paragraph>
                 <Anchor href="https://bit.ly/connie-docs" showExternal>
                   docs
                 </Anchor>
