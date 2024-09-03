@@ -44,7 +44,7 @@ const Demos: NextPage = () => {
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="https://connie-datacenter-2156.twil.io/nss-dashboard-1.html">Reports</Anchor>
+                      <Anchor href="/data-center/adhoc/adhoc-dashboard">Reports</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
