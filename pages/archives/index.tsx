@@ -8,7 +8,7 @@ import { Anchor } from '@twilio-paste/core/anchor';
 import { Button } from '@twilio-paste/core/button';
 import { ProductUsageIcon } from '@twilio-paste/icons/cjs/ProductUsageIcon';
 import { AgentIcon } from "@twilio-paste/icons/cjs/AgentIcon";
-import { NewIcon } from '@twilio-paste/icons/cjs/NewIcon';
+import { ProductChatIcon } from '@twilio-paste/icons/cjs/ProductChatIcon';
 import { AddListIcon } from '@twilio-paste/icons/cjs/AddListIcon';
 import { PinIcon } from '@twilio-paste/icons/cjs/PinIcon';
 import { UnpinIcon } from '@twilio-paste/icons/cjs/UnpinIcon';
@@ -34,25 +34,25 @@ const Demos: NextPage = () => {
         Get To Know Connie
       </Heading><Grid gutter="space30" marginBottom="space50">
         <Column>
-        <Card>
+          <Card>
             <MediaObject as="div">
               <MediaFigure as="div" spacing="space50">
-                <AgentIcon decorative={true} size="sizeIcon50" />
+                <ProductUsageIcon decorative={true} size="sizeIcon50" />
               </MediaFigure>
               <MediaBody as="div">
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/agent-tools-data">Staff Agent Tools & Data</Anchor>
+                      <Anchor href="/starthere">Start Here!</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
-                        <PinIcon decorative={false} title="Pin Chat to navigation" size="sizeIcon50" />
+                        <PinIcon decorative={false} title="Pin Messaging to navigation" size="sizeIcon50" />
                       </Button>
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Helpful tools and resources for Staff Agents & Volunteers.</Paragraph>
+                <Paragraph>Everything you need to know to Connie like a pro!</Paragraph>
                 <Anchor href="https://bit.ly/connie-docs" showExternal>
                   docs
                 </Anchor>
@@ -79,7 +79,7 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Network and account management tools. Data, reports and performance dashborards. Access recordings.</Paragraph>
+                <Paragraph>Access your work tools and customers records right here in this window!</Paragraph>
                 <Anchor href="https://bit.ly/connie-docs" showExternal>
                   docs
                 </Anchor>
@@ -89,25 +89,25 @@ const Demos: NextPage = () => {
         </Column>
       </Grid><Grid gutter="space30" marginBottom="space50">
         <Column>
-        <Card>
+          <Card>
             <MediaObject as="div">
               <MediaFigure as="div" spacing="space50">
-                <ProductUsageIcon decorative={true} size="sizeIcon50" />
+                <AgentIcon decorative={true} size="sizeIcon50" />
               </MediaFigure>
               <MediaBody as="div">
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="">Learning & Support Center</Anchor>
+                      <Anchor href="/agent-tools-data">Staff Agent Tools & Data</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
-                        <PinIcon decorative={false} title="Pin Messaging to navigation" size="sizeIcon50" />
+                        <PinIcon decorative={false} title="Pin Chat to navigation" size="sizeIcon50" />
                       </Button>
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Learn everything you need to know to Connie like a pro! Support services.</Paragraph>
+                <Paragraph>Access work tools, forms and more right here in this window!</Paragraph>
                 <Anchor href="https://bit.ly/connie-docs" showExternal>
                   docs
                 </Anchor>
@@ -119,13 +119,13 @@ const Demos: NextPage = () => {
           <Card>
             <MediaObject as="div">
               <MediaFigure as="div" spacing="space50">
-                <NewIcon decorative={true} size="sizeIcon50" />
+                <ProductChatIcon decorative={true} size="sizeIcon50" />
               </MediaFigure>
               <MediaBody as="div">
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="">Connie Showroom</Anchor>
+                      <Anchor href="/messaging-email-tasks">Messaging & Email</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -134,7 +134,7 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Product Roadmap, pre-release demos, make a suggestion & win cool stuff!</Paragraph>
+                <Paragraph>Send and receive SMS, Social Media, Webchat messages as tasks in Connie.</Paragraph>
                 <Anchor href="https://bit.ly/connie-docs" showExternal>
                   docs
                 </Anchor>

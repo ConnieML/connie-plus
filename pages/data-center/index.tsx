@@ -70,7 +70,7 @@ const Demos: NextPage = () => {
       >
         <Box padding="space100">
           <Stack orientation="vertical" spacing="space40">
-            <Alert variant="neutral">PLEASE NOTE: As of Connie Prototype v1.5, All reporting feature and functions are still under active development. Currently, there are no customer report generation options available. To assemble customer reports, please download the raw data sets and import into a local spreadsheet application to build custom reports. Custom report generation will be generally available as of Connie MVPv1.0. If you would like early access to advanced Connie reporting features, please consider participainting our upcoming Advanced Reporting Cohort Group by contacting us <Anchor href="/empty-state">here</Anchor>.</Alert>
+            <Alert variant="neutral">PLEASE NOTE: As of Connie Prototype v1.5, All reporting feature and functions are under active development. Currently, there are no custom report build tools available. To build a custom report, please download the raw data sets you need and import into a local spreadsheet application. Custom report generation will be generally available as of Connie MVPv1.0. If you would like early access to advanced Connie reporting features, please consider participainting in the Connie Reporting Cohort Group by contacting us <Anchor href="/empty-state">here</Anchor>.</Alert>
           </Stack>
         </Box>
       </CustomizationProvider>
