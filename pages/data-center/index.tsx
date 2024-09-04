@@ -15,7 +15,6 @@ import { Box } from '@twilio-paste/core';
 import { Stack } from "@twilio-paste/core/stack";
 import { CustomizationProvider } from "@twilio-paste/core/customization";
 import { Alert } from "@twilio-paste/core/alert";
-import { Theme } from "@twilio-paste/core/theme";
 
 
 // import { PrototypeAnchor } from '../components/site/PrototypeAnchor';
