@@ -46,14 +46,30 @@ const Demos: NextPage = () => {
       >
         <Box padding="space100">
           <Stack orientation="vertical" spacing="space40">
+            Customising all base alerts and targeting variants
             <Alert variant="neutral">Neutral alert</Alert>
+            <Alert variant="error">Error alert</Alert>
+            <Alert variant="warning">Warning alert</Alert>
+            Creating an entirely custom alert instance, and customizing that
+            <Alert element="CUSTOM_ALERT" variant="neutral">
+              Neutral alert
+            </Alert>
+            <Alert element="CUSTOM_ALERT" variant="error">
+              Error alert
+            </Alert>
+            <Alert element="CUSTOM_ALERT" variant="warning">
+              Warning alert
+            </Alert>
           </Stack>
         </Box>
       </CustomizationProvider>
       <Theme.Provider theme="default">
         <Box padding="space100">
           <Stack orientation="vertical" spacing="space40">
+            Default Paste Alerts
             <Alert variant="neutral">Neutral alert</Alert>
+            <Alert variant="error">Error alert</Alert>
+            <Alert variant="warning">Warning alert</Alert>
           </Stack>
         </Box>
       </Theme.Provider>  
