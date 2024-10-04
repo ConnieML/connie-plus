@@ -13,7 +13,7 @@ const AgentTools: NextPage = () => {
     
     <Box as="main" padding="space70">
       <Head>
-        <title>Tasks Features Info Template Page</title>
+        <title>Connie CBO Agent Tools Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Heading as="h1" variant="heading10">
@@ -24,7 +24,22 @@ const AgentTools: NextPage = () => {
       </Paragraph>
       <Separator orientation="horizontal" verticalSpacing="space120" />
       <Heading as="h2" variant="heading20">
-        Online Forms
+        CRM / EMR
+      </Heading>
+      <UnorderedList>
+        <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="https://staging.myadulthomecare.com/staff_login/884ab270fea2c9fa5e648de498ad5911SHViU3BvdF9Vc2Vy726f549615f703f815cd0df26aff6cc1TnZjcm1AMDA3b3c27e8d6149175d06c2307d1333f3b4MTIzLTQ1Ni03ODkw">
+            📋 My Adult Daycare (EMR)
+            </Anchor>
+          </Heading>
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
+          <Paragraph></Paragraph>
+        </ListItem>
+      </UnorderedList>
+      <Separator orientation="horizontal" verticalSpacing="space120" />
+      <Heading as="h2" variant="heading20">
+      Online Forms
       </Heading>
       <UnorderedList>
         <ListItem>
