@@ -29,7 +29,7 @@ const AgentTools: NextPage = () => {
       <UnorderedList>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="https://staging.myadulthomecare.com/staff_login/884ab270fea2c9fa5e648de498ad5911SHViU3BvdF9Vc2Vy726f549615f703f815cd0df26aff6cc1TnZjcm1AMDA3b3c27e8d6149175d06c2307d1333f3b4MTIzLTQ1Ni03ODkw">
+            <Anchor href="/agent-tools/myadultdaycare" showExternal>
             📋 My Adult Daycare (EMR)
             </Anchor>
           </Heading>
