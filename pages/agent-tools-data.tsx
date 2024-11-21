@@ -48,6 +48,29 @@ const AgentTools: NextPage = () => {
       </UnorderedList>
       <Separator orientation="horizontal" verticalSpacing="space120" />
       <Heading as="h2" variant="heading20">
+        FAX
+      </Heading>
+      <UnorderedList>
+        <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="https://bit.ly/connie-demo-fax-cover-1" showExternal>
+            📠 Fax Cover Sheet Templates
+            </Anchor>
+          </Heading>
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
+          <Paragraph></Paragraph>
+          </ListItem>
+          <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="/demos/iframes/iframe-embed-fax1">
+            📠 Fax Coversheet Templates (iFrame)
+            </Anchor>
+          </Heading>
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
+          <Paragraph></Paragraph>
+        </ListItem>
+      </UnorderedList>
+      <Heading as="h2" variant="heading20">
       Online Forms
       </Heading>
       <UnorderedList>
