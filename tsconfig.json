@@ -27,6 +27,6 @@
     "strict": true,
     "target": "es6"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/demos/apis/DummyJsonProducts"],
   "exclude": ["node_modules"]
 }

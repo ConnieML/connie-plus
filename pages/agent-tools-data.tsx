@@ -29,8 +29,17 @@ const AgentTools: NextPage = () => {
       <UnorderedList>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="/agent-tools/myadultdaycare" showExternal>
+            <Anchor href="https://staging.myadulthomecare.com/referral?phone_number=510-930-9015" showExternal>
             📋 My Adult Daycare (EMR)
+            </Anchor>
+          </Heading>
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
+          <Paragraph></Paragraph>
+          </ListItem>
+          <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="/agent-tools/myadultdaycare">
+            📋 My Adult Daycare (iFrame)
             </Anchor>
           </Heading>
           {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
