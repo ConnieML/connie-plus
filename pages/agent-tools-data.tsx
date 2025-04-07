@@ -23,6 +23,30 @@ const AgentTools: NextPage = () => {
       Here you will find information and resources for Staff Agents. Below is a list of links, tools and resources commonly used by staff members. Return to home page by clicking {' '}  <Anchor href="/">Home</Anchor>.
       </Paragraph>
       <Separator orientation="horizontal" verticalSpacing="space120" />
+            <Heading as="h2" variant="heading20">
+        Client / Partner Directories
+      </Heading>
+      <UnorderedList>
+        <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="/templates/iframe-embed-airtable-client" showExternal>
+            🔎 Client Directory (Airtable)
+            </Anchor>
+          </Heading>
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
+          <Paragraph></Paragraph>
+          </ListItem>
+          <ListItem>
+          <Heading as="h3" variant="heading30">
+            <Anchor href="/templates/iframe-embed-airtable-partner">
+            🏥 Community Partner Directory (Airtable)
+            </Anchor>
+          </Heading>
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
+          <Paragraph></Paragraph>
+        </ListItem>
+      </UnorderedList>
+      <Separator orientation="horizontal" verticalSpacing="space120" />
       <Heading as="h2" variant="heading20">
         CRM / EMR
       </Heading>
