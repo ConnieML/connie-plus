@@ -15,7 +15,7 @@ function IframeEmbedFax1() {
       <Separator orientation="horizontal" verticalSpacing="space120" />
       {/* biome-ignore lint/a11y/useIframeTitle: <explanation> */}
       <iframe
-        src="airtable-embed" src="https://airtable.com/embed/appXyXOHlD7rqJJLr/shrgV3sX54wr5dktD?backgroundColor=blue&viewControls=on"
+        src="https://airtable.com/embed/appXyXOHlD7rqJJLr/shrgV3sX54wr5dktD?backgroundColor=blue&viewControls=on"
         width="100%"
         height="100%"
         style={{ border: 'none', overflow: 'hidden', minHeight: '900px', minWidth:'600px' }}
