@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "-": "^0.0.1",
+    "@okta/okta-auth-js": "^7.12.1",
+    "@okta/okta-react": "^6.10.0",
     "@twilio-paste/core": "^20.13.0",
     "@twilio-paste/data-visualization-library": "^5.0.0",
     "@twilio-paste/icons": "^12.5.0",

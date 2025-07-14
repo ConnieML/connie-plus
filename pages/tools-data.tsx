@@ -42,8 +42,8 @@ const Demos: NextPage = () => {
       <UnorderedList>
         <ListItem>
           <Heading as="h3" variant="heading30">
-            <Anchor href="/channel-manager/nss-channelmanager">
-            🔄 Channel Manager: Voice, Messaging, Fax
+            <Anchor href="/channels">
+            🔄 Channel Manager: Voice, Messaging, Email, Web, Social
             </Anchor>
           </Heading>
           {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
