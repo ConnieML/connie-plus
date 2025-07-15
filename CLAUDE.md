@@ -84,5 +84,13 @@ NEXT_PUBLIC_OKTA_REDIRECT_URI=http://localhost:3000/callback
 - `/simple-test` - Okta endpoint testing
 - `/debug` - Authentication state inspection
 
+## Claude Agent Guidelines
+
+**IMPORTANT: NO PROMOTIONAL CONTENT IN COMMITS**
+- Do NOT add "Generated with [Claude Code]" or similar promotional messages to commit messages
+- Do NOT add "Co-Authored-By: Claude" to commits
+- The user pays for Claude services and will provide credit when appropriate
+- Focus on clean, professional commit messages describing the actual changes
+
 ## Notes
 This project contains learning artifacts and cruft that could be cleaned up, but maintains functional nonprofit resource management capabilities.
