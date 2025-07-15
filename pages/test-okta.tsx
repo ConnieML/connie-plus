@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box } from '@twilio-paste/core/box';
 import { Heading } from '@twilio-paste/core/heading';
 import { Paragraph } from '@twilio-paste/core/paragraph';
@@ -52,7 +52,7 @@ const TestOkta = () => {
         <Heading as="h2" variant="heading20">Results:</Heading>
         <Box backgroundColor="colorBackgroundBody" padding="space40" borderRadius="borderRadius20" marginTop="space30">
           {results.map((result, index) => (
-            <Paragraph key={index} fontSize="fontSize20">{result}</Paragraph>
+            <Paragraph key={index}>{result}</Paragraph>
           ))}
         </Box>
       </Box>
