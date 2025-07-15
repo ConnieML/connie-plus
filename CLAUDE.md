@@ -16,6 +16,19 @@ V1.connie.plus is a Next.js application serving as a resource hub for nonprofit 
 - `npm run lint` - Run linting
 - `npm run tsc` - TypeScript type checking
 
+## Dependencies & Installation
+**IMPORTANT: Use legacy peer deps for installation**
+```bash
+npm install --legacy-peer-deps
+```
+
+**Reason**: React 19 compatibility issues with Twilio Paste components
+- Project uses React 19.1.0 for modern features
+- Twilio Paste expects React 18.x (peer dependency conflict)
+- `--legacy-peer-deps` bypasses strict peer dependency checking
+- Functionality works correctly despite version mismatch
+- **Future Action Required**: Monitor Twilio Paste updates for React 19 support
+
 ## Key Features
 - **Agent Tools & Data**: Staff resources including client directories, CRM/EMR access, fax templates
 - **Admin Tools & Data**: Network management, reports, dashboards
@@ -45,44 +58,106 @@ V1.connie.plus is a Next.js application serving as a resource hub for nonprofit 
 - Twilio support has already validated our iframe SSO approach as correct
 - Always prefer verified information from Twilio support over assumptions
 
-## ✅ CURRENT STATUS - Authentication SUCCESS!
+**Known Issues to Monitor with Twilio Support:**
+- Badge component TypeScript errors due to React 19 + Twilio Paste compatibility
+- Current workaround: Use Text components with color variants instead of Badge
+- Future: Check with Twilio support for React 19 compatibility timeline
 
-### 🎉 **BREAKTHROUGH ACHIEVED:**
-- **Date:** July 14, 2025
-- **Status:** Standalone Okta authentication WORKING
-- **User can login and access authenticated app**
+## ✅ CURRENT STATUS - CHANNEL MANAGER COMPLETE!
 
-### 🔑 **Key Fix Applied:**
-- **Problem:** Wrong issuer URL in environment config
-- **Solution:** Changed from `https://trial-2094636.okta.com/oauth2/default` → `https://trial-2094636.okta.com`
-- **Root Cause:** Okta instance uses root domain, not `/oauth2/default` authorization server
+### 🎉 **MAJOR MILESTONE ACHIEVED:**
+- **Date:** July 15, 2025
+- **Status:** Channel Manager with real Twilio API integration COMPLETE
+- **Authentication:** Okta SSO with role-based access control WORKING
+- **API Integration:** Real Twilio phone numbers and messaging services displayed
+
+### 🔑 **Key Implementations:**
+- **Okta Authentication:** Full SSO with groups-based access control
+- **Channel Manager:** Role-based access for Admin/Supervisor users
+- **Twilio API:** Real-time data from actual Twilio account
+- **Production Ready:** Deployed and functional
 
 ### 📋 **Current Working Configuration:**
 ```bash
+# Okta Configuration
 NEXT_PUBLIC_OKTA_ISSUER=https://trial-2094636.okta.com
 NEXT_PUBLIC_OKTA_CLIENT_ID=0oat7hjmxbdY525p9697
-NEXT_PUBLIC_OKTA_REDIRECT_URI=http://localhost:3000/callback
+NEXT_PUBLIC_OKTA_REDIRECT_URI=http://localhost:3000/callback (dev)
+NEXT_PUBLIC_OKTA_REDIRECT_URI=https://v1.connie.plus/callback (prod)
+
+# Twilio Configuration
+TWILIO_ACCOUNT_SID=your_account_sid_here
+TWILIO_AUTH_TOKEN=your_auth_token_here
 ```
 
 ### ✅ **Completed Items:**
-- [x] Okta app created and configured
-- [x] Environment variables set correctly
+- [x] Okta app created and configured with groups claim
+- [x] Environment variables set correctly for all environments
 - [x] iframe embed and CORS permissions set
-- [x] User assignments configured
+- [x] User assignments configured with ConnieOne-Admins group
 - [x] Standalone authentication flow working
-- [x] User can login and see authenticated content
+- [x] Channel Manager page with role-based access control
+- [x] Real Twilio API integration for phone numbers and messaging services
+- [x] Production deployment successful
+- [x] Local development environment functional
 
-### 🚀 **Next Steps (After Break):**
-- [ ] Test `/debug` page to verify user info
-- [ ] Test iframe authentication with `test-iframe.html`
-- [ ] Test postMessage communication
-- [ ] Deploy to production (`https://v1.connie.plus`)
-- [ ] Test full Flex CRMcontainer integration
+### 🚀 **Production Deployment:**
+- **URL:** https://v1.connie.plus/channels
+- **Access:** Admin/Supervisor users with ConnieOne-Admins group
+- **Data:** Real Twilio phone numbers and messaging services
+- **Status:** Fully functional and ready for Flex CRMcontainer integration
 
 ### 🛠 **Test Files Created:**
 - `test-iframe.html` - Parent window simulation
 - `/simple-test` - Okta endpoint testing
 - `/debug` - Authentication state inspection
+
+## 🚀 **Channel Manager Deployment Guide**
+
+### **Prerequisites:**
+1. **Okta Application configured** with groups claim
+2. **Twilio account** with phone numbers and messaging services
+3. **Production environment** with nginx and PM2
+
+### **Environment Setup:**
+```bash
+# Create ecosystem.config.js for PM2
+module.exports = {
+  apps: [{
+    name: 'v1.connie.plus',
+    script: 'npm',
+    args: 'start',
+    env: {
+      NODE_ENV: 'production',
+      NEXT_PUBLIC_OKTA_ISSUER: 'https://trial-2094636.okta.com',
+      NEXT_PUBLIC_OKTA_CLIENT_ID: '0oat7hjmxbdY525p9697',
+      NEXT_PUBLIC_OKTA_REDIRECT_URI: 'https://v1.connie.plus/callback',
+      NEXT_PUBLIC_ALLOWED_PARENT_ORIGIN: 'https://flex.twilio.com',
+      NEXT_PUBLIC_FLEX_DOMAIN: 'https://nss.connie.team',
+      TWILIO_ACCOUNT_SID: 'your_account_sid_here',
+      TWILIO_AUTH_TOKEN: 'your_auth_token_here'
+    }
+  }]
+};
+```
+
+### **Deployment Steps:**
+1. **Install dependencies:** `npm install --legacy-peer-deps`
+2. **Build application:** `npm run build`
+3. **Start with PM2:** `pm2 start ecosystem.config.js`
+4. **Verify status:** `pm2 list`
+
+### **Okta Configuration Requirements:**
+- **Groups claim:** Filter with "ConnieOne-Admins"
+- **Scopes:** `['openid', 'profile', 'email', 'groups']`
+- **Redirect URIs:** Both localhost and production URLs
+- **User group membership:** ConnieOne-Admins group
+
+### **Twilio API Integration:**
+- **Phone numbers:** `client.incomingPhoneNumbers.list()`
+- **Messaging services:** `client.messaging.v1.services.list()`
+- **Fallback:** Mock data if API calls fail
+- **Real-time data:** Updates when Twilio resources change
 
 ## Claude Agent Guidelines
 

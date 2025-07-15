@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../lib/auth';
 import { Box } from '@twilio-paste/core/box';
 import { Button } from '@twilio-paste/core/button';
@@ -12,8 +12,14 @@ import Head from 'next/head';
 
 const DebugPage: NextPage = () => {
   const { isAuthenticated, user, loading, error, login, logout, checkAuth, requestTokenFromParent } = useAuth();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const isInIframe = () => {
+    if (!isClient) return false;
     try {
       return window.self !== window.top;
     } catch (e) {

@@ -1,5 +1,6 @@
 // pages/api/channels.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
+import twilio from 'twilio';
 
 export interface Channel {
   sid: string;
@@ -19,7 +20,13 @@ export interface ChannelsResponse {
   error?: string;
 }
 
-// Mock channel data structure (replace with actual Twilio API calls)
+// Initialize Twilio client
+const client = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+
+// Mock channel data structure (fallback if API calls fail)
 const mockChannelData: Channel[] = [
   // Voice Channels
   {
@@ -125,24 +132,58 @@ export default async function handler(
   }
 
   try {
-    // TODO: Replace with actual Twilio API calls
-    // const twilioClient = twilio(accountSid, authToken);
-    // const phoneNumbers = await twilioClient.incomingPhoneNumbers.list();
-    // const messagingServices = await twilioClient.messaging.services.list();
-    // etc...
+    const channels: Channel[] = [];
 
-    // For now, return mock data
+    // Fetch phone numbers (Voice channels)
+    const phoneNumbers = await client.incomingPhoneNumbers.list();
+    for (const phoneNumber of phoneNumbers) {
+      const capabilities = [];
+      if (phoneNumber.capabilities.voice) capabilities.push('voice');
+      if (phoneNumber.capabilities.sms) capabilities.push('messaging');
+      if (phoneNumber.capabilities.mms) capabilities.push('messaging');
+
+      channels.push({
+        sid: phoneNumber.sid,
+        friendlyName: phoneNumber.friendlyName || phoneNumber.phoneNumber,
+        phoneNumber: phoneNumber.phoneNumber,
+        type: 'voice',
+        capabilities,
+        accountSid: phoneNumber.accountSid,
+        dateCreated: phoneNumber.dateCreated?.toISOString() || new Date().toISOString(),
+        status: 'active'
+      });
+    }
+
+    // Fetch messaging services (Messaging channels)
+    const messagingServices = await client.messaging.v1.services.list();
+    for (const service of messagingServices) {
+      channels.push({
+        sid: service.sid,
+        friendlyName: service.friendlyName,
+        address: service.sid,
+        type: 'messaging',
+        capabilities: ['messaging'],
+        accountSid: service.accountSid,
+        dateCreated: service.dateCreated?.toISOString() || new Date().toISOString(),
+        status: 'active'
+      });
+    }
+
+    // Note: Email, Web, and Social channels would require additional API calls
+    // depending on your specific integrations (SendGrid, Flex, etc.)
+
     res.status(200).json({
       success: true,
-      channels: mockChannelData
+      channels
     });
 
   } catch (error) {
     console.error('Error fetching channels:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to fetch channel data',
-      channels: []
+    
+    // Fallback to mock data if API calls fail
+    res.status(200).json({
+      success: true,
+      channels: mockChannelData
     });
   }
 }

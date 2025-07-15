@@ -9,7 +9,7 @@ const oktaConfig = {
   issuer: process.env.NEXT_PUBLIC_OKTA_ISSUER || 'https://your-okta-domain.okta.com/oauth2/default',
   clientId: process.env.NEXT_PUBLIC_OKTA_CLIENT_ID || 'your-client-id',
   redirectUri: process.env.NEXT_PUBLIC_OKTA_REDIRECT_URI || 'https://v1.connie.plus/callback',
-  scopes: ['openid', 'profile', 'email'],
+  scopes: ['openid', 'profile', 'email', 'groups'],
   pkce: true,
   // Configure token manager for automatic renewal
   tokenManager: {

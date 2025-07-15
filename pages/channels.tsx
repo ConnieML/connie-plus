@@ -40,7 +40,7 @@ const ChannelManager: NextPage = () => {
   const hasAccess = () => {
     if (!user || !user.groups) return false;
     const userGroups = user.groups.map(group => group.toLowerCase());
-    return userGroups.includes('admin') || userGroups.includes('supervisor');
+    return userGroups.some(group => group.includes('admin') || group.includes('supervisor'));
   };
 
   // Fetch channel data

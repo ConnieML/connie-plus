@@ -9,7 +9,7 @@ const MyApp: React.FC<React.PropsWithChildren<AppProps>> = ({ Component, pagePro
   const router = useRouter();
   
   // Pages that don't require authentication
-  const publicPages = ['/callback', '/test-okta', '/simple-test'];
+  const publicPages = ['/callback', '/test-okta', '/simple-test', '/debug'];
   const isPublicPage = publicPages.includes(router.pathname);
 
   return (
