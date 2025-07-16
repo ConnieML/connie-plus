@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iframe Authentication Test</title>
+    <title>Production Iframe Authentication Test</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,12 +67,20 @@
             background: #f8d7da;
             color: #721c24;
         }
+        .production-badge {
+            background: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🧪 Localhost Iframe Authentication Test <span style="background: #dc3545; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-left: 10px;">LOCALHOST</span></h1>
-        <p>This page simulates a Flex parent window for testing iframe authentication with <strong>localhost:3000</strong>.</p>
+        <h1>🧪 Production Iframe Authentication Test <span class="production-badge">PRODUCTION</span></h1>
+        <p>This page simulates a Flex parent window for testing iframe authentication with <strong>v1.connie.plus</strong>.</p>
         
         <div class="controls">
             <h3>Parent Window Controls</h3>
@@ -80,23 +88,25 @@
             <button onclick="triggerLogout()">Trigger Logout</button>
             <button onclick="refreshToken()">Refresh Token</button>
             <button onclick="clearLog()">Clear Log</button>
+            <button onclick="navigateToChannels()">Navigate to Channels</button>
+            <button onclick="navigateToDebug()">Navigate to Debug</button>
             
             <div class="log" id="messageLog">
-                <div class="log-entry">Ready for testing...</div>
+                <div class="log-entry">Ready for production testing...</div>
             </div>
         </div>
         
         <iframe 
             id="authIframe" 
-            src="http://localhost:3000"
-            title="Localhost Authentication Test Iframe">
+            src="https://v1.connie.plus"
+            title="Production Authentication Test Iframe">
         </iframe>
     </div>
 
     <script>
         const iframe = document.getElementById('authIframe');
         const messageLog = document.getElementById('messageLog');
-        const iframeOrigin = 'http://localhost:3000';
+        const iframeOrigin = 'https://v1.connie.plus';
         
         // Log function
         function log(message, type = 'info') {
@@ -141,20 +151,21 @@
             }
         });
         
-        // Mock token for testing
+        // Mock token for testing (with actual Okta structure)
         const mockToken = {
             accessToken: {
                 accessToken: 'mock-access-token-12345',
                 expiresAt: Date.now() + 3600000,
-                scopes: ['openid', 'profile', 'email']
+                scopes: ['openid', 'profile', 'email', 'groups']
             },
             idToken: {
                 idToken: 'mock-id-token-67890',
                 expiresAt: Date.now() + 3600000,
                 claims: {
                     sub: 'mock-user-123',
-                    name: 'Test User',
-                    email: 'test@example.com'
+                    name: 'Test Admin User',
+                    email: 'admin@connie.team',
+                    groups: ['Admin', 'Supervisor']
                 }
             }
         };
@@ -198,12 +209,22 @@
             log(`📤 Sent: ${JSON.stringify(message)}`, 'sent');
         }
         
+        function navigateToChannels() {
+            iframe.src = 'https://v1.connie.plus/channels';
+            log('🧭 Navigating to channels page', 'info');
+        }
+        
+        function navigateToDebug() {
+            iframe.src = 'https://v1.connie.plus/debug';
+            log('🐛 Navigating to debug page', 'info');
+        }
+        
         function clearLog() {
             messageLog.innerHTML = '<div class="log-entry">Log cleared...</div>';
         }
         
         // Initial setup
-        log('🚀 Parent window initialized', 'info');
+        log('🚀 Production parent window initialized', 'info');
         log(`📍 Iframe origin: ${iframeOrigin}`, 'info');
         
         // Auto-share token after iframe loads (simulate existing Flex session)

@@ -6,16 +6,17 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   // CORS headers for iframe embedding in Flex
-  response.headers.set('Access-Control-Allow-Origin', 'https://flex.twilio.com');
+  response.headers.set('Access-Control-Allow-Origin', 'https://nss.connie.team');
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
   response.headers.set('Access-Control-Allow-Credentials', 'true');
 
-  // Frame ancestors for Flex CRMcontainer
-  response.headers.set(
-    'Content-Security-Policy',
-    "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com"
-  );
+  // Frame ancestors for Flex CRMcontainer (environment-specific)
+  const frameAncestors = process.env.NODE_ENV === 'development' 
+    ? "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team file:"
+    : "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team";
+  
+  response.headers.set('Content-Security-Policy', frameAncestors);
 
   // Additional security headers
   response.headers.set('X-Frame-Options', 'ALLOW-FROM https://flex.twilio.com');
