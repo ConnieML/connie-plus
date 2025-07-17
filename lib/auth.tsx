@@ -198,17 +198,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       
       if (isInIframe()) {
-        // In iframe, redirect parent window to login - WITH SECURITY
+        // In Enhanced CRM Container, request authentication context from Flex
+        console.log('🔗 Requesting authentication from Flex Enhanced CRM Container');
         window.parent.postMessage({
-          type: 'REQUEST_LOGIN',
-          loginUrl: `${oktaConfig.issuer}/v1/authorize?${new URLSearchParams({
-            client_id: oktaConfig.clientId,
-            response_type: 'code',
-            scope: oktaConfig.scopes.join(' '),
-            redirect_uri: oktaConfig.redirectUri,
-            state: 'iframe-login'
-          }).toString()}`
-        }, ALLOWED_PARENT_ORIGIN); // ✅ Secure origin instead of '*'
+          type: 'REQUEST_AUTH_CONTEXT'
+        }, ALLOWED_PARENT_ORIGIN);
       } else {
         // Standard login flow
         console.log('🚀 Calling oktaAuth.signInWithRedirect()');
@@ -293,11 +287,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return;
       }
 
-      switch (event.data.type) {
+      const { type, token, user, tokens } = event.data || {};
+      
+      switch (type) {
+        case 'auth':
+          // Enhanced CRM Container authentication (Twilio's standard protocol)
+          console.log('Received Flex authentication context:', { token, user });
+          if (token && user) {
+            // Store Flex authentication context
+            (window as any).flexAuthToken = token;
+            (window as any).flexUser = user;
+            
+            // Update authentication state
+            setAuthState({
+              isAuthenticated: true,
+              user: user,
+              loading: false,
+              error: null
+            });
+          }
+          break;
+          
         case 'FLEX_AUTH_TOKEN':
-          // Parent (Flex) is sharing auth token
-          if (event.data.tokens) {
-            oktaAuth.tokenManager.setTokens(event.data.tokens);
+          // Legacy format - Parent (Flex) is sharing auth token
+          if (tokens) {
+            oktaAuth.tokenManager.setTokens(tokens);
             checkAuth();
           }
           break;
@@ -309,19 +323,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           
         case 'FLEX_TOKEN_REFRESH':
           // Parent is providing refreshed token
-          if (event.data.tokens) {
-            oktaAuth.tokenManager.setTokens(event.data.tokens);
+          if (tokens) {
+            oktaAuth.tokenManager.setTokens(tokens);
             checkAuth();
           }
           break;
           
         default:
-          console.log('Unknown message type from parent:', event.data.type);
+          console.log('Unknown message type from parent:', type);
       }
     };
 
     if (isInIframe()) {
       window.addEventListener('message', handleMessage);
+      
+      // Signal to parent that we're ready to receive authentication context
+      window.parent.postMessage({ type: 'ready' }, ALLOWED_PARENT_ORIGIN);
+      console.log('Sent ready signal to parent:', ALLOWED_PARENT_ORIGIN);
     }
 
     return () => {

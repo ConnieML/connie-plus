@@ -22,10 +22,18 @@ export interface ChannelsResponse {
 
 // Initialize Twilio client function
 const getClient = () => {
-  if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN) {
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  
+  if (!accountSid || !authToken) {
+    console.error('Missing Twilio credentials:', {
+      accountSid: accountSid ? 'present' : 'missing',
+      authToken: authToken ? 'present' : 'missing'
+    });
     throw new Error('Missing Twilio credentials');
   }
-  return twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+  
+  return twilio(accountSid, authToken);
 };
 
 // Mock channel data structure (fallback if API calls fail)
