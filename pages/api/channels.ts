@@ -20,11 +20,13 @@ export interface ChannelsResponse {
   error?: string;
 }
 
-// Initialize Twilio client
-const client = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+// Initialize Twilio client function
+const getClient = () => {
+  if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN) {
+    throw new Error('Missing Twilio credentials');
+  }
+  return twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+};
 
 // Mock channel data structure (fallback if API calls fail)
 const mockChannelData: Channel[] = [
@@ -133,6 +135,7 @@ export default async function handler(
 
   try {
     const channels: Channel[] = [];
+    const client = getClient();
 
     // Fetch phone numbers (Voice channels)
     const phoneNumbers = await client.incomingPhoneNumbers.list();
