@@ -25,12 +25,23 @@ const Demos: NextPage = () => {
       <title>Connie Plus NextJS App</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Heading as="h1" variant="heading10">
-    Connie ➕
-    </Heading><Paragraph>
-    Welcome to Connie! This is a temporary landing page intended to get you get up and running in your new Connie account quickly and easly. It's also, intended to be playground where you can explore the wonderful world of Connie in 'safe mode'. So go ahead and start clicking! You can return to this page anytime by clicking {' '}
-        <Anchor href="/">Home</Anchor>.
-      </Paragraph><Heading as="h2" variant="heading20">
+    {/* Logo Header */}
+    <Box marginBottom="space60">
+      <Anchor href="/">
+        <img 
+          src="/assets/connie-plus-logo.svg" 
+          alt="Connie Platform Logo" 
+          style={{ height: '40px', width: 'auto' }}
+        />
+      </Anchor>
+    </Box><Heading as="h1" variant="heading10">
+      Welcome to Connie!
+    </Heading>
+    <Paragraph>
+      This is your centralized hub for accessing Connie platform tools and resources. 
+      Get up and running quickly with our organized toolkit for both agents and administrators. 
+      Explore safely and efficiently!
+    </Paragraph><Heading as="h2" variant="heading20">
         Get To Know Connie
       </Heading><Grid gutter="space30" marginBottom="space50">
         <Column>
@@ -70,7 +81,7 @@ const Demos: NextPage = () => {
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/tools-data">Admin Tools & Data</Anchor>
+                      <Anchor href="/admin-tools-data">Admin Tools & Data</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">

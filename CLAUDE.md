@@ -49,6 +49,45 @@ npm install --legacy-peer-deps
 - Fax services and templates
 - Various CBO management tools
 
+## Twilio Paste Design System - REQUIRED READING
+**MANDATORY: All Claude agents MUST review Twilio Paste documentation before starting any UI work**
+
+### Required Documentation Review:
+1. **Introduction**: https://paste.twilio.design/introduction/about-paste
+2. **Components**: https://paste.twilio.design/components
+3. **Patterns**: https://paste.twilio.design/patterns
+
+### Key Twilio Paste Principles:
+- **Accessible by default**: All components meet WCAG 2.1 AA compliance
+- **Composable by design**: Components are presentational, not concerned with application logic
+- **Design tokens**: Use Paste's design tokens for consistent styling
+- **No custom className**: Paste components don't support custom className properties
+- **Testing approach**: Use data attributes for test identifiers, not CSS classes
+
+### Component Categories Available:
+- **Layout**: Grid, Flex, Stack, Box
+- **Form Components**: Input, Checkbox, Radio Group, Select
+- **Interactive**: Button, Modal, Popover, Tooltip
+- **Navigation**: Sidebar, Breadcrumb, In Page Navigation
+- **Data Display**: Table, List, Card
+- **Typography**: Heading, Text, Paragraph
+- **Feedback**: Alert, Toast, Badge (see known issues)
+
+### Production Patterns to Follow:
+- Button vs Anchor usage
+- Form patterns and validation
+- Empty state handling
+- Error state management
+- Confirmation dialogs
+- Data export workflows
+
+### Implementation Guidelines:
+- Always use Paste components over custom HTML elements
+- Follow established patterns for common interactions
+- Leverage primitives for custom component development
+- Use theme customization options appropriately
+- Maintain consistency across all pages and components
+
 ## Twilio Support Access
 **IMPORTANT: We have 24/7 paid Twilio support available - DO NOT GUESS!**
 
