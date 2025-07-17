@@ -31,7 +31,6 @@ interface ChannelGroup {
 }
 
 const ChannelManager: NextPage = () => {
-  const { loading } = useAuth();
   const [channels, setChannels] = useState<Channel[]>([]);
   const [channelsLoading, setChannelsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -108,17 +107,7 @@ const ChannelManager: NextPage = () => {
   };
 
 
-  // Loading state
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" padding="space70">
-        <Box textAlign="center">
-          <Spinner decorative={false} title="Loading..." size="sizeIcon40" />
-          <Paragraph>Loading channel manager...</Paragraph>
-        </Box>
-      </Box>
-    );
-  }
+  // Remove auth loading check - bypassed for testing
 
   // Access denied
   if (!hasAccess()) {
