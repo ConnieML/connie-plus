@@ -1,6 +1,5 @@
 // pages/channels.tsx
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../lib/auth';
 import { Box } from '@twilio-paste/core/box';
 import { Heading } from '@twilio-paste/core/heading';
 import { Paragraph } from '@twilio-paste/core/paragraph';
