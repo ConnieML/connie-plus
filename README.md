@@ -1,5 +1,5 @@
 <a  href="https://www.connieconnect.com">
-<img  src="https://i.postimg.cc/MGd7M6Cp/connie-logo-white-thin-deja-Vu-Sans.png"  alt="Connie SaaS For Nonprofits"  width="250"  />
+<img  src="https://i.postimg.cc/7LrnJm19/connie-plus-ascii-888x220-blue.png"  alt="Connie SaaS For Nonprofits"  width="250"  />
 </a>
 
 # ➕ Connie Plus
