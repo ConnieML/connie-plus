@@ -13,8 +13,8 @@ export function middleware(request: NextRequest) {
 
   // Frame ancestors for Flex CRMcontainer (environment-specific)
   const frameAncestors = process.env.NODE_ENV === 'development' 
-    ? "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team https://dev.connie.team https://hhovv.connie.team https://*.connie.team file:"
-    : "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team https://dev.connie.team https://hhovv.connie.team https://*.connie.team";
+    ? "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team https://dev.connie.team https://hhovv.connie.team https://*.connie.team https://v2.connie.plus file:"
+    : "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team https://dev.connie.team https://hhovv.connie.team https://*.connie.team https://v2.connie.plus";
   
   response.headers.set('Content-Security-Policy', frameAncestors);
 

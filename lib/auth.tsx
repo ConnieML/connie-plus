@@ -6,7 +6,8 @@ const ALLOWED_PARENT_ORIGINS = [
   'https://flex.twilio.com',
   'https://nss.connie.team',
   'https://dev.connie.team', 
-  'https://hhovv.connie.team'
+  'https://hhovv.connie.team',
+  'https://v2.connie.plus'
 ];
 const ALLOWED_PARENT_ORIGIN = process.env.NEXT_PUBLIC_ALLOWED_PARENT_ORIGIN || 'https://flex.twilio.com';
 
