@@ -5,8 +5,21 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  // CORS headers for iframe embedding in Flex
-  response.headers.set('Access-Control-Allow-Origin', 'https://nss.connie.team');
+  // CORS headers for iframe embedding in Flex (dynamic origin validation)
+  const origin = request.headers.get('origin');
+  const allowedOrigins = [
+    'https://flex.twilio.com',
+    'https://nss.connie.team',
+    'https://dev.connie.team',
+    'https://hhovv.connie.team'
+  ];
+  
+  if (origin && allowedOrigins.includes(origin)) {
+    response.headers.set('Access-Control-Allow-Origin', origin);
+  } else {
+    response.headers.set('Access-Control-Allow-Origin', 'https://nss.connie.team'); // Default fallback
+  }
+  
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
   response.headers.set('Access-Control-Allow-Credentials', 'true');
