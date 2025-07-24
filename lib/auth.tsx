@@ -62,6 +62,7 @@ const AuthContext = createContext<AuthState & {
   user: null,
   loading: true,
   error: null,
+  accountSid: null,
   login: async () => {},
   logout: async () => {},
   checkAuth: async () => {},

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { extractUserToken, isUserAuthorizedForAccount, decodeUserToken, logAccountAccess } from '../../lib/account-validation';
+import { extractUserToken, decodeUserToken, logAccountAccess } from '../../lib/account-validation';
 import { storeCredentialsInSecrets } from '../../lib/secrets-manager';
 import twilio from 'twilio';
 

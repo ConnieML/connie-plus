@@ -163,9 +163,11 @@ const ChannelManager: NextPage = () => {
         
         <Box textAlign="center" maxWidth="600px" marginX="auto">
           <Spinner decorative size="sizeIcon60" />
-          <Paragraph marginTop="space40">
-            Connecting to Twilio Flex...
-          </Paragraph>
+          <Box marginTop="space40">
+            <Paragraph>
+              Connecting to Twilio Flex...
+            </Paragraph>
+          </Box>
         </Box>
       </Box>
     );

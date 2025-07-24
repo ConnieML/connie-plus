@@ -140,7 +140,7 @@ const CustomerOnboarding: NextPage = () => {
         <Head>
           <title>Access Denied - Customer Onboarding</title>
         </Head>
-        <Alert variant="error">
+        <Alert variant="warning">
           <Heading as="h2" variant="heading30">Access Denied</Heading>
           <Paragraph>
             This page is only accessible to administrators.
@@ -167,7 +167,7 @@ const CustomerOnboarding: NextPage = () => {
 
       {success && (
         <Box marginBottom="space50">
-          <Alert variant="success" onDismiss={() => setSuccess(null)}>
+          <Alert variant="neutral" onDismiss={() => setSuccess(null)}>
             <Paragraph>{success}</Paragraph>
           </Alert>
         </Box>
@@ -175,7 +175,7 @@ const CustomerOnboarding: NextPage = () => {
 
       {error && (
         <Box marginBottom="space50">
-          <Alert variant="error" onDismiss={() => setError(null)}>
+          <Alert variant="warning" onDismiss={() => setError(null)}>
             <Paragraph>{error}</Paragraph>
           </Alert>
         </Box>
@@ -183,153 +183,175 @@ const CustomerOnboarding: NextPage = () => {
 
       <Card>
         <Form onSubmit={handleSubmit}>
-          <Heading as="h2" variant="heading30" marginBottom="space50">
-            Organization Details
-          </Heading>
+          <Box marginBottom="space50">
+            <Heading as="h2" variant="heading30">
+              Organization Details
+            </Heading>
+          </Box>
 
-          <FormControl marginBottom="space50">
-            <Label htmlFor="organizationName" required>
-              Organization Name
-            </Label>
-            <Input
-              id="organizationName"
-              name="organizationName"
-              type="text"
-              value={formData.organizationName}
-              onChange={handleInputChange}
-              required
-              placeholder="Healthcare CBO"
-            />
-            <HelpText>The name of the customer organization</HelpText>
-          </FormControl>
+          <Box marginBottom="space50">
+            <FormControl>
+              <Label htmlFor="organizationName" required>
+                Organization Name
+              </Label>
+              <Input
+                id="organizationName"
+                name="organizationName"
+                type="text"
+                value={formData.organizationName}
+                onChange={handleInputChange}
+                required
+                placeholder="Healthcare CBO"
+              />
+              <HelpText>The name of the customer organization</HelpText>
+            </FormControl>
+          </Box>
 
-          <FormControl marginBottom="space50">
-            <Label htmlFor="accountSid" required>
-              Twilio Account SID
-            </Label>
-            <Input
-              id="accountSid"
-              name="accountSid"
-              type="text"
-              value={formData.accountSid}
-              onChange={handleInputChange}
-              required
-              placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-            />
-            <HelpText>The customer's Twilio Account SID (starts with AC)</HelpText>
-          </FormControl>
+          <Box marginBottom="space50">
+            <FormControl>
+              <Label htmlFor="accountSid" required>
+                Twilio Account SID
+              </Label>
+              <Input
+                id="accountSid"
+                name="accountSid"
+                type="text"
+                value={formData.accountSid}
+                onChange={handleInputChange}
+                required
+                placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+              />
+              <HelpText>The customer's Twilio Account SID (starts with AC)</HelpText>
+            </FormControl>
+          </Box>
 
           <Separator orientation="horizontal" />
 
-          <Heading as="h2" variant="heading30" marginBottom="space50" marginTop="space50">
-            Twilio Credentials
-          </Heading>
+          <Box marginBottom="space50" marginTop="space50">
+            <Heading as="h2" variant="heading30">
+              Twilio Credentials
+            </Heading>
+          </Box>
 
-          <FormControl marginBottom="space50">
-            <RadioGroup
-              name="authType"
-              value={formData.authType}
-              onChange={handleAuthTypeChange}
-              legend="Authentication Type"
-              required
-            >
-              <Radio id="authToken" value="authToken">
-                Auth Token (Simple)
-              </Radio>
-              <Radio id="apiKey" value="apiKey">
-                API Key & Secret (Recommended)
-              </Radio>
-            </RadioGroup>
-          </FormControl>
+          <Box marginBottom="space50">
+            <FormControl>
+              <RadioGroup
+                name="authType"
+                value={formData.authType}
+                onChange={handleAuthTypeChange}
+                legend="Authentication Type"
+                required
+              >
+                <Radio id="authToken" value="authToken">
+                  Auth Token (Simple)
+                </Radio>
+                <Radio id="apiKey" value="apiKey">
+                  API Key & Secret (Recommended)
+                </Radio>
+              </RadioGroup>
+            </FormControl>
+          </Box>
 
           {formData.authType === 'authToken' ? (
-            <FormControl marginBottom="space50">
-              <Label htmlFor="authToken" required>
-                Auth Token
-              </Label>
-              <Input
-                id="authToken"
-                name="authToken"
-                type="password"
-                value={formData.authToken}
-                onChange={handleInputChange}
-                required
-                placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-              />
-              <HelpText>The customer's Twilio Auth Token</HelpText>
-            </FormControl>
-          ) : (
-            <>
-              <FormControl marginBottom="space50">
-                <Label htmlFor="apiKeySid" required>
-                  API Key SID
+            <Box marginBottom="space50">
+              <FormControl>
+                <Label htmlFor="authToken" required>
+                  Auth Token
                 </Label>
                 <Input
-                  id="apiKeySid"
-                  name="apiKeySid"
-                  type="text"
-                  value={formData.apiKeySid}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="SKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                />
-                <HelpText>The API Key SID (starts with SK)</HelpText>
-              </FormControl>
-
-              <FormControl marginBottom="space50">
-                <Label htmlFor="apiKeySecret" required>
-                  API Key Secret
-                </Label>
-                <Input
-                  id="apiKeySecret"
-                  name="apiKeySecret"
+                  id="authToken"
+                  name="authToken"
                   type="password"
-                  value={formData.apiKeySecret}
+                  value={formData.authToken}
                   onChange={handleInputChange}
                   required
                   placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                 />
-                <HelpText>The API Key Secret</HelpText>
+                <HelpText>The customer's Twilio Auth Token</HelpText>
               </FormControl>
+            </Box>
+          ) : (
+            <>
+              <Box marginBottom="space50">
+                <FormControl>
+                  <Label htmlFor="apiKeySid" required>
+                    API Key SID
+                  </Label>
+                  <Input
+                    id="apiKeySid"
+                    name="apiKeySid"
+                    type="text"
+                    value={formData.apiKeySid}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="SKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                  />
+                  <HelpText>The API Key SID (starts with SK)</HelpText>
+                </FormControl>
+              </Box>
+
+              <Box marginBottom="space50">
+                <FormControl>
+                  <Label htmlFor="apiKeySecret" required>
+                    API Key Secret
+                  </Label>
+                  <Input
+                    id="apiKeySecret"
+                    name="apiKeySecret"
+                    type="password"
+                    value={formData.apiKeySecret}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                  />
+                  <HelpText>The API Key Secret</HelpText>
+                </FormControl>
+              </Box>
             </>
           )}
 
           <Separator orientation="horizontal" />
 
-          <Heading as="h2" variant="heading30" marginBottom="space50" marginTop="space50">
-            Administrator Contact
-          </Heading>
+          <Box marginBottom="space50" marginTop="space50">
+            <Heading as="h2" variant="heading30">
+              Administrator Contact
+            </Heading>
+          </Box>
 
-          <FormControl marginBottom="space50">
-            <Label htmlFor="adminName" required>
-              Admin Name
-            </Label>
-            <Input
-              id="adminName"
-              name="adminName"
-              type="text"
-              value={formData.adminName}
-              onChange={handleInputChange}
-              required
-              placeholder="John Smith"
-            />
-          </FormControl>
+          <Box marginBottom="space50">
+            <FormControl>
+              <Label htmlFor="adminName" required>
+                Admin Name
+              </Label>
+              <Input
+                id="adminName"
+                name="adminName"
+                type="text"
+                value={formData.adminName}
+                onChange={handleInputChange}
+                required
+                placeholder="John Smith"
+              />
+            </FormControl>
+          </Box>
 
-          <FormControl marginBottom="space50">
-            <Label htmlFor="adminEmail" required>
-              Admin Email
-            </Label>
-            <Input
-              id="adminEmail"
-              name="adminEmail"
-              type="email"
-              value={formData.adminEmail}
-              onChange={handleInputChange}
-              required
-              placeholder="admin@organization.com"
-            />
-            <HelpText>Primary contact for this organization</HelpText>
-          </FormControl>
+          <Box marginBottom="space50">
+            <FormControl>
+              <Label htmlFor="adminEmail" required>
+                Admin Email
+              </Label>
+              <Input
+                id="adminEmail"
+                name="adminEmail"
+                type="email"
+                value={formData.adminEmail}
+                onChange={handleInputChange}
+                required
+                placeholder="admin@organization.com"
+              />
+              <HelpText>Primary contact for this organization</HelpText>
+            </FormControl>
+          </Box>
 
           <FormActions>
             <Button variant="primary" type="submit" disabled={submitting}>
