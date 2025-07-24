@@ -1951,20 +1951,25 @@
   resolved "https://registry.npmjs.org/@twilio-paste/account-switcher/-/account-switcher-3.0.1.tgz"
   integrity sha512-crH5TyXevwAbT0QC4SGXlPlP4YtvE1nlHCurHLL8PpK8uxiwKipDodBXN6HRSkOxb4aTcJF/a7VQZ3dpaWvpNQ==
 
-"@twilio-paste/alert-dialog@^9.2.0":
-  version "9.2.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/alert-dialog/-/alert-dialog-9.2.0.tgz"
-  integrity sha512-e4Jw9UvKZTCNOyPjkmLGxjIkhEBXu2Z4y/1n3Ug5WdzCgMzj9IG+dotozAggSidNEoqyrNseQIJJEFfLhB/NSQ==
+"@twilio-paste/ai-chat-log@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/ai-chat-log/-/ai-chat-log-1.1.0.tgz"
+  integrity sha512-mcPwZxj71c9fVGw0KIVToNh5oWzf7l8ovAJIo9Gj2xHlMd8BJpi4o7DbeuC7AO22hFqhn+i5iK3ytOQvfxUp6w==
 
-"@twilio-paste/alert@^14.1.0":
-  version "14.1.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/alert/-/alert-14.1.0.tgz"
-  integrity sha512-ewgso4xeCFfWhCUkLI3ChZVVgqZ9gjcrh6tkYOM8akx84i2A0eg+SapXWgD4pPf9tKr7o4zixg84K3gsKFlV6g==
+"@twilio-paste/alert-dialog@^9.2.1":
+  version "9.2.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/alert-dialog/-/alert-dialog-9.2.1.tgz"
+  integrity sha512-C53+4aG1xe8M1iPx1ilZzbR85vTHwa3W3jYm6WbW81oyDDNtGNdZA8d4aHK5PsJGWTP3PyzI+RLbdiNmyi2+Fg==
 
-"@twilio-paste/anchor@^12.1.0":
-  version "12.1.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/anchor/-/anchor-12.1.0.tgz"
-  integrity sha512-yBnrg8/hfP0pwbIvhKr6Jy5sJg27TvYpu1vfGKwusqGuPyN40Vv3ob6ijr+dbeWvx8ozgOs7pk6YGWP18RVp1w==
+"@twilio-paste/alert@^14.1.1":
+  version "14.1.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/alert/-/alert-14.1.1.tgz"
+  integrity sha512-uGCzRVeInRwBuvm/csRvpKRhZk93UBO8EHQC/8+gSTU/bITKfLdPhJhKrhzjIkrPB2KG5m/MNOgg3ZJBkOPD5g==
+
+"@twilio-paste/anchor@^12.1.1":
+  version "12.1.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/anchor/-/anchor-12.1.1.tgz"
+  integrity sha512-xHyQITIEvgvfldi1mRszdlfCHYhjINvxcwiSAAj7o/9U9dvBpOW+6fpgvyMvFdZFFOR96WqaK8dGhjt2ZtCKCQ==
 
 "@twilio-paste/animation-library@^2.0.0":
   version "2.0.0"
@@ -1987,20 +1992,25 @@
     "@types/react-is" "17.0.3"
     react-is "18.0.0"
 
-"@twilio-paste/badge@^8.2.0":
-  version "8.2.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/badge/-/badge-8.2.0.tgz"
-  integrity sha512-eM0UbOt/0YguW6jQU/aiJsMB+qNH3YJx0LLnaN6g12soYMeO3qkfkNJeW4xz+NUwHcKwFfMPbWy+AEEpbz2NsA==
+"@twilio-paste/badge@^8.4.0":
+  version "8.4.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/badge/-/badge-8.4.0.tgz"
+  integrity sha512-svHMMZxJMnlc526e1+rTcwc4T4NpSUE1e7H4EQIm+t0ud7bgZTRBqD9XgfBFBlZMHnlg8m8/HjUztxFOZ+I9XA==
 
 "@twilio-paste/base-radio-checkbox@^13.1.0":
   version "13.1.0"
   resolved "https://registry.npmjs.org/@twilio-paste/base-radio-checkbox/-/base-radio-checkbox-13.1.0.tgz"
   integrity sha512-GVNfz8b6zrFoqsalO0Uu1bo8S6iNyyWyuJjPAhWUIpkNhb+3mKneQOXNfyazUozPLX/mynQGvhLkjwQhpRIWRA==
 
-"@twilio-paste/box@^10.3.0":
-  version "10.3.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/box/-/box-10.3.0.tgz"
-  integrity sha512-8iC8oJGWQH3+sJ6EmA6TvgUjZhxX3UcUq11w+K8grbEDlIs/GWQ3L+sOCcvJo4Ho6392jRsYbYI+IRGRIpW8ew==
+"@twilio-paste/blockquote@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/blockquote/-/blockquote-1.0.0.tgz"
+  integrity sha512-KUb5WuGZsKvUfSfY31K/E1HG642m6utfRYrWc3hxvCy/rF972UYAZWoSVvCbSeFVQe1YdD/1rqe9IXLWf+zqxw==
+
+"@twilio-paste/box@^10.4.0":
+  version "10.4.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/box/-/box-10.4.0.tgz"
+  integrity sha512-oi6gKQLoDiTfzPT0mCso17X7bEFgtt0sexaTCJ8Q1nS6o+Be1vIdumb7HYtSPPQzljfLd2P1bFhSrRDvKFkXWQ==
   dependencies:
     deepmerge "4.2.2"
 
@@ -2009,44 +2019,49 @@
   resolved "https://registry.npmjs.org/@twilio-paste/breadcrumb/-/breadcrumb-11.1.1.tgz"
   integrity sha512-Jjd25ULwVPO9IihXwY7+0dGBLAyxjnWTDzkE7yGDsQnixYc1a3EAzgl6QAI4yVxSiq+34wgFb23oT82gL3mSjg==
 
-"@twilio-paste/button-group@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/button-group/-/button-group-4.1.0.tgz"
-  integrity sha512-0uFUwC9/BaRieRsJLr8VXKxjc5fmBVVP7j9+wQmRDvMrGj+QOoxkIfgotViP/ri0HBrHB3rrpWRSQ0dIqMX2og==
+"@twilio-paste/button-group@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/button-group/-/button-group-4.2.0.tgz"
+  integrity sha512-ehyFOLx16GCnQSdg1ILQdwk6eAd17s9Y6rJ4dOjdwapNEN7NyOz9a2T1pcRKJVmtzB3gV+ov+NnXRhAflBZBVA==
 
-"@twilio-paste/button@^14.1.1":
-  version "14.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/button/-/button-14.1.1.tgz"
-  integrity sha512-+6d3m/mgUl8fj9spwj5v1N29xuAmrN3WNIjx5Mz2BsZJ8fb6uDZ3LKWBJqjyc4zXXroSHLo2mVDL8feEBKYA/g==
+"@twilio-paste/button@^14.1.3":
+  version "14.1.3"
+  resolved "https://registry.npmjs.org/@twilio-paste/button/-/button-14.1.3.tgz"
+  integrity sha512-t/vh6OVy2f/IB3gIT8AeIoY7rDOSRc6LpQIgLD1J0wcUpGRhD7jdWyhSl4PSILxSjcZc5SHLI1YJSHrc9oPP/w==
   dependencies:
     deepmerge "4.2.2"
 
-"@twilio-paste/callout@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/callout/-/callout-4.1.0.tgz"
-  integrity sha512-4WPcrPxqvwyRF6qOe+eF4qc0PlpnsqEfCiaIG0ZEhjoB7O4ub6cKQAy6ylCeoE2X/p5sXSKwr/XgWLV23CQe2g==
+"@twilio-paste/callout@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/callout/-/callout-4.2.2.tgz"
+  integrity sha512-XLlr6WZQXh3IYJEsuog1qCrs6aNyVLLAHVz9Vz82gWEE7MqglWuknFBF1QWL9BCgY9rzSCePgbjFO9IJ6W5X+g==
 
-"@twilio-paste/card@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/card/-/card-9.1.0.tgz"
-  integrity sha512-eNgeMVBx6K6icplpQ9Qh0FjuNpaU+9paRB23mqaB1C2ie+3NOLhTxJOBYyTi1susRCNOzDiKVY3jLn/dQZ57jQ==
+"@twilio-paste/card@^9.1.1":
+  version "9.1.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/card/-/card-9.1.1.tgz"
+  integrity sha512-fC0veYGZKNnMDEtYtBH1dWkolBltQ/WyVdcN7d1ax+og7b14P6kT8grrbkfVXblbWFxAhbHg/F50UnrUuVez1A==
 
-"@twilio-paste/chat-composer@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/chat-composer/-/chat-composer-5.1.1.tgz"
-  integrity sha512-+4joEjDWxNKlU66c+DIaleEB88prvpYi5DTvBzPa4UardN/EqTXbb4l7QHCJFuHxKc9habIQfCw9udWvnS7RlA==
+"@twilio-paste/chart-provider@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/chart-provider/-/chart-provider-1.0.0.tgz"
+  integrity sha512-T4zy8XjaqBc6yT91T+FwN6BZ862IvfLRn1ceg65QO1c2uMtOsEoEFdiSN5geiXPaS/lM/VZfzFmR6MqOq7SBAA==
+
+"@twilio-paste/chat-composer@^5.2.2":
+  version "5.2.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/chat-composer/-/chat-composer-5.2.2.tgz"
+  integrity sha512-s5OqU357K9pCURxyRUSKSfqhvnrynSrsES/WCq6LIZ8/V7DQD+DqRlY/ydeMkamANL7zzszXfT2qh9o/3yIOzg==
   dependencies:
     deepmerge "4.2.2"
 
-"@twilio-paste/chat-log@^5.2.1":
-  version "5.2.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/chat-log/-/chat-log-5.2.1.tgz"
-  integrity sha512-0178ZzNgkS/a4FpOqVetmf5cS4Zs94b/l2w0koh82Y7kkc80bQL/DgkmUhCTrn/V+AplvL9eUDaQ0vcaaLFwGg==
+"@twilio-paste/chat-log@^5.2.2":
+  version "5.2.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/chat-log/-/chat-log-5.2.2.tgz"
+  integrity sha512-2j+KzmdTrhuJvi3o1kEY/mzSu3Vdkdy+wi78V0oaGVTBltlLgp7KWkUtYE87iiC+WpFdsbPs+8vMdVQovMratw==
 
-"@twilio-paste/checkbox@^13.1.1":
-  version "13.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/checkbox/-/checkbox-13.1.1.tgz"
-  integrity sha512-MRlPdJhlL0L9p377zSxJVG7LOU+xja3PhqK/wnDNK5ti2tXNBlSvAyzHneZKNsIIFLm8HXusuWoBQxpLkQAgmA==
+"@twilio-paste/checkbox@^13.1.2":
+  version "13.1.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/checkbox/-/checkbox-13.1.2.tgz"
+  integrity sha512-8XlI426GXf++WCumgLM6miyQGTmZCBSyWzvnDgrjvHMo56e4Y6ZpKO4DuSgY3KaAxOHwyQvVeI3oRLY39DSyGw==
 
 "@twilio-paste/clipboard-copy-library@^3.0.0":
   version "3.0.0"
@@ -2055,10 +2070,10 @@
   dependencies:
     use-clipboard-copy "0.2.0"
 
-"@twilio-paste/code-block@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/code-block/-/code-block-4.1.1.tgz"
-  integrity sha512-qm6kEcPeAyIhzFgiUQ9tqul26rx3qQ4QzIT4tPTJHxZFoGSUvaoJt/0HfXmeHUCmCTJ/ZdaC7lpU/7NZNf6e4g==
+"@twilio-paste/code-block@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/code-block/-/code-block-5.0.1.tgz"
+  integrity sha512-hJ1FRqT44+8c2BtvzTDBff5vME7Nsz/V6zDFl7FkXolgEp1Z/JUSnkruLW0Id+er01Ytt99vBl5cSr9SZ6bZIw==
 
 "@twilio-paste/code-editor-library@^2.0.0":
   version "2.0.0"
@@ -2081,50 +2096,54 @@
   resolved "https://registry.npmjs.org/@twilio-paste/combobox-primitive/-/combobox-primitive-2.1.1.tgz"
   integrity sha512-v+sHb5XY9WLPKZTdRsRMmZxaVlcK0CEVbyUvE8g85959FzscRllPWJkb4igiHyS0tenUAap94HUhoopKG+W3FQ==
 
-"@twilio-paste/combobox@^16.2.1":
-  version "16.2.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/combobox/-/combobox-16.2.1.tgz"
-  integrity sha512-4n14YDc3UJo7w39Stw1G+BgIga+u7/XKNfmMCI+S1NAX11EDerVZPqwrNe1KHGloN/MiAzZpApVuiTb2LeViyQ==
+"@twilio-paste/combobox@^16.3.1":
+  version "16.3.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/combobox/-/combobox-16.3.1.tgz"
+  integrity sha512-8eErcP3a6nBrnwrwVQUUjM11P8Vmq30l1CyK5msuhQ57LCy5eZ6lbPOAdV/Il8MCMcxRH/wMzpqE5FlvO+ABwQ==
   dependencies:
     "@radix-ui/react-use-rect" "1.0.0"
     lodash "4.17.21"
     react-virtual "2.10.4"
 
 "@twilio-paste/core@^20.13.0":
-  version "20.13.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/core/-/core-20.13.0.tgz"
-  integrity sha512-y6knLrY3MJO2nSyyVuJckvNGpXSSmmjiXeXGWLW8HQUTluzrOdLaCVKBj4vNpDHqwJJVayRPpX6OBSERGGhH3w==
+  version "20.23.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/core/-/core-20.23.0.tgz"
+  integrity sha512-iWG+mq54YGjLH/35tLMgGgjsF1/R0KQXuvUa158XY7pv999moEyr6z8dwnN5xDAVlCcKw3dOB9ldREaLa1NLyg==
   dependencies:
     "@twilio-paste/account-switcher" "^3.0.1"
-    "@twilio-paste/alert" "^14.1.0"
-    "@twilio-paste/alert-dialog" "^9.2.0"
-    "@twilio-paste/anchor" "^12.1.0"
+    "@twilio-paste/ai-chat-log" "^1.1.0"
+    "@twilio-paste/alert" "^14.1.1"
+    "@twilio-paste/alert-dialog" "^9.2.1"
+    "@twilio-paste/anchor" "^12.1.1"
     "@twilio-paste/animation-library" "^2.0.0"
     "@twilio-paste/aspect-ratio" "^10.1.0"
     "@twilio-paste/avatar" "^9.1.0"
-    "@twilio-paste/badge" "^8.2.0"
+    "@twilio-paste/badge" "^8.4.0"
     "@twilio-paste/base-radio-checkbox" "^13.1.0"
-    "@twilio-paste/box" "^10.3.0"
+    "@twilio-paste/blockquote" "^1.0.0"
+    "@twilio-paste/box" "^10.4.0"
     "@twilio-paste/breadcrumb" "^11.1.1"
-    "@twilio-paste/button" "^14.1.1"
-    "@twilio-paste/button-group" "^4.1.0"
-    "@twilio-paste/callout" "^4.1.0"
-    "@twilio-paste/card" "^9.1.0"
-    "@twilio-paste/chat-composer" "^5.1.1"
-    "@twilio-paste/chat-log" "^5.2.1"
-    "@twilio-paste/checkbox" "^13.1.1"
+    "@twilio-paste/button" "^14.1.3"
+    "@twilio-paste/button-group" "^4.2.0"
+    "@twilio-paste/callout" "^4.2.2"
+    "@twilio-paste/card" "^9.1.1"
+    "@twilio-paste/chart-provider" "^1.0.0"
+    "@twilio-paste/chat-composer" "^5.2.2"
+    "@twilio-paste/chat-log" "^5.2.2"
+    "@twilio-paste/checkbox" "^13.1.2"
     "@twilio-paste/clipboard-copy-library" "^3.0.0"
-    "@twilio-paste/code-block" "^4.1.1"
+    "@twilio-paste/code-block" "^5.0.1"
     "@twilio-paste/code-editor-library" "^2.0.0"
     "@twilio-paste/color-contrast-utils" "^5.0.0"
-    "@twilio-paste/combobox" "^16.2.1"
+    "@twilio-paste/combobox" "^16.3.1"
     "@twilio-paste/combobox-primitive" "^2.1.1"
+    "@twilio-paste/corner-ornament" "^1.0.0"
     "@twilio-paste/customization" "^8.2.0"
     "@twilio-paste/data-grid" "^8.3.1"
-    "@twilio-paste/data-visualization-library" "^5.0.0"
+    "@twilio-paste/data-visualization-library" "^5.1.0"
     "@twilio-paste/date-picker" "^6.1.1"
     "@twilio-paste/description-list" "^4.2.0"
-    "@twilio-paste/design-tokens" "^10.6.0"
+    "@twilio-paste/design-tokens" "^10.14.0"
     "@twilio-paste/detail-text" "^3.1.0"
     "@twilio-paste/disclosure" "^12.1.0"
     "@twilio-paste/disclosure-primitive" "^2.1.1"
@@ -2132,77 +2151,85 @@
     "@twilio-paste/display-pill-group" "^8.0.1"
     "@twilio-paste/dropdown-library" "^3.0.0"
     "@twilio-paste/editable-code-block" "^2.1.0"
+    "@twilio-paste/example-text" "^1.0.0"
     "@twilio-paste/file-picker" "^4.1.0"
     "@twilio-paste/file-uploader" "^4.1.0"
     "@twilio-paste/flex" "^8.1.0"
     "@twilio-paste/form" "^11.1.1"
-    "@twilio-paste/form-pill-group" "^8.0.1"
-    "@twilio-paste/grid" "^8.1.1"
+    "@twilio-paste/form-pill-group" "^8.1.1"
+    "@twilio-paste/grid" "^8.1.2"
     "@twilio-paste/heading" "^11.1.2"
     "@twilio-paste/help-text" "^13.1.0"
-    "@twilio-paste/in-page-navigation" "^4.3.1"
-    "@twilio-paste/inline-code" "^4.1.1"
+    "@twilio-paste/in-page-navigation" "^4.4.0"
+    "@twilio-paste/inline-code" "^4.1.2"
     "@twilio-paste/inline-control-group" "^13.0.2"
-    "@twilio-paste/input" "^9.1.3"
-    "@twilio-paste/input-box" "^10.1.1"
+    "@twilio-paste/input" "^9.1.4"
+    "@twilio-paste/input-box" "^10.1.2"
+    "@twilio-paste/keyboard-key" "^1.0.0"
     "@twilio-paste/label" "^13.1.1"
-    "@twilio-paste/lexical-library" "^4.1.0"
+    "@twilio-paste/lexical-library" "^4.3.0"
     "@twilio-paste/list" "^8.2.1"
     "@twilio-paste/listbox-primitive" "^3.0.1"
     "@twilio-paste/media-object" "^10.1.0"
-    "@twilio-paste/menu" "^14.1.3"
+    "@twilio-paste/menu" "^14.1.4"
     "@twilio-paste/menu-primitive" "^2.1.1"
     "@twilio-paste/meter" "^1.0.3"
-    "@twilio-paste/minimizable-dialog" "^4.1.1"
-    "@twilio-paste/modal" "^16.1.2"
+    "@twilio-paste/minimizable-dialog" "^4.1.2"
+    "@twilio-paste/modal" "^16.1.3"
     "@twilio-paste/modal-dialog-primitive" "^2.0.1"
     "@twilio-paste/non-modal-dialog-primitive" "^2.0.2"
     "@twilio-paste/page-header" "^1.0.0"
     "@twilio-paste/pagination" "^7.1.1"
     "@twilio-paste/paragraph" "^10.1.1"
-    "@twilio-paste/popover" "^13.2.0"
+    "@twilio-paste/popover" "^13.3.1"
     "@twilio-paste/product-switcher" "^3.0.2"
     "@twilio-paste/progress-bar" "^1.1.0"
-    "@twilio-paste/progress-steps" "^2.1.1"
+    "@twilio-paste/progress-steps" "^2.2.2"
     "@twilio-paste/radio-button-group" "^4.1.1"
     "@twilio-paste/radio-group" "^13.1.1"
     "@twilio-paste/react-spectrum-library" "^2.2.0"
     "@twilio-paste/react-textarea-autosize-library" "^3.0.0"
     "@twilio-paste/reakit-library" "^2.1.1"
     "@twilio-paste/screen-reader-only" "^13.1.1"
-    "@twilio-paste/select" "^12.1.2"
+    "@twilio-paste/select" "^12.1.3"
     "@twilio-paste/separator" "^8.1.1"
     "@twilio-paste/sibling-box" "^9.1.1"
-    "@twilio-paste/side-modal" "^4.1.2"
-    "@twilio-paste/side-panel" "^1.0.0"
-    "@twilio-paste/sidebar" "^1.1.1"
+    "@twilio-paste/side-modal" "^4.2.1"
+    "@twilio-paste/side-panel" "^1.2.0"
+    "@twilio-paste/sidebar" "^1.1.3"
     "@twilio-paste/skeleton-loader" "^6.1.1"
     "@twilio-paste/slider" "^3.0.1"
     "@twilio-paste/spinner" "^14.1.2"
     "@twilio-paste/stack" "^8.1.0"
-    "@twilio-paste/status" "^2.1.1"
+    "@twilio-paste/status" "^2.2.0"
     "@twilio-paste/style-props" "^9.1.1"
     "@twilio-paste/styling-library" "^3.0.0"
     "@twilio-paste/summary-detail" "^1.0.0"
     "@twilio-paste/switch" "^5.1.1"
     "@twilio-paste/syntax-highlighter-library" "^3.0.0"
-    "@twilio-paste/table" "^8.2.1"
-    "@twilio-paste/tabs" "^8.2.1"
+    "@twilio-paste/table" "^8.2.2"
+    "@twilio-paste/tabs" "^8.3.2"
     "@twilio-paste/tabs-primitive" "^2.0.1"
     "@twilio-paste/text" "^10.1.1"
     "@twilio-paste/textarea" "^10.2.0"
-    "@twilio-paste/theme" "^11.1.0"
+    "@twilio-paste/theme" "^11.2.0"
     "@twilio-paste/time-picker" "^6.1.1"
-    "@twilio-paste/toast" "^12.2.0"
-    "@twilio-paste/tooltip" "^11.1.1"
+    "@twilio-paste/timeline" "^1.0.1"
+    "@twilio-paste/toast" "^12.2.2"
+    "@twilio-paste/tooltip" "^12.0.1"
     "@twilio-paste/tooltip-primitive" "^2.0.1"
-    "@twilio-paste/topbar" "^1.2.0"
+    "@twilio-paste/topbar" "^1.2.1"
     "@twilio-paste/truncate" "^14.1.1"
     "@twilio-paste/types" "^6.0.0"
     "@twilio-paste/uid-library" "^2.0.0"
-    "@twilio-paste/user-dialog" "^2.1.1"
+    "@twilio-paste/user-dialog" "^2.1.3"
     "@twilio-paste/utils" "^5.0.0"
-    "@twilio-paste/visual-picker" "^2.0.3"
+    "@twilio-paste/visual-picker" "^2.0.4"
+
+"@twilio-paste/corner-ornament@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/corner-ornament/-/corner-ornament-1.0.0.tgz"
+  integrity sha512-gnNT80G0poqAQEzAnysFxQxi0GuJhRpFHs0klyH3B8YLXeLvL2THar08Z1Ugwj1PtMUGf13apAdHBigkXE2UMQ==
 
 "@twilio-paste/customization@^8.2.0":
   version "8.2.0"
@@ -2218,10 +2245,10 @@
   dependencies:
     lodash "4.17.21"
 
-"@twilio-paste/data-visualization-library@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/data-visualization-library/-/data-visualization-library-5.0.0.tgz"
-  integrity sha512-fJs8DHYq5xGBwGdLOjyEkXbObYFJlSt5QPPn9akTIZW1ytGJ5grjaJtc4oyDDG8vKejqZvHRsWoGjRNc6/3Ozg==
+"@twilio-paste/data-visualization-library@^5.0.0", "@twilio-paste/data-visualization-library@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/data-visualization-library/-/data-visualization-library-5.1.0.tgz"
+  integrity sha512-lwUphE8Ly5HvbmH9FvJ6/IR7zE/pqyhmimpcxNd8+77WgN1YwGn+uzTEVWRN3KT2bQSqnDm6545aNtykCnGOlQ==
   dependencies:
     deepmerge "4.2.2"
 
@@ -2237,10 +2264,10 @@
   resolved "https://registry.npmjs.org/@twilio-paste/description-list/-/description-list-4.2.0.tgz"
   integrity sha512-JcXVzHo15Ii/TAGnYBgAD91Aw3SSrpXBx1NKDJsOBogfkK+yXRy3GY3F4kr9xSjGTGG7cUQ69dVjmglGmDqS3Q==
 
-"@twilio-paste/design-tokens@^10.6.0":
-  version "10.6.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/design-tokens/-/design-tokens-10.6.0.tgz"
-  integrity sha512-Up/uyvaioPAAljOP2whvpM6mQV3RNnbh4LB2jhpdS6PQ+sXIwyhGfb9lx6cKIdRfL+5tAlGnAfMm5NV262kS0A==
+"@twilio-paste/design-tokens@^10.14.0":
+  version "10.14.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/design-tokens/-/design-tokens-10.14.1.tgz"
+  integrity sha512-HfJxwsVISDm3XvcAJvKAW9miD5Js1fPkGID/6eaLb6tozSQ1CP/GEN4rdCI5FvIDJZc7AVsINfdcOYHOJ3Vo1Q==
 
 "@twilio-paste/detail-text@^3.1.0":
   version "3.1.0"
@@ -2279,6 +2306,11 @@
   resolved "https://registry.npmjs.org/@twilio-paste/editable-code-block/-/editable-code-block-2.1.0.tgz"
   integrity sha512-CcnGNwJfG8fY/YyHWTLyGT+AUklDmLG6dYzrH7eDw8Ww8gqEMbkR9kHfBrgr4Bnhuj1ByhjZ9lHXMpPhdr0dFQ==
 
+"@twilio-paste/example-text@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/example-text/-/example-text-1.0.0.tgz"
+  integrity sha512-OTxITIcjBSb4DMYRu3ETyYyPV1F7dznA5IqPuZ42m1/zQKfXg/eqg7sdM7fy0K2VMFAezKe3AuTimmFmnK/aLQ==
+
 "@twilio-paste/file-picker@^4.1.0":
   version "4.1.0"
   resolved "https://registry.npmjs.org/@twilio-paste/file-picker/-/file-picker-4.1.0.tgz"
@@ -2296,10 +2328,10 @@
   resolved "https://registry.npmjs.org/@twilio-paste/flex/-/flex-8.1.0.tgz"
   integrity sha512-44KKKre+NtlNVGtAuwM6Bc+kPGcqWcDGI02RWP0n/1jM70ERlIlqS5uEV92m/Y+4oPdJ4WjX5F2EIdtJSJV0uw==
 
-"@twilio-paste/form-pill-group@^8.0.1":
-  version "8.0.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/form-pill-group/-/form-pill-group-8.0.1.tgz"
-  integrity sha512-Mg9P3T7J5OzMenOUXRf5veUPoEYCCmtNAu/H8cnZh5TYXWDZgf+V2oXvcJHFiZKq5bvn4NRMPKIP/tTCdNQhUw==
+"@twilio-paste/form-pill-group@^8.1.1":
+  version "8.1.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/form-pill-group/-/form-pill-group-8.1.1.tgz"
+  integrity sha512-5FTukRCrfJYLMrU4ORtnmzQrI2AOkvXiupCpJop6bs9FmKkiy3RdslW1fe+MaNVDaxiLn3+8f5kwci5wpbLNbg==
   dependencies:
     deepmerge "4.2.2"
 
@@ -2308,10 +2340,10 @@
   resolved "https://registry.npmjs.org/@twilio-paste/form/-/form-11.1.1.tgz"
   integrity sha512-QkIGCchA9EPua2adnOx/he87vuR6PrieZMjTHG49Jl8IVczJSv0RUTB8s6NGOmyEBoGZYpO1y52iim3fXwe91w==
 
-"@twilio-paste/grid@^8.1.1":
-  version "8.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/grid/-/grid-8.1.1.tgz"
-  integrity sha512-8wpFnmyp4Uau3h/um6/UpafsP08KNQdOCb+xeci+mWysncTV6PluYccpG5IfpgxUD03TlPtEdD2LBojZ6aXjTg==
+"@twilio-paste/grid@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/grid/-/grid-8.1.2.tgz"
+  integrity sha512-tCASej/0cCb6yjTonJYU/lsG40/vzeVBTZmoSqqBCTHMpIxVXHZ3p9tPdAbu/SjjIRKjEtiO7XsotFf8lHZ3sw==
 
 "@twilio-paste/heading@^11.1.2":
   version "11.1.2"
@@ -2328,40 +2360,45 @@
   resolved "https://registry.npmjs.org/@twilio-paste/icons/-/icons-12.5.0.tgz"
   integrity sha512-vLhmhFw3BN8KHNGcKmqEg07dkR2+EgujRRnUNnX426FhsxCUlnEnrO9UttaONM1WBL0Vh34/7zHy8FsSmUujhQ==
 
-"@twilio-paste/in-page-navigation@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/in-page-navigation/-/in-page-navigation-4.3.1.tgz"
-  integrity sha512-xxEJxDLpqH9kGoHZOqHvVHYlEqYvk35HOukKa3CunUwjTnHQcJ1aywSCRR16t8ZQZ1wALWDP/atL4i27VbZ7sA==
+"@twilio-paste/in-page-navigation@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/in-page-navigation/-/in-page-navigation-4.4.0.tgz"
+  integrity sha512-uo/k6I/3e41HL9u4CZirGGqtgsgCCFL7KXqbYzrscKGYF6SEtYsp6OXNYos4jrfNX0HbyEieixVVDbW+NeiknQ==
 
-"@twilio-paste/inline-code@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/inline-code/-/inline-code-4.1.1.tgz"
-  integrity sha512-UVUKMYU7zuOubPb+icSLnHLB4vL8fWfWzNIOpkAdePStHbWYDn1M9d7zmgVJ0e41RWbVTWfXpsJPdP9JoWlc7g==
+"@twilio-paste/inline-code@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/inline-code/-/inline-code-4.1.2.tgz"
+  integrity sha512-ebWqLwYTmLh/J3Oze5g9FnIqQ2YTTuwlEc9ph6C0HDyPfnm9ipxdIxleMV2Xvn6tzaEfXPpHydKTXWT7uvH3WQ==
 
 "@twilio-paste/inline-control-group@^13.0.2":
   version "13.0.2"
   resolved "https://registry.npmjs.org/@twilio-paste/inline-control-group/-/inline-control-group-13.0.2.tgz"
   integrity sha512-YhnARb7P8vfNa4W3Djvlxzv3vaJp31+5XseibpelstlKZ3wKhblKlW+BrffeCM3P+hmD26AXWnpXj7b9njl8rQ==
 
-"@twilio-paste/input-box@^10.1.1":
-  version "10.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/input-box/-/input-box-10.1.1.tgz"
-  integrity sha512-opYWQxVgopT70HLWdEwtGVM4GfSpqkPZXPLoEPorxt5BRWkXwrsAWGrJIi+IGOZ7hjvSLo2artgH8z2elq1qpg==
+"@twilio-paste/input-box@^10.1.2":
+  version "10.1.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/input-box/-/input-box-10.1.2.tgz"
+  integrity sha512-jpQqnNg3MjBa9DqqQazEQOjFRlFqsODPR4jWpyT6oDgkqcnKole0iM3vSMyNPJB8f/Z1oA+3LWkTRFH0469RSQ==
 
-"@twilio-paste/input@^9.1.3":
-  version "9.1.3"
-  resolved "https://registry.npmjs.org/@twilio-paste/input/-/input-9.1.3.tgz"
-  integrity sha512-V4zrrhRRq3a+jdo6fnmZroGRqwCXTRGcL2aCSHwaNHeZkk/NZgKeeam6qlNIAMRKA+X03l58Q2m7/5GDFtYWgg==
+"@twilio-paste/input@^9.1.4":
+  version "9.1.4"
+  resolved "https://registry.npmjs.org/@twilio-paste/input/-/input-9.1.4.tgz"
+  integrity sha512-GSnTKXBH3+m58ATfO3pF6j1dWxLE36yLedfqhq+plpwWFEzuTqT6F3JGJWCwsxWedhqphWbGzSQv3XgEpLJptA==
+
+"@twilio-paste/keyboard-key@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/keyboard-key/-/keyboard-key-1.0.0.tgz"
+  integrity sha512-4Duc/PJb4bGnPCgIsCpMAkHfELOEU6tmRA5qJhbe1BjzGT9PFJO9MTwjtlcSVDGoNoCXU003WPs4TTjSsuX1pw==
 
 "@twilio-paste/label@^13.1.1":
   version "13.1.1"
   resolved "https://registry.npmjs.org/@twilio-paste/label/-/label-13.1.1.tgz"
   integrity sha512-L+rrsKJ0hRzIbHiwFuYqs14LI4Mgp7OnMAZmzOHBQwlPdZFt6Ud4s1ifSmep6wWDdyowzFHc1Tis/2qq33nXmg==
 
-"@twilio-paste/lexical-library@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/lexical-library/-/lexical-library-4.1.0.tgz"
-  integrity sha512-Er1Lljo7/oVYevp+O6to9RAtE6oRhS04SY3CxhAN0WfoWoZJcPbfTtqPMN00q072ObdTCZhQEvGTFo2RnaZVFw==
+"@twilio-paste/lexical-library@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/lexical-library/-/lexical-library-4.3.0.tgz"
+  integrity sha512-vJDG5ovuOg6zg2bbNJaAcsiDEac4MssaMzozlms1kS+tC/oDWIVuUlatMf7/HOkZj7snY4QswwhPGyQnsGdnHQ==
   dependencies:
     "@lexical/link" "0.12.0"
     "@lexical/react" "0.12.0"
@@ -2387,20 +2424,20 @@
   resolved "https://registry.npmjs.org/@twilio-paste/menu-primitive/-/menu-primitive-2.1.1.tgz"
   integrity sha512-iPC4ij7EKIlAAU+T/hDaW74154YfKyARe335TbAeUO2a5n3u40fW4p41zKSTyQ4wUmEQx8sCbGwAqM7yjztQPw==
 
-"@twilio-paste/menu@^14.1.3":
-  version "14.1.3"
-  resolved "https://registry.npmjs.org/@twilio-paste/menu/-/menu-14.1.3.tgz"
-  integrity sha512-1oKXMH8vnu90mKYxytt6e9RW89dp6ZoiLsSzQvE85mZuxbD42yCd19DLDgCJCJ0lLWssXtfTU4JiP6JSw+Z23A==
+"@twilio-paste/menu@^14.1.4":
+  version "14.1.4"
+  resolved "https://registry.npmjs.org/@twilio-paste/menu/-/menu-14.1.4.tgz"
+  integrity sha512-RYzBgVsR9feYqwrC2cza4DIoYpbSFYeuJ6tNwSbjp8sgNRzFviklzWfC/kNNAXGicG/+uuDNvrBRZQcLfEG9IA==
 
 "@twilio-paste/meter@^1.0.3":
   version "1.0.3"
   resolved "https://registry.npmjs.org/@twilio-paste/meter/-/meter-1.0.3.tgz"
   integrity sha512-ABR8FfPlgwF2DNnnuDL5Vb1q4sc/bvzwh98a+zTHL0CEdBb2DM1MdotTHYcOZxk9g6MFtdrlHzVBmjZcU42HFw==
 
-"@twilio-paste/minimizable-dialog@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/minimizable-dialog/-/minimizable-dialog-4.1.1.tgz"
-  integrity sha512-yQPsg+cD9tA8MUcaOCaoV3JIr0pGm4PSmKSicZZ/WjN0eyeAgZd3decys/xF2MzQ79wjPu/9ayxTG32PXFBCRQ==
+"@twilio-paste/minimizable-dialog@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/minimizable-dialog/-/minimizable-dialog-4.1.2.tgz"
+  integrity sha512-h4ftcn6NHm7Mgg0bltOFuGHoX1LuClhj1YZXOFlgWegFhfAxHabnnwRiL/nV9re+pI95iI5MzRHYOZRSwZlkNA==
 
 "@twilio-paste/modal-dialog-primitive@^2.0.1":
   version "2.0.1"
@@ -2409,10 +2446,10 @@
   dependencies:
     "@reach/dialog" "0.16.2"
 
-"@twilio-paste/modal@^16.1.2":
-  version "16.1.2"
-  resolved "https://registry.npmjs.org/@twilio-paste/modal/-/modal-16.1.2.tgz"
-  integrity sha512-dUQqbIgQQcQ5sKAHb4jNOuGIPZwHSXl8mMpUdgll6JHm9fdlk5EvgNPxQodI9f1+z0ofPKJ9OAOauIjbdMjdjg==
+"@twilio-paste/modal@^16.1.3":
+  version "16.1.3"
+  resolved "https://registry.npmjs.org/@twilio-paste/modal/-/modal-16.1.3.tgz"
+  integrity sha512-CTet1JSg2o+D+RlGWBvt+EfUU9hKD/VLYzw30xIFkv18yF1xFv/WIFCmYoIszHPynBtuO7YnjrqPmbv3JTCUyw==
 
 "@twilio-paste/non-modal-dialog-primitive@^2.0.2":
   version "2.0.2"
@@ -2445,10 +2482,10 @@
     reakit-utils "^0.15.2"
     reakit-warning "^0.6.2"
 
-"@twilio-paste/popover@^13.2.0":
-  version "13.2.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/popover/-/popover-13.2.0.tgz"
-  integrity sha512-IQyKcMqJ6Zoj2dC3o58twaQGm+cJhvDDK7WoRVpCO1ZczJ3RCRuVXki58yYt8nFgdNDMBuOKxnF8sB6d9RC8Pg==
+"@twilio-paste/popover@^13.3.1":
+  version "13.3.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/popover/-/popover-13.3.1.tgz"
+  integrity sha512-rcGT5zqU3iwiCuKUuJnVhgU1rboO+WZU9+xiTCyQDbiMqBVZdR0200606H2tIIE6dsFjWTF4SXr7XXYBJpJXpg==
 
 "@twilio-paste/product-switcher@^3.0.2":
   version "3.0.2"
@@ -2460,10 +2497,10 @@
   resolved "https://registry.npmjs.org/@twilio-paste/progress-bar/-/progress-bar-1.1.0.tgz"
   integrity sha512-k/ojGVaQpTlCN/EV3wZJS9rf0lkHnEjSD5VJX/ym1ddVcORcE8XYFtLMMke+5G60zRqkzMSCDhcV+cq0JbT76Q==
 
-"@twilio-paste/progress-steps@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/progress-steps/-/progress-steps-2.1.1.tgz"
-  integrity sha512-UIerVci4n1jN5Ylhw6X9qeTNPgs3FmLNllh4YyDlHsK0m7+QWKpGOZID7BkEzut4xJelQwAjn8nk5aKB8pG0/Q==
+"@twilio-paste/progress-steps@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/progress-steps/-/progress-steps-2.2.2.tgz"
+  integrity sha512-31eDlebKSmjpjtIiZE7smF7zA1/FFo1Zy2v+Q1s5p2D23JNUaHQa5Rea1eMERlOCM1eVYu4QhOWCMliJwzte7A==
 
 "@twilio-paste/radio-button-group@^4.1.1":
   version "4.1.1"
@@ -2506,10 +2543,10 @@
   resolved "https://registry.npmjs.org/@twilio-paste/screen-reader-only/-/screen-reader-only-13.1.1.tgz"
   integrity sha512-h8PBF8x2nJ10QKhaj05hGqLC1397ZYXhPKESgKfDDlSCV+KoGn3pu+5bAo1pNtPQGhDK+/TdUmGYe2814hDMPg==
 
-"@twilio-paste/select@^12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@twilio-paste/select/-/select-12.1.2.tgz"
-  integrity sha512-omLECa1avEjQI0vThMQ0VSwtRpQl4BG/tQFilvG7EwoeoYPb/yLqy6MPKlV5byVqI65M2WmALC9A6yei6FTITA==
+"@twilio-paste/select@^12.1.3":
+  version "12.1.3"
+  resolved "https://registry.npmjs.org/@twilio-paste/select/-/select-12.1.3.tgz"
+  integrity sha512-lMyC0iyFJq8u+iVIiSPlKeWjkDm1K7PY0X2Sq+HII1sOVRphW2Nrxw11kPTRA/p/NxobjftzWRxx9MBksfel7w==
 
 "@twilio-paste/separator@^8.1.1":
   version "8.1.1"
@@ -2521,20 +2558,20 @@
   resolved "https://registry.npmjs.org/@twilio-paste/sibling-box/-/sibling-box-9.1.1.tgz"
   integrity sha512-YTBRyy1Q1g5AJZIGvqbr+5/RIZhU2WZi8fnuUr9yZX0e64CKdi+UFE146gZkxzqHbkCSRR8TLxr1NONWYR+lEA==
 
-"@twilio-paste/side-modal@^4.1.2":
-  version "4.1.2"
-  resolved "https://registry.npmjs.org/@twilio-paste/side-modal/-/side-modal-4.1.2.tgz"
-  integrity sha512-PjX4d/6XRJLXWLF0n0KlD3LApZ8wSa30APb9AhYnXrogovmmqt1C33i1PEnJkmkE/Es6X6rE3eaWVTTqo8x78A==
+"@twilio-paste/side-modal@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/side-modal/-/side-modal-4.2.1.tgz"
+  integrity sha512-fWJJMXx8lzGWA4SJ6Cqyu/nGH0BfyuGMnYPrV3H8t9hiVa01CxPVXWn5LlxfP9U/uQQPRvgcaB9rJYkd9DsDsQ==
 
-"@twilio-paste/side-panel@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/side-panel/-/side-panel-1.0.0.tgz"
-  integrity sha512-oQ3hJw1N/PDAQtllfcp+FdBCINmjz03+cacavLJyCp9TDFBEOUymx2CLHZrTPTonSdxNF5z6DLuamxr5BEZz0w==
+"@twilio-paste/side-panel@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/side-panel/-/side-panel-1.2.0.tgz"
+  integrity sha512-QzOtQ0kGLHpK5oag2lxR0SU8b10SYI3WP7p+X7FDRM8tQZqbFWP+gBTxyFvmgUHNcgeuI6uM4UGRU6/ZlK13iQ==
 
-"@twilio-paste/sidebar@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/sidebar/-/sidebar-1.1.1.tgz"
-  integrity sha512-u490SgaKh45c1tYUWn8BBqQ1LSY5qd2LHYqdpW5J8xP7GLBFUucacBFDG55teUwip6YqtF48559AypAsmSt8Eg==
+"@twilio-paste/sidebar@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@twilio-paste/sidebar/-/sidebar-1.1.3.tgz"
+  integrity sha512-aDT1B75FnVvroH4zy2/JBqFmzpGeTgZcBc7bf/KYZ0Ahpdm4bZvyWN08bHqQTvu6RvIrxyPGMahGlMRUQyLqhw==
 
 "@twilio-paste/skeleton-loader@^6.1.1":
   version "6.1.1"
@@ -2556,10 +2593,10 @@
   resolved "https://registry.npmjs.org/@twilio-paste/stack/-/stack-8.1.0.tgz"
   integrity sha512-/Vb6sCGY0vEc2j1C7GJ1NDY/3NFvVJMkaLGk7y2t9k7bg1HOnufvBwPfEffRnp3KTngAb2UNOL9iL5/PNaCOig==
 
-"@twilio-paste/status@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/status/-/status-2.1.1.tgz"
-  integrity sha512-pjtDX6ZE33LXG/8Irkm1cUGncgy/ia4Ww4umfPe/mnxdCYoTV75qAzv7/EC/KBRGAalW5Q3wRP//BxJJs+Dg8Q==
+"@twilio-paste/status@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/status/-/status-2.2.0.tgz"
+  integrity sha512-QLZbh1GTr9elXyetuJyzWZxqEHclsfca48ZTSfjF5mZSBls9j7ENU3dsB4L717i6RmOcozgyfZJIoe3nzbyw+w==
 
 "@twilio-paste/style-props@^9.1.1":
   version "9.1.1"
@@ -2604,20 +2641,20 @@
     "@types/react-syntax-highlighter" "15.5.5"
     react-syntax-highlighter "15.5.0"
 
-"@twilio-paste/table@^8.2.1":
-  version "8.2.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/table/-/table-8.2.1.tgz"
-  integrity sha512-wc5s663+GgxHEO340X3NtOSR9DepOK9IQhoWODqDHA6D9ZzqCwgLjhTMM1BkAVwRkFrP5FRz8RDFxQFUIb4UGg==
+"@twilio-paste/table@^8.2.2":
+  version "8.2.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/table/-/table-8.2.2.tgz"
+  integrity sha512-Bet33HFrwkW3VsWFiCTsfuw7YEj2CLRChFxVLfTUMqFStM7E4PCBAZn8U86GZ00sQLnMCHSalpMaL/6OxwNJ8w==
 
 "@twilio-paste/tabs-primitive@^2.0.1":
   version "2.0.1"
   resolved "https://registry.npmjs.org/@twilio-paste/tabs-primitive/-/tabs-primitive-2.0.1.tgz"
   integrity sha512-n0mkph24X5PVzXVFx7AXSqvvJwLU90X04zRewY1/27twe3umoxqGWR6vwgy3mtqtG7wgpxyyksf3QMncwbVjCg==
 
-"@twilio-paste/tabs@^8.2.1":
-  version "8.2.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/tabs/-/tabs-8.2.1.tgz"
-  integrity sha512-0Q4PeuaQTWo2uV4iDwh+nOgne8XVXa/inuNxYKFQ1OQcxQR57z1JeE62Y0X7adQk6XeWFaPSFhU2AA8w7lj31A==
+"@twilio-paste/tabs@^8.3.2":
+  version "8.3.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/tabs/-/tabs-8.3.2.tgz"
+  integrity sha512-bl/fULSW6j2BLd7mWrIhGQviQoLQxWmI4WqHrQyblrpLOmGJh6U9ul/i+xMySgr9lmvqSMNCWr/zbRjKb8sSuA==
 
 "@twilio-paste/text@^10.1.1":
   version "10.1.1"
@@ -2631,10 +2668,10 @@
   resolved "https://registry.npmjs.org/@twilio-paste/textarea/-/textarea-10.2.0.tgz"
   integrity sha512-xcVDbDGvcRdp5ym3ossypHZWhEUaaJ1q1PYPgUDmCdjX2lpgDoYFz98dmL6LLXV0myZ4/s1LNOz8MkW7hvj0Lg==
 
-"@twilio-paste/theme@^11.1.0":
-  version "11.1.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/theme/-/theme-11.1.0.tgz"
-  integrity sha512-Y0aTgYAMBBttB1gg36H/difwykqhI7lQYJvcVLTjXjz301Dn3Swmm+3RpoEbV/TyGmjxIwH7+Y1kgwcn/bfL9A==
+"@twilio-paste/theme@^11.2.0":
+  version "11.2.0"
+  resolved "https://registry.npmjs.org/@twilio-paste/theme/-/theme-11.2.0.tgz"
+  integrity sha512-b++c5p2q37d9lgmgtksWo6Sqyibmcfj9/ciUCfZnknSsA8BNRAS8ctlOLZeldUyC9JWZYnmuztBKam4/YuSnsw==
 
 "@twilio-paste/time-picker@^6.1.1":
   version "6.1.1"
@@ -2643,25 +2680,30 @@
   dependencies:
     date-fns "2.21.3"
 
-"@twilio-paste/toast@^12.2.0":
-  version "12.2.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/toast/-/toast-12.2.0.tgz"
-  integrity sha512-BDxh6aWAfL8Uizbv6KPmeizLOCvHmnJ1ACQdOLrEjzRn3gRLvWwQevgdrfBetR0Mw6Ix+GtOfM9jtr31H60XKQ==
+"@twilio-paste/timeline@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/timeline/-/timeline-1.0.1.tgz"
+  integrity sha512-uEdoEROwY0yyWaW8Kt5tYW1lZDcX2Sz1/KNICWNqVbUZ4HW7yszdChc3P3FIvxhJDAoQd/JqAc0ErxQsP0fm+g==
+
+"@twilio-paste/toast@^12.2.2":
+  version "12.2.2"
+  resolved "https://registry.npmjs.org/@twilio-paste/toast/-/toast-12.2.2.tgz"
+  integrity sha512-/Nud5CORhczk/OtitpvRQgVZ2rqVsvSnP1fMdRRiL+Tls0eO6N5KC5ZQdcO9A0vqUnr2P/032Ak1CZzXx0h7cQ==
 
 "@twilio-paste/tooltip-primitive@^2.0.1":
   version "2.0.1"
   resolved "https://registry.npmjs.org/@twilio-paste/tooltip-primitive/-/tooltip-primitive-2.0.1.tgz"
   integrity sha512-vQDhMgNh5I63ozof1FeFy6I8Wz2AMfUoeNlCwIkzBocRaWcruOGqb1X1JC0rnPS7s//IFvBNfLJOc0R5wLloFg==
 
-"@twilio-paste/tooltip@^11.1.1":
-  version "11.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/tooltip/-/tooltip-11.1.1.tgz"
-  integrity sha512-ZBZksinHqLLGIYIMfPedDTvBlDf17cFvPRs3jvXkWv+Peb7t/1y+tanEwMuyEIbUDJ5P773WmmNd8eT5QeJh2Q==
+"@twilio-paste/tooltip@^12.0.1":
+  version "12.0.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/tooltip/-/tooltip-12.0.1.tgz"
+  integrity sha512-kR6B+mPXKvkxY8sDD2s4tbXo62qKMCw0yyEBcKdO9XFswCnnG13xL5sc4MCd5sGS/z2UOQkYOvX/3Ty/HqTkCQ==
 
-"@twilio-paste/topbar@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/@twilio-paste/topbar/-/topbar-1.2.0.tgz"
-  integrity sha512-h/tZtsJifM8iGpQaYnU7Jlgm/B1E18ue5uyS5sUiig5GKsEmhLbLI4CW0PZFpLTvzZsiljcw9CCvcrCLhsKXSQ==
+"@twilio-paste/topbar@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/@twilio-paste/topbar/-/topbar-1.2.1.tgz"
+  integrity sha512-/DtBxauQP3p0acmAqf/1L7vje02veEfzDiBQT1T/44/kpst4U2xGOhAQnrS3pd6suKHa4E4tLbE+BQzds+NhEQ==
 
 "@twilio-paste/truncate@^14.1.1":
   version "14.1.1"
@@ -2680,10 +2722,10 @@
   dependencies:
     react-uid "2.3.3"
 
-"@twilio-paste/user-dialog@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/@twilio-paste/user-dialog/-/user-dialog-2.1.1.tgz"
-  integrity sha512-u0QvaHtoVdQWOj6OqTl/d/Eb1d5n19FmY9owoC5jlQX6cp3yIBljJ/qHZb0Tw6tEPRJImwTJSW60Aqd5s8Mnaw==
+"@twilio-paste/user-dialog@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.npmjs.org/@twilio-paste/user-dialog/-/user-dialog-2.1.3.tgz"
+  integrity sha512-CjHMkduGd8unQreOb+yjC9h4bdyI1EvtizgZDeUGTdYJT73Xc96pZ+6USfz1n3e1u4djDGpEBAt959zXPEhwIA==
 
 "@twilio-paste/utils@^5.0.0":
   version "5.0.0"
@@ -2692,10 +2734,10 @@
   dependencies:
     lodash "4.17.21"
 
-"@twilio-paste/visual-picker@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/@twilio-paste/visual-picker/-/visual-picker-2.0.3.tgz"
-  integrity sha512-56hf6iMjiR0O9RPrzJLMycu84sM8wsZtO4ixelqmVFQl4VfbTR02CxRl2O2NUbDNvajoqBxOTxBiToQM8iP54w==
+"@twilio-paste/visual-picker@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.npmjs.org/@twilio-paste/visual-picker/-/visual-picker-2.0.4.tgz"
+  integrity sha512-Fi7fr47cLsDCAyU2luXRyT7Zsg7hFeCTz0llHzKEG4z7dmr6Q+OMPc1sb98pmhPEssqfcnviJAq+reqlMqj1Wg==
 
 "@types/hast@^2.0.0":
   version "2.3.10"
@@ -3106,12 +3148,12 @@ axe-core@^4.10.0:
   integrity sha512-Xm7bpRXnDSX2YE2YFfBk2FnF0ep6tmG7xPh8iHee8MIcrgq762Nkce856dYtJYLkuIoYZvGfTs/PbZhideTcEg==
 
 axios@^1.8.3:
-  version "1.10.0"
-  resolved "https://registry.npmjs.org/axios/-/axios-1.10.0.tgz"
-  integrity sha512-/1xYAC4MP/HEG+3duIhFr4ZQXR4sQXOIe+o6sdqzeykGLx6Upp/1p8MHqhINOvGeP7xyNHe7tsiJByc4SSVUxw==
+  version "1.11.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-1.11.0.tgz"
+  integrity sha512-1Lx3WLFQWm3ooKDYZD1eXmoGO9fxYQjrycfHFC8P0sCfQVXyROp0p9PFWBehewBOdCwHc+f/b8I0fMto5eSfwA==
   dependencies:
     follow-redirects "^1.15.6"
-    form-data "^4.0.0"
+    form-data "^4.0.4"
     proxy-from-env "^1.1.0"
 
 axobject-query@^4.1.0:
@@ -3149,17 +3191,17 @@ body-scroll-lock@^3.1.5:
   integrity sha512-Yi1Xaml0EvNA0OYWxXiYNqY24AfWkbA6w5vxE7GWxtKfzIbZM+Qw+aSmkgsbWzbHiy/RCSkUZBplVxTA+E4jJg==
 
 brace-expansion@^1.1.7:
-  version "1.1.11"
-  resolved "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz"
-  integrity sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==
+  version "1.1.12"
+  resolved "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.12.tgz"
+  integrity sha512-9T9UjW3r0UW5c1Q7GTwllptXwhvYmEzFhzMfZ9H7FQWt+uZePjZPjBP/W1ZEyZ1twGWom5/56TF4lPcqjnDHcg==
   dependencies:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
 
 brace-expansion@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.1.tgz"
-  integrity sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.2.tgz"
+  integrity sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ==
   dependencies:
     balanced-match "^1.0.0"
 
@@ -3432,9 +3474,9 @@ cross-fetch@^3.1.5:
     node-fetch "^2.7.0"
 
 cross-spawn@^7.0.0, cross-spawn@^7.0.2:
-  version "7.0.3"
-  resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.3.tgz"
-  integrity sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==
+  version "7.0.6"
+  resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz"
+  integrity sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==
   dependencies:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
@@ -4130,10 +4172,10 @@ foreground-child@^3.1.0:
     cross-spawn "^7.0.0"
     signal-exit "^4.0.1"
 
-form-data@^4.0.0:
-  version "4.0.3"
-  resolved "https://registry.npmjs.org/form-data/-/form-data-4.0.3.tgz"
-  integrity sha512-qsITQPfmvMOSAdeyZ+12I1c+CKSstAFAwu+97zrnWAbIr5u8wfsExUzCesVLC8NgHuRUqNN4Zy6UPWUTRGslcA==
+form-data@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.npmjs.org/form-data/-/form-data-4.0.4.tgz"
+  integrity sha512-KrGhL9Q4zjj0kiUt5OO4Mr/A/jlI2jDYs5eHBpYHPcBEVSiipAvn2Ko2HnPe20rmcuuvMHNdZFp+4IlGTMF0Ow==
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
@@ -5009,9 +5051,9 @@ mz@^2.7.0:
     thenify-all "^1.0.0"
 
 nanoid@^3.3.6, nanoid@^3.3.7:
-  version "3.3.7"
-  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.7.tgz"
-  integrity sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==
+  version "3.3.11"
+  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.11.tgz"
+  integrity sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -5383,9 +5425,9 @@ prelude-ls@^1.2.1:
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
 prismjs@^1.27.0:
-  version "1.29.0"
-  resolved "https://registry.npmjs.org/prismjs/-/prismjs-1.29.0.tgz"
-  integrity sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==
+  version "1.30.0"
+  resolved "https://registry.npmjs.org/prismjs/-/prismjs-1.30.0.tgz"
+  integrity sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==
 
 prismjs@~1.27.0:
   version "1.27.0"
