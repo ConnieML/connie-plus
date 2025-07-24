@@ -1,7 +1,13 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { OktaAuth } from '@okta/okta-auth-js';
 
-// Security configuration
+// Security configuration - For postMessage validation, we'll validate against multiple origins
+const ALLOWED_PARENT_ORIGINS = [
+  'https://flex.twilio.com',
+  'https://nss.connie.team',
+  'https://dev.connie.team', 
+  'https://hhovv.connie.team'
+];
 const ALLOWED_PARENT_ORIGIN = process.env.NEXT_PUBLIC_ALLOWED_PARENT_ORIGIN || 'https://flex.twilio.com';
 
 // Okta configuration
@@ -291,7 +297,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Listen for messages from parent window (Flex) - WITH SECURITY
     const handleMessage = (event: MessageEvent) => {
       // ✅ SECURITY: Validate origin before processing message
-      if (event.origin !== ALLOWED_PARENT_ORIGIN) {
+      if (!ALLOWED_PARENT_ORIGINS.includes(event.origin)) {
         console.warn('Received message from untrusted origin:', event.origin);
         return;
       }

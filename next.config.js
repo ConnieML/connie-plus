@@ -21,7 +21,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team",
+            value: "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team https://dev.connie.team https://hhovv.connie.team https://*.connie.team",
           },
           {
             key: 'X-Content-Type-Options',
