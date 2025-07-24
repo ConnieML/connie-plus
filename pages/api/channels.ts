@@ -28,8 +28,8 @@ export interface ChannelsResponse {
 }
 
 // Initialize Twilio client function with dynamic credentials
-const getClient = (accountSid: string) => {
-  const credentials = getCredentialsForAccount(accountSid);
+const getClient = async (accountSid: string) => {
+  const credentials = await getCredentialsForAccount(accountSid);
   
   if (!credentials) {
     throw new Error(`No credentials found for account: ${accountSid}`);
@@ -88,7 +88,7 @@ export default async function handler(
 
   try {
     const channels: Channel[] = [];
-    const client = getClient(accountSid);
+    const client = await getClient(accountSid);
     
     // Log successful access
     const decodedToken = userToken ? decodeUserToken(userToken) : null;

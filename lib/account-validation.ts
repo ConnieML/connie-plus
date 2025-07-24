@@ -1,5 +1,6 @@
 import { NextApiRequest } from 'next';
 import jwt from 'jsonwebtoken';
+import { getCredentialsWithFallback } from './secrets-manager';
 
 export interface DecodedToken {
   sub: string;
@@ -117,41 +118,11 @@ export function isUserAuthorizedForAccount(userToken: string | null, requestedAc
 
 /**
  * Gets Twilio API credentials for a specific account
- * This would connect to AWS Secrets Manager or encrypted database in production
+ * Now integrated with AWS Secrets Manager for production use
  */
-export function getCredentialsForAccount(accountSid: string): { sid: string; token: string } | null {
-  // Development/testing credential mapping
-  // TODO: Replace with AWS Secrets Manager lookup in production
-  const credentialMap: Record<string, { sid: string; token: string }> = {
-    // Healthcare CBO accounts
-    'AC1234healthcare': {
-      sid: process.env.TWILIO_HEALTHCARE_SID || process.env.TWILIO_ACCOUNT_SID || '',
-      token: process.env.TWILIO_HEALTHCARE_TOKEN || process.env.TWILIO_AUTH_TOKEN || ''
-    },
-    
-    // Social Services CBO accounts  
-    'AC9999social': {
-      sid: process.env.TWILIO_SOCIAL_SID || process.env.TWILIO_ACCOUNT_SID || '',
-      token: process.env.TWILIO_SOCIAL_TOKEN || process.env.TWILIO_AUTH_TOKEN || ''
-    },
-    
-    // Default/development account (fallback to current credentials)
-    'default': {
-      sid: process.env.TWILIO_ACCOUNT_SID || '',
-      token: process.env.TWILIO_AUTH_TOKEN || ''
-    }
-  };
-  
-  // Return specific credentials or fallback to default
-  const credentials = credentialMap[accountSid] || credentialMap['default'];
-  
-  if (!credentials.sid || !credentials.token) {
-    console.error('No valid credentials found for account:', accountSid);
-    return null;
-  }
-  
-  console.log('Retrieved credentials for account:', accountSid);
-  return credentials;
+export async function getCredentialsForAccount(accountSid: string): Promise<{ sid: string; token: string } | null> {
+  // Use the enhanced lookup that tries Secrets Manager first, then falls back
+  return await getCredentialsWithFallback(accountSid);
 }
 
 /**
