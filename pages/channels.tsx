@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@twilio-paste/core/box';
 import { Heading } from '@twilio-paste/core/heading';
 import { Paragraph } from '@twilio-paste/core/paragraph';
+import { Text } from '@twilio-paste/core/text';
 import { Card } from '@twilio-paste/core/card';
 import { Button } from '@twilio-paste/core/button';
 import { Anchor } from '@twilio-paste/core/anchor';
@@ -217,7 +218,7 @@ const ChannelManager: NextPage = () => {
         <MediaObject verticalAlign="center">
           <MediaBody>
             <Heading as="h1" variant="heading10">
-              Channel Manager
+              Channel Manager <Text as="span" color="colorTextSuccess" fontSize="fontSize30">[v2 Multi-Tenant]</Text>
             </Heading>
             <Paragraph>
               Manage and monitor all active Flex communication channels
