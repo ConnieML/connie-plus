@@ -1,6 +1,13 @@
 // pages/api/channels.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import twilio from 'twilio';
+import { 
+  extractUserToken, 
+  isUserAuthorizedForAccount, 
+  getCredentialsForAccount,
+  logAccountAccess,
+  decodeUserToken
+} from '../../lib/account-validation';
 
 export interface Channel {
   sid: string;
@@ -20,114 +27,20 @@ export interface ChannelsResponse {
   error?: string;
 }
 
-// Initialize Twilio client function
-const getClient = () => {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
+// Initialize Twilio client function with dynamic credentials
+const getClient = (accountSid: string) => {
+  const credentials = getCredentialsForAccount(accountSid);
   
-  if (!accountSid || !authToken) {
-    console.error('Missing Twilio credentials:', {
-      accountSid: accountSid ? 'present' : 'missing',
-      authToken: authToken ? 'present' : 'missing'
-    });
-    throw new Error('Missing Twilio credentials');
+  if (!credentials) {
+    throw new Error(`No credentials found for account: ${accountSid}`);
   }
   
-  return twilio(accountSid, authToken);
+  console.log('Creating Twilio client for account:', accountSid);
+  return twilio(credentials.sid, credentials.token);
 };
 
-// Mock channel data structure (fallback if API calls fail)
-const mockChannelData: Channel[] = [
-  // Voice Channels
-  {
-    sid: 'PNxxxxxxxxxx1',
-    friendlyName: 'Main Support Line',
-    phoneNumber: '+1 (555) 123-4567',
-    type: 'voice',
-    capabilities: ['voice', 'messaging'],
-    accountSid: 'ACxxxxxxxxxx',
-    dateCreated: '2024-01-15T10:30:00Z',
-    status: 'active'
-  },
-  {
-    sid: 'PNxxxxxxxxxx2', 
-    friendlyName: 'Sales Hotline',
-    phoneNumber: '+1 (555) 987-6543',
-    type: 'voice',
-    capabilities: ['voice'],
-    accountSid: 'ACxxxxxxxxxx',
-    dateCreated: '2024-02-01T14:15:00Z',
-    status: 'active'
-  },
-  
-  // Messaging Channels
-  {
-    sid: 'MGxxxxxxxxxx1',
-    friendlyName: 'Customer SMS',
-    phoneNumber: '+1 (555) 234-5678',
-    type: 'messaging',
-    capabilities: ['messaging'],
-    accountSid: 'ACxxxxxxxxxx',
-    dateCreated: '2024-01-20T09:45:00Z',
-    status: 'active'
-  },
-  {
-    sid: 'MGxxxxxxxxxx2',
-    friendlyName: 'WhatsApp Business',
-    phoneNumber: 'whatsapp:+14155238886',
-    type: 'messaging',
-    capabilities: ['messaging'],
-    accountSid: 'ACxxxxxxxxxx',
-    dateCreated: '2024-03-01T11:20:00Z',
-    status: 'active'
-  },
-  
-  // Email Channels
-  {
-    sid: 'CHxxxxxxxxxx1',
-    friendlyName: 'Support Email',
-    address: 'support@connie.team',
-    type: 'email',
-    capabilities: ['email'],
-    accountSid: 'ACxxxxxxxxxx',
-    dateCreated: '2024-01-10T16:00:00Z',
-    status: 'active'
-  },
-  {
-    sid: 'CHxxxxxxxxxx2',
-    friendlyName: 'Sales Inquiries',
-    address: 'sales@connie.team',
-    type: 'email', 
-    capabilities: ['email'],
-    accountSid: 'ACxxxxxxxxxx',
-    dateCreated: '2024-02-15T13:30:00Z',
-    status: 'active'
-  },
-  
-  // Web Channels
-  {
-    sid: 'CHxxxxxxxxxx3',
-    friendlyName: 'Website Chat',
-    address: 'https://connie.team/chat',
-    type: 'web',
-    capabilities: ['messaging'],
-    accountSid: 'ACxxxxxxxxxx',
-    dateCreated: '2024-01-25T12:00:00Z',
-    status: 'active'
-  },
-  
-  // Social Channels
-  {
-    sid: 'CHxxxxxxxxxx4',
-    friendlyName: 'Facebook Messenger',
-    address: 'facebook:connieteam',
-    type: 'social',
-    capabilities: ['messaging'],
-    accountSid: 'ACxxxxxxxxxx',
-    dateCreated: '2024-03-10T10:15:00Z',
-    status: 'active'
-  }
-];
+// Note: Mock data removed - we now use real Twilio API calls only
+// with proper account-specific credentials and authorization
 
 export default async function handler(
   req: NextApiRequest,
@@ -141,9 +54,51 @@ export default async function handler(
     });
   }
 
+  // Extract account context and user authorization
+  const { accountSid } = req.query;
+  const userToken = extractUserToken(req);
+  
+  // Validate required parameters
+  if (!accountSid || typeof accountSid !== 'string') {
+    return res.status(400).json({
+      success: false,
+      error: 'Missing or invalid accountSid parameter',
+      channels: []
+    });
+  }
+
+  // Validate user authorization for the requested account
+  if (!isUserAuthorizedForAccount(userToken, accountSid)) {
+    // Log unauthorized access attempt
+    const decodedToken = userToken ? decodeUserToken(userToken) : null;
+    logAccountAccess(
+      decodedToken?.email,
+      accountSid,
+      'channels_access',
+      false,
+      req.headers['user-agent']
+    );
+    
+    return res.status(403).json({
+      success: false,
+      error: 'Unauthorized: You do not have access to this account',
+      channels: []
+    });
+  }
+
   try {
     const channels: Channel[] = [];
-    const client = getClient();
+    const client = getClient(accountSid);
+    
+    // Log successful access
+    const decodedToken = userToken ? decodeUserToken(userToken) : null;
+    logAccountAccess(
+      decodedToken?.email,
+      accountSid,
+      'channels_access',
+      true,
+      req.headers['user-agent']
+    );
 
     // Fetch phone numbers (Voice channels)
     const phoneNumbers = await client.incomingPhoneNumbers.list();
@@ -189,12 +144,23 @@ export default async function handler(
     });
 
   } catch (error) {
-    console.error('Error fetching channels:', error);
+    console.error('Error fetching channels for account', accountSid, ':', error);
     
-    // Fallback to mock data if API calls fail
-    res.status(200).json({
-      success: true,
-      channels: mockChannelData
+    // Log the error
+    const decodedToken = userToken ? decodeUserToken(userToken) : null;
+    logAccountAccess(
+      decodedToken?.email,
+      accountSid,
+      'channels_access_error',
+      false,
+      req.headers['user-agent']
+    );
+    
+    // Return error instead of fallback mock data for security
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch channel data for the requested account',
+      channels: []
     });
   }
 }

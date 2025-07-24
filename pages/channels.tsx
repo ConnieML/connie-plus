@@ -21,6 +21,7 @@ import { RefreshIcon } from '@twilio-paste/icons/cjs/RefreshIcon';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import type { Channel } from './api/channels';
+import { useAuth } from '../lib/auth';
 
 interface ChannelGroup {
   type: string;
@@ -33,19 +34,53 @@ const ChannelManager: NextPage = () => {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [channelsLoading, setChannelsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { isAuthenticated, user, loading, accountSid } = useAuth();
 
-  // Check if user has required role - BYPASSED FOR TESTING
+  // Check if user has required role and account context
   const hasAccess = () => {
-    return true; // Always allow access for testing
+    // Must be authenticated
+    if (!isAuthenticated || !user) return false;
+    
+    // Must have account context from Flex
+    if (!accountSid) {
+      console.warn('No accountSid available - user may not be in Flex iframe');
+      return false;
+    }
+    
+    // Check user groups (maintain existing role-based access)
+    if (user.groups?.includes('ConnieOne-Admins')) return true;
+    
+    return false;
   };
 
   // Fetch channel data
   const fetchChannels = async () => {
+    if (!accountSid) {
+      setError('No account context available. Please access this page from within Twilio Flex.');
+      setChannelsLoading(false);
+      return;
+    }
+
     try {
       setChannelsLoading(true);
       setError(null);
       
-      const response = await fetch('/api/channels');
+      // Get user token from global context (set by auth.tsx)
+      const flexToken = (window as any).flexAuthToken;
+      
+      // Build API URL with account context
+      const apiUrl = `/api/channels?accountSid=${encodeURIComponent(accountSid)}`;
+      
+      // Make request with authorization header if token available
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (flexToken) {
+        headers['Authorization'] = `Bearer ${flexToken}`;
+      }
+      
+      const response = await fetch(apiUrl, { headers });
       const data = await response.json();
       
       if (data.success) {
@@ -62,9 +97,21 @@ const ChannelManager: NextPage = () => {
   };
 
   useEffect(() => {
-    // Always fetch channels since we bypassed authentication
-    fetchChannels();
-  }, []);
+    // Only fetch channels if we have authentication and account context
+    if (isAuthenticated && accountSid && hasAccess()) {
+      fetchChannels();
+    } else if (!loading) {
+      // If not loading and no access, set appropriate error
+      if (!isAuthenticated) {
+        setError('Authentication required. Please log in.');
+      } else if (!accountSid) {
+        setError('Account context required. Please access from Twilio Flex.');
+      } else {
+        setError('Access denied. Admin privileges required.');
+      }
+      setChannelsLoading(false);
+    }
+  }, [isAuthenticated, accountSid, loading]);
 
   // Group channels by type
   const groupChannels = (): ChannelGroup[] => {
@@ -106,7 +153,23 @@ const ChannelManager: NextPage = () => {
   };
 
 
-  // Remove auth loading check - bypassed for testing
+  // Show loading spinner while authentication is in progress
+  if (loading) {
+    return (
+      <Box padding="space70">
+        <Head>
+          <title>Loading - Channel Manager</title>
+        </Head>
+        
+        <Box textAlign="center" maxWidth="600px" marginX="auto">
+          <Spinner decorative size="sizeIcon60" />
+          <Paragraph marginTop="space40">
+            Connecting to Twilio Flex...
+          </Paragraph>
+        </Box>
+      </Box>
+    );
+  }
 
   // Access denied
   if (!hasAccess()) {
@@ -120,9 +183,18 @@ const ChannelManager: NextPage = () => {
           <Alert variant="warning">
             <Heading as="h2" variant="heading30">Access Restricted</Heading>
             <Paragraph>
-              You do not have permission to access the Channel Manager. This page is only available to 
-              Administrators and Supervisors.
+              {!isAuthenticated 
+                ? 'Authentication required. Please log in through Twilio Flex.'
+                : !accountSid 
+                  ? 'Account context missing. Please access this page from within Twilio Flex Enhanced CRM Container.'
+                  : 'You do not have permission to access the Channel Manager. This page is only available to Administrators and Supervisors.'
+              }
             </Paragraph>
+            {error && (
+              <Box marginTop="space30">
+                <Text as="p" color="colorTextError">{error}</Text>
+              </Box>
+            )}
             <Box marginTop="space50">
               <Anchor href="/">← Return to Home</Anchor>
             </Box>

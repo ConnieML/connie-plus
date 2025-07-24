@@ -48,6 +48,7 @@ export interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
+  accountSid: string | null; // NEW: Twilio account context from Flex
 }
 
 // Auth Context
@@ -75,7 +76,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isAuthenticated: false,
     user: null,
     loading: true,
-    error: null
+    error: null,
+    accountSid: null // NEW: Initialize account context
   });
 
   // Check if we're in an iframe
@@ -138,7 +140,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           isAuthenticated: true,
           user: userInfo as User,
           loading: false,
-          error: null
+          error: null,
+          accountSid: null // Okta auth doesn't provide accountSid
         });
         return;
       }
@@ -152,7 +155,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             isAuthenticated: true,
             user: userInfo as User,
             loading: false,
-            error: null
+            error: null,
+            accountSid: null // Silent auth doesn't provide accountSid
           });
           return;
         }
@@ -166,14 +170,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isAuthenticated: false,
         user: null,
         loading: false,
-        error: null
+        error: null,
+        accountSid: null
       });
     } catch (error) {
       setAuthState({
         isAuthenticated: false,
         user: null,
         loading: false,
-        error: error instanceof Error ? error.message : 'Authentication error'
+        error: error instanceof Error ? error.message : 'Authentication error',
+        accountSid: null
       });
     }
   };
@@ -235,7 +241,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isAuthenticated: false,
         user: null,
         loading: false,
-        error: null
+        error: null,
+        accountSid: null
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Logout failed';
@@ -269,7 +276,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           isAuthenticated: false,
           user: null,
           loading: false,
-          error: 'Session expired. Please log in again.'
+          error: 'Session expired. Please log in again.',
+          accountSid: null
         });
       }
     };
@@ -287,23 +295,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return;
       }
 
-      const { type, token, user, tokens } = event.data || {};
+      const { type, token, user, tokens, accountSid } = event.data || {};
       
       switch (type) {
         case 'auth':
           // Enhanced CRM Container authentication (Twilio's standard protocol)
-          console.log('Received Flex authentication context:', { token, user });
+          console.log('Received Flex authentication context:', { token, user, accountSid });
           if (token && user) {
             // Store Flex authentication context
             (window as any).flexAuthToken = token;
             (window as any).flexUser = user;
+            (window as any).flexAccountSid = accountSid; // NEW: Store account context
             
-            // Update authentication state
+            // Update authentication state with account context
             setAuthState({
               isAuthenticated: true,
               user: user,
               loading: false,
-              error: null
+              error: null,
+              accountSid: accountSid || null // NEW: Include account context
             });
           }
           break;
