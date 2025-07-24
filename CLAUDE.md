@@ -206,5 +206,111 @@ module.exports = {
 - The user pays for Claude services and will provide credit when appropriate
 - Focus on clean, professional commit messages describing the actual changes
 
+## 🚨 **CRITICAL UPDATE - MULTI-TENANT ROADMAP (July 2025)**
+
+### **IMPORTANT CONTEXT FOR NEW CLAUDE AGENTS:**
+As of July 24, 2025, this project is at a critical transition point. **READ THIS SECTION COMPLETELY** before making any changes.
+
+### **Current Production Status:**
+- **v1.connie.plus**: LIVE in production with beta testers using CRMcontainer
+- **Authentication**: Currently BYPASSED for testing (components/AuthGuard.tsx line 9-10)
+- **Data Access**: Shows same Twilio account data to all users (single-tenant)
+- **Git Status**: Production state backed up with tag `v1.0-production-stable`
+
+### **Multi-Tenant Architecture Discovery:**
+Through extensive consultation with Twilio Support, we've validated a **multi-tenant architecture approach** that will make this application "account-aware":
+
+**Current Problem:**
+- All users see the same Twilio account data regardless of which Flex instance they're using
+- Hardcoded credentials in API endpoints (api/channels.ts)
+- No account isolation between different customer organizations
+
+**Validated Solution (Twilio-approved):**
+1. **Account Context Passing**: Flex sends `accountSid` via postMessage to iframe
+2. **Dynamic Credential Lookup**: Backend maps accountSid to customer-specific API keys
+3. **Backend Validation**: Always verify user authorization for requested accountSid
+4. **Security Model**: Never trust frontend for account context
+
+### **Technical Implementation Plan:**
+
+**Phase 1: Core Multi-Tenant Security**
+```javascript
+// lib/auth.tsx enhancement
+case 'auth':
+  const { token, user, accountSid } = event.data;
+  window.flexAccountSid = accountSid; // NEW
+  setAuthState({
+    isAuthenticated: true,
+    user: user,
+    accountSid: accountSid // NEW
+  });
+```
+
+**Phase 2: Dynamic API Credentials**
+```javascript
+// api/channels.ts transformation
+const { accountSid } = req.query;
+const credentials = getCredentialsForAccount(accountSid);
+const client = twilio(credentials.sid, credentials.token);
+```
+
+**Phase 3: Customer Onboarding**
+- Secure credential storage (AWS Secrets Manager)
+- API key collection process
+- Account authorization validation
+
+### **Branching Strategy (ACTIVE):**
+- **main branch**: Protected production code for v1.connie.plus
+- **feature/multi-tenant-aware**: Development branch for v2 implementation
+- **Production backup**: Tag `v1.0-production-stable` for rollback
+
+### **File Backups Created:**
+- `.env.local.v1-backup`: Original production environment config
+- **Git tag**: `v1.0-production-stable` pushed to GitHub
+
+### **Business Context:**
+- **v1.connie.plus**: Single-tenant, stable, must remain functional for beta testers
+- **v2.connie.plus**: Multi-tenant aware, development target
+- **Transition strategy**: Parallel development, no downtime for current users
+
+### **Critical Security Notes:**
+1. **AuthGuard is currently bypassed** - authentication disabled for testing
+2. **Public access risk** - https://v1.connie.plus/channels accessible to anyone
+3. **Single credential set** - all users see same Twilio account data
+4. **Production impact** - changes affect live beta testers immediately
+
+### **Twilio Support Validation:**
+- Multi-tenant pattern confirmed as **industry standard approach**
+- Works across **entire Twilio ecosystem** (Voice, Conversations, Messaging, etc.)
+- postMessage with accountSid is **correct and secure**
+- Backend validation is **non-negotiable for security**
+
+### **Development Guidelines for New Agents:**
+1. **Work on feature branch**: `feature/multi-tenant-aware` only
+2. **Protect production**: Never break v1.connie.plus functionality
+3. **Test thoroughly**: Changes affect real beta testers
+4. **Follow Twilio patterns**: Use validated multi-tenant approach
+5. **Security first**: Always validate account access on backend
+
+### **Next Steps (When Ready):**
+1. Implement accountSid extraction in auth.tsx
+2. Build dynamic credential lookup system
+3. Add backend authorization validation
+4. Set up AWS Secrets Manager for credentials
+5. Create customer API key onboarding flow
+
+### **Rollback Procedures:**
+```bash
+# Emergency rollback to stable production
+git checkout v1.0-production-stable
+npm run build
+pm2 restart v1.connie.plus
+
+# Restore original environment
+cp .env.local.v1-backup .env.local
+```
+
+**⚠️ REMEMBER**: This project serves real beta testers in production. Treat every change as business-critical.
+
 ## Notes
 This project contains learning artifacts and cruft that could be cleaned up, but maintains functional nonprofit resource management capabilities.
