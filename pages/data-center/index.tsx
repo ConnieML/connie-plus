@@ -87,7 +87,7 @@ const Demos: NextPage = () => {
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/data-center/adhoc/adhoc-dashboard">Data & Reports</Anchor>
+                      <Anchor href="/data-center/dashboard">Analytics Dashboard</Anchor>
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -96,7 +96,7 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Access raw transaction data and dashboard reports.</Paragraph>
+                <Paragraph>Real-time analytics and insights from your contact center.</Paragraph>
                 <Anchor href="https://docs.google.com/presentation/d/10FvsaIWYulWj72B2wUdXjw0mvJ-bB8uc/edit#slide=id.p10" showExternal>
                   docs
                 </Anchor>
