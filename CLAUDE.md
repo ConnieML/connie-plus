@@ -1,7 +1,14 @@
-# Claude Code Documentation for V1.connie.plus
+# Claude Code Documentation for Connie.plus
 
 ## Project Overview
-V1.connie.plus is a Next.js application serving as a resource hub for nonprofit Community Based Organizations (CBOs) using the Connie platform. It provides centralized access to tools, data, and resources for staff agents and administrators.
+Connie.plus is a Next.js application serving as a resource hub for nonprofit Community Based Organizations (CBOs) using the Connie platform. It provides centralized access to tools, data, and resources for staff agents and administrators.
+
+## ✅ CURRENT DEPLOYMENT INFO (Updated Aug 2025)
+- **GitHub Repository**: `ConnieML/connie-plus`
+- **Live Domain**: `https://connie.plus`
+- **EC2 Directory**: `/var/www/connie.plus`  
+- **PM2 Process**: `connie.plus`
+- **All CRM Containers**: Point to `connie.plus` (NSS, HHOVV, DevSandbox)
 
 ## Tech Stack
 - **Framework**: Next.js 15.2 with TypeScript
