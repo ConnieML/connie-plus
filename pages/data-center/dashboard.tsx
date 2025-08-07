@@ -29,13 +29,14 @@ interface DailyMetrics {
   generated_at: string;
 }
 
-interface DashboardResponse {
-  success: boolean;
-  clientId: string;
-  data: DailyMetrics;
-  timestamp: string;
-  cached: boolean;
-}
+// Dashboard response interface - may be used for API typing later
+// interface DashboardResponse {
+//   success: boolean;
+//   clientId: string;
+//   data: DailyMetrics;
+//   timestamp: string;
+//   cached: boolean;
+// }
 
 // Simple metric card component
 const MetricCard: React.FC<{
@@ -58,7 +59,7 @@ const MetricCard: React.FC<{
       <Stack orientation="vertical" spacing="space30">
         <Heading as="h3" variant="heading40">{title}</Heading>
         <Box>
-          <Heading as="div" variant="heading10" color="colorTextPrimary">
+          <Heading as="div" variant="heading10">
             {value}
           </Heading>
         </Box>
