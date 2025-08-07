@@ -34,14 +34,15 @@ const Demos: NextPage = () => {
           style={{ height: '40px', width: 'auto' }}
         />
       </Anchor>
-    </Box><Heading as="h1" variant="heading10">
-      Welcome to Connie!
-    </Heading>
-    <Paragraph>
-      This is your centralized hub for accessing Connie platform tools and resources. 
-      Get up and running quickly with our organized toolkit for both agents and administrators. 
-      Explore safely and efficiently!
-    </Paragraph><Heading as="h2" variant="heading20">
+    </Box>
+    
+    <Box marginBottom="space60">
+      <Paragraph>
+        Welcome to Connie! This is your centralized hub for accessing Connie platform tools and resources. 
+        Get up and running quickly with our organized toolkit for both agents and administrators. 
+        Explore safely and efficiently!
+      </Paragraph>
+    </Box><Heading as="h2" variant="heading20">
         Get To Know Connie
       </Heading><Grid gutter="space30" marginBottom="space50">
         <Column>
