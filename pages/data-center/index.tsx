@@ -1,4 +1,4 @@
-// import React from 'react';
+import React, { useState } from 'react';
 import { Heading } from '@twilio-paste/core/heading';
 import { Paragraph } from '@twilio-paste/core/paragraph';
 import { Column, Grid } from '@twilio-paste/core/grid';
@@ -9,6 +9,7 @@ import { Button } from '@twilio-paste/core/button';
 import { DataBarChartIcon } from '@twilio-paste/icons/cjs/DataBarChartIcon';
 import { PlayIcon } from "@twilio-paste/icons/cjs/PlayIcon";
 import { UnpinIcon } from '@twilio-paste/icons/cjs/UnpinIcon';
+import { Table, THead, TBody, Tr, Td, Th } from '@twilio-paste/core/table';
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Box } from '@twilio-paste/core';
@@ -16,8 +17,98 @@ import { Stack } from "@twilio-paste/core/stack";
 import { CustomizationProvider } from "@twilio-paste/core/customization";
 import { Alert } from "@twilio-paste/core/alert";
 
+// TypeScript interface for voicemail data
+interface Voicemail {
+  sid: string;
+  callSid: string;
+  duration: number;
+  dateCreated: string;
+  dateUpdated: string;
+  status: string;
+  source: string;
+  uri: string;
+  createdAt: string;
+}
 
-// import { PrototypeAnchor } from '../components/site/PrototypeAnchor';
+
+// VoicemailPlayer component for NSS voicemail listing
+const VoicemailPlayer = () => {
+  const [voicemails, setVoicemails] = useState<Voicemail[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [showVoicemails, setShowVoicemails] = useState(false);
+
+  const fetchVoicemails = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const response = await fetch('https://voicemail-player-functions-8887-dev.twil.io/list-voicemails');
+      const data = await response.json();
+      
+      if (data.success) {
+        setVoicemails(data.voicemails);
+        setShowVoicemails(true);
+      } else {
+        setError(data.error || 'Failed to fetch voicemails');
+      }
+    } catch (err) {
+      setError('Error connecting to voicemail service');
+    }
+    setLoading(false);
+  };
+
+  return (
+    <Box>
+      <Box marginBottom="space40">
+        <Button variant="primary" onClick={fetchVoicemails} loading={loading} disabled={loading}>
+          {loading ? 'Loading...' : 'Load NSS Voicemails'}
+        </Button>
+      </Box>
+      
+      {error && (
+        <Box marginBottom="space40">
+          <Alert variant="error">{error}</Alert>
+        </Box>
+      )}
+      
+      {showVoicemails && voicemails.length > 0 && (
+        <Box marginBottom="space40">
+          <Box marginBottom="space30">
+            <Heading as="h3" variant="heading30">
+              Recent NSS Voicemails ({voicemails.length})
+            </Heading>
+          </Box>
+          <Table>
+            <THead>
+              <Tr>
+                <Th>Date</Th>
+                <Th>Duration</Th>
+                <Th>Action</Th>
+              </Tr>
+            </THead>
+            <TBody>
+              {voicemails.map((voicemail) => (
+                <Tr key={voicemail.sid}>
+                  <Td>{voicemail.createdAt}</Td>
+                  <Td>{voicemail.duration}s</Td>
+                  <Td>
+                    <Button
+                      variant="link"
+                      onClick={() => window.open(voicemail.uri, '_blank')}
+                    >
+                      Play
+                    </Button>
+                  </Td>
+                </Tr>
+              ))}
+            </TBody>
+          </Table>
+        </Box>
+      )}
+    </Box>
+  );
+};
+
 const Demos: NextPage = () => {
   return (
   <>
@@ -115,7 +206,7 @@ const Demos: NextPage = () => {
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="#">Playback Machine</Anchor>
+                      Playback Machine
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -125,6 +216,9 @@ const Demos: NextPage = () => {
                   </MediaObject>
                 </Heading>
                 <Paragraph>Retrieve & playback task media & call recordings.</Paragraph>
+                <Box marginTop="space40">
+                  <VoicemailPlayer />
+                </Box>
                 <Anchor href="https://docs.google.com/presentation/d/10FvsaIWYulWj72B2wUdXjw0mvJ-bB8uc/edit#slide=id.p10" showExternal>
                   docs
                 </Anchor>
