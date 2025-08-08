@@ -84,7 +84,7 @@ const VoicemailPlayer = () => {
               <Tr>
                 <Th>Date</Th>
                 <Th>Duration</Th>
-                <Th>Action</Th>
+                <Th>Playback</Th>
               </Tr>
             </THead>
             <TBody>
@@ -93,12 +93,10 @@ const VoicemailPlayer = () => {
                   <Td>{voicemail.createdAt}</Td>
                   <Td>{voicemail.duration}s</Td>
                   <Td>
-                    <Button
-                      variant="link"
-                      onClick={() => window.open(voicemail.uri, '_blank')}
-                    >
-                      Play
-                    </Button>
+                    <audio controls style={{ width: '200px', height: '30px' }}>
+                      <source src={voicemail.uri} type="audio/mpeg" />
+                      Your browser does not support the audio element.
+                    </audio>
                   </Td>
                 </Tr>
               ))}

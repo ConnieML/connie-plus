@@ -35,6 +35,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const data = await twilioResponse.json();
     console.log('Twilio Function returned:', data.success ? `${data.count} voicemails` : 'error');
 
+    // Update URIs to use our proxy endpoint instead of direct Twilio URLs
+    if (data.success && data.voicemails) {
+      data.voicemails = data.voicemails.map((voicemail: any) => ({
+        ...voicemail,
+        uri: `/api/voicemail-audio/${voicemail.sid}`
+      }));
+    }
+
     // Return the data to the frontend
     res.status(200).json(data);
 
