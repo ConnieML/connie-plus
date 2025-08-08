@@ -42,7 +42,8 @@ const VoicemailPlayer = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch('https://voicemail-player-functions-8887-dev.twil.io/list-voicemails');
+      // Call our Next.js API proxy (no CORS issues)
+      const response = await fetch('/api/voicemails');
       const data = await response.json();
       
       if (data.success) {
