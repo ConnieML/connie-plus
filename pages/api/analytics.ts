@@ -22,8 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // NSS Analytics Twilio serverless function URL
-    const TWILIO_FUNCTION_URL = 'https://analytics-reader-functions-4971-dev.twil.io/dashboard-data';
+    // NSS Analytics Twilio serverless function URL  
+    const TWILIO_FUNCTION_URL = 'https://analytics-reader-functions-4971-dev.twil.io/functions/dashboard-data';
     
     console.log('📡 Calling Twilio function:', TWILIO_FUNCTION_URL);
 
