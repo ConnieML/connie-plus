@@ -35,11 +35,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const data = await twilioResponse.json();
     console.log('Twilio Function returned:', data.success ? `${data.count} voicemails` : 'error');
 
-    // Update URIs to use our proxy endpoint instead of direct Twilio URLs
+    // Update URIs to use Twilio serverless audio proxy
     if (data.success && data.voicemails) {
       data.voicemails = data.voicemails.map((voicemail: any) => ({
         ...voicemail,
-        uri: `/api/voicemail-audio/${voicemail.sid}`
+        uri: `https://voicemail-player-functions-8887-dev.twil.io/functions/get-audio?recordingSid=${voicemail.sid}`
       }));
     }
 
