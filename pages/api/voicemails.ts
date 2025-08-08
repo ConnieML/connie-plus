@@ -8,8 +8,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // The URL of our Twilio Function
-    const TWILIO_FUNCTION_URL = 'https://voicemail-player-functions-8887-dev.twil.io/list-voicemails';
+    // The URL of our Twilio Function (correct path with /functions/)
+    const TWILIO_FUNCTION_URL = 'https://voicemail-player-functions-8887-dev.twil.io/functions/list-voicemails';
 
     console.log('Proxying request to Twilio Function:', TWILIO_FUNCTION_URL);
 
