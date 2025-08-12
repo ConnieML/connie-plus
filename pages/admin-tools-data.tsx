@@ -7,15 +7,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { Card } from "@twilio-paste/core";
 import { Button } from "@twilio-paste/core";
-import { ProcessSuccessIcon } from '@twilio-paste/icons/cjs/ProcessSuccessIcon';
-import { ProcessWarningIcon } from '@twilio-paste/icons/cjs/ProcessWarningIcon';
-import { Table } from '@twilio-paste/core';
-import { THead } from '@twilio-paste/core';
-import { Tr } from '@twilio-paste/core';
-import { Th } from '@twilio-paste/core';
-import { TBody } from '@twilio-paste/core';
-import { Td } from '@twilio-paste/core';
-import { Text } from '@twilio-paste/core/text';
 import { Grid, Column } from '@twilio-paste/core/grid';
 import { Breadcrumb, BreadcrumbItem } from '@twilio-paste/core/breadcrumb';
 
@@ -52,8 +43,8 @@ const AdminToolsData: NextPage = () => {
           Admin Tools & Data
         </Heading>
         <Paragraph>
-          Comprehensive admin tools and data integration resources for Connie+ platform management. 
-          Configure channels, manage integrations, and access reporting tools.
+          Essential administrative tools and resources for managing your Connie+ platform. 
+          Access channel configuration, reporting dashboards, and documentation.
         </Paragraph>
       </Box>
       {/* Admin Tools Section */}
@@ -70,9 +61,9 @@ const AdminToolsData: NextPage = () => {
               <Paragraph>
                 Manage voice, messaging, email, web, and social channels for your Connie platform.
               </Paragraph>
-              <Anchor href="/channels">
-                🔄 Access Channel Manager
-              </Anchor>
+              <Button variant="primary" as="a" href="/channels">
+                Access Channel Manager
+              </Button>
             </Card>
           </Column>
           <Column span={[12, 6, 4]}>
@@ -83,309 +74,12 @@ const AdminToolsData: NextPage = () => {
               <Paragraph>
                 Access comprehensive reporting tools and analytics for your organization.
               </Paragraph>
-              <Anchor href="/data-center/">
-                📊 View Reports
-              </Anchor>
-            </Card>
-          </Column>
-          <Column span={[12, 6, 4]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                Integration Tools
-              </Heading>
-              <Paragraph>
-                Advanced integration management tools for connecting external systems.
-              </Paragraph>
-              <Text as="span" color="colorTextWeak">
-                Coming Soon!
-              </Text>
+              <Button variant="primary" as="a" href="/data-center">
+                View Reports
+              </Button>
             </Card>
           </Column>
         </Grid>
-      </Box>
-      {/* Communication Tools Section */}
-      <Box marginBottom="space120">
-        <Heading as="h2" variant="heading20">
-          Communication & Integration Tools
-        </Heading>
-        <Grid gutter="space60">
-          <Column span={[12, 6]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                Data Integration Partners
-              </Heading>
-              <Paragraph>
-                Connect with verified data integration partners for seamless data flow.
-              </Paragraph>
-              <Anchor href="https://outbound-messaging-v2-6965-dev.twil.io/index.html#/login" showExternal>
-                Access Partner Portal
-              </Anchor>
-            </Card>
-          </Column>
-          <Column span={[12, 6]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                Email & eFax Integration
-              </Heading>
-              <Paragraph>
-                Manage email and electronic fax integrations for your communication workflow.
-              </Paragraph>
-              <Anchor href="https://nextjs.org/docs" showExternal>
-                Configure Email/eFax
-              </Anchor>
-            </Card>
-          </Column>
-          <Column span={[12, 6]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                Social Media Integration
-              </Heading>
-              <Paragraph>
-                Connect social media platforms for comprehensive communication management.
-              </Paragraph>
-              <Anchor href="https://nextjs.org/docs" showExternal>
-                Setup Social Media
-              </Anchor>
-            </Card>
-          </Column>
-          <Column span={[12, 6]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                Web Framework Integration
-              </Heading>
-              <Paragraph>
-                Connect WordPress, React, and other web frameworks to your Connie platform.
-              </Paragraph>
-              <Anchor href="https://nextjs.org/docs" showExternal>
-                Configure Web Frameworks
-              </Anchor>
-            </Card>
-          </Column>
-        </Grid>
-      </Box>
-      {/* Data Integration Section */}
-      <Box marginBottom="space120">
-        <Heading as="h2" variant="heading20">
-          Data Integration & Mapping Tools
-        </Heading>
-        
-        {/* Database Integrations */}
-        <Box marginBottom="space80">
-          <Heading as="h3" variant="heading30">
-            Database Integrations
-          </Heading>
-          <Table>
-  <THead>
-    <Tr>
-      <Th>Data Source:</Th>
-      <Th>Database</Th>
-      <Th>Resources</Th>
-    </Tr>
-  </THead>
-  <TBody>
-    <Tr>
-      <Td>
-        <Box display="flex" alignItems="center">
-          <ProcessSuccessIcon
-            color="colorTextIconSuccess"
-            decorative={false}
-            title="valid" />
-          <Text as="p" marginLeft="space20">Available</Text>
-        </Box>
-        <Text as="p" color="colorTextWeak" marginLeft="space70">2020-09-17</Text>
-      </Td>
-      <Td>
-        <Text as="span" fontFamily="fontFamilyCode">
-          MySQL
-        </Text>
-      </Td>
-      <Td>Requirements + Connie Integration Steps</Td>
-    </Tr>
-    <Tr>
-      <Td>
-        <Box display="flex" alignItems="center">
-          <ProcessSuccessIcon
-            color="colorTextIconSuccess"
-            decorative={false}
-            title="Available" />
-          <Text as="p" marginLeft="space20">Available</Text>
-        </Box>
-        <Text as="p" color="colorTextWeak" marginLeft="space70">2024-05-31</Text>
-      </Td>
-      <Td>
-        <Text as="span" fontFamily="fontFamilyCode">
-          MongoDB
-        </Text>
-      </Td>
-      <Td>Requirements + Connie Integration Steps</Td>
-    </Tr>
-    <Tr>
-      <Td>
-        <Box display="flex" alignItems="center">
-          <ProcessWarningIcon
-            color="colorTextIconWarning"
-            decorative={false}
-            title="invalid" />
-          <Text as="p" marginLeft="space20">In Development</Text>
-        </Box>
-        <Text as="p" color="colorTextWeak" marginLeft="space70">2020-09-17</Text>
-      </Td>
-      <Td>
-        <Text as="span" fontFamily="fontFamilyCode">
-          SupaBase
-        </Text>
-      </Td>
-      <Td>See Roadmap</Td>
-    </Tr>
-  </TBody>
-          </Table>
-        </Box>
-        
-        {/* Spreadsheet Integrations */}
-        <Box marginBottom="space80">
-          <Heading as="h3" variant="heading30">
-            Spreadsheet Integrations
-          </Heading>
-          <Table>
-  <THead>
-    <Tr>
-    <Th>Data Source:</Th>
-    <Th>Spreadsheet</Th>
-    <Th>Resources</Th>
-    </Tr>
-  </THead>
-  <TBody>
-    <Tr>
-      <Td>
-        <Box display="flex" alignItems="center">
-          <ProcessSuccessIcon
-            color="colorTextIconSuccess"
-            decorative={false}
-            title="valid" />
-          <Text as="p" marginLeft="space20">Valid</Text>
-        </Box>
-        <Text as="p" color="colorTextWeak" marginLeft="space70">2024-06-12</Text>
-      </Td>
-      <Td>
-        <Text as="span" fontFamily="fontFamilyCode">
-          Airtable
-        </Text>
-      </Td>
-      <Td>Requirements + Connie Integration Steps</Td>
-    </Tr>
-    <Tr>
-      <Td>
-        <Box display="flex" alignItems="center">
-          <ProcessSuccessIcon
-            color="colorTextIconSuccess"
-            decorative={false}
-            title="valid" />
-          <Text as="p" marginLeft="space20">Valid</Text>
-        </Box>
-        <Text as="p" color="colorTextWeak" marginLeft="space70">2024-06-12</Text>
-      </Td>
-      <Td>
-        <Text as="span" fontFamily="fontFamilyCode">
-          GSuite
-        </Text>
-      </Td>
-      <Td>Requirements + Connie Integration Steps</Td>
-    </Tr>
-    <Tr>
-      <Td>
-        <Box display="flex" alignItems="center">
-          <ProcessWarningIcon
-            color="colorTextIconWarning"
-            decorative={false}
-            title="In Development" />
-          <Text as="p" marginLeft="space20">In Development</Text>
-        </Box>
-        <Text as="p" color="colorTextWeak" marginLeft="space70">2024-09-01</Text>
-      </Td>
-      <Td>
-        <Text as="span" fontFamily="fontFamilyCode">
-        Office365
-        </Text>
-      </Td>
-      <Td>See Roadmap</Td>
-    </Tr>
-  </TBody>
-          </Table>
-        </Box>
-        
-        {/* CRM/EMR Integrations */}
-        <Box marginBottom="space80">
-          <Heading as="h3" variant="heading30">
-            CRM / EMR Integrations
-          </Heading>
-          <Table>
-  <THead>
-    <Tr>
-    <Th>Data Source:</Th>
-    <Th>CRM / EMR </Th>
-    <Th>Integration Steps</Th>
-    </Tr>
-  </THead>
-  <TBody>
-    <Tr>
-      <Td>
-        <Box display="flex" alignItems="center">
-          <ProcessSuccessIcon
-            color="colorTextIconSuccess"
-            decorative={false}
-            title="valid" />
-          <Text as="p" marginLeft="space20">Valid</Text>
-        </Box>
-        <Text as="p" color="colorTextWeak" marginLeft="space70">2023-05-08</Text>
-      </Td>
-      <Td>
-        <Text as="span" fontFamily="fontFamilyCode">
-        <Anchor href="https://www.hubspot.com/" showExternal>
-              Hubspot
-            </Anchor>
-        </Text>
-      </Td>
-      <Td>Requirements + Connie Integration Steps</Td>
-    </Tr>
-    <Tr>
-      <Td>
-        <Box display="flex" alignItems="center">
-          <ProcessSuccessIcon
-            color="colorTextIconSuccess"
-            decorative={false}
-            title="Available" />
-          <Text as="p" marginLeft="space20">Available</Text>
-        </Box>
-        <Text as="p" color="colorTextWeak" marginLeft="space70">2024-06-17</Text>
-      </Td>
-      <Td>
-        <Text as="span" fontFamily="fontFamilyCode">
-          Zoho
-        </Text>
-      </Td>
-      <Td>Requirements + Connie Integration Steps</Td>
-    </Tr>
-    <Tr>
-      <Td>
-        <Box display="flex" alignItems="center">
-          <ProcessWarningIcon
-            color="colorTextIconWarning"
-            decorative={false}
-            title="invalid" />
-          <Text as="p" marginLeft="space20">In Development</Text>
-        </Box>
-        <Text as="p" color="colorTextWeak" marginLeft="space70">2024-09-01</Text>
-      </Td>
-      <Td>
-        <Text as="span" fontFamily="fontFamilyCode">
-          Monday
-        </Text>
-      </Td>
-      <Td>See Roadmap</Td>
-    </Tr>
-  </TBody>
-          </Table>
-        </Box>
       </Box>
       
       {/* Action Cards Section */}
@@ -394,7 +88,20 @@ const AdminToolsData: NextPage = () => {
           Resources & Documentation
         </Heading>
         <Grid gutter="space60">
-          <Column span={[12, 6]}>
+          <Column span={[12, 6, 4]}>
+            <Card>
+              <Heading as="h3" variant="heading30">
+                Admin Documentation
+              </Heading>
+              <Paragraph>
+                Comprehensive documentation covering SDKs, sample applications, and integration guides.
+              </Paragraph>
+              <Button variant="primary">
+                Access Documentation
+              </Button>
+            </Card>
+          </Column>
+          <Column span={[12, 6, 4]}>
             <Card>
               <Heading as="h3" variant="heading30">
                 What's New with Connie
@@ -404,19 +111,6 @@ const AdminToolsData: NextPage = () => {
               </Paragraph>
               <Button variant="primary">
                 View Roadmap
-              </Button>
-            </Card>
-          </Column>
-          <Column span={[12, 6]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                Admin Documentation
-              </Heading>
-              <Paragraph>
-                Comprehensive documentation covering SDKs, sample applications, and integration guides.
-              </Paragraph>
-              <Button variant="secondary">
-                Access Documentation
               </Button>
             </Card>
           </Column>

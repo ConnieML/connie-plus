@@ -13,6 +13,7 @@ import { Table, THead, TBody, Tr, Th, Td } from '@twilio-paste/core/table';
 import { Separator } from '@twilio-paste/core/separator';
 import { MediaObject, MediaFigure, MediaBody } from '@twilio-paste/core/media-object';
 import { ProductVoiceIcon } from '@twilio-paste/icons/cjs/ProductVoiceIcon';
+import { Breadcrumb, BreadcrumbItem } from '@twilio-paste/core/breadcrumb';
 import { ProductMessagingIcon } from '@twilio-paste/icons/cjs/ProductMessagingIcon';
 import { EmailIcon } from '@twilio-paste/icons/cjs/EmailIcon';
 import { ProductInternetOfThingsIcon } from '@twilio-paste/icons/cjs/ProductInternetOfThingsIcon';
@@ -137,6 +138,25 @@ const ChannelManager: NextPage = () => {
       <Head>
         <title>Channel Manager - Connie Plus</title>
       </Head>
+
+      {/* Logo Header */}
+      <Box marginBottom="space60">
+        <Anchor href="/">
+          <img 
+            src="/assets/connie-plus-logo.svg" 
+            alt="Connie Platform Logo" 
+            style={{ height: '40px', width: 'auto' }}
+          />
+        </Anchor>
+      </Box>
+      
+      {/* Breadcrumb Navigation */}
+      <Box marginBottom="space60">
+        <Breadcrumb aria-label="breadcrumb">
+          <BreadcrumbItem href="/">Home</BreadcrumbItem>
+          <BreadcrumbItem>Channel Manager</BreadcrumbItem>
+        </Breadcrumb>
+      </Box>
 
       {/* Header */}
       <Box marginBottom="space70">

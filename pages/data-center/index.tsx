@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Heading } from '@twilio-paste/core/heading';
 import { Paragraph } from '@twilio-paste/core/paragraph';
 import { Column, Grid } from '@twilio-paste/core/grid';
@@ -9,104 +9,17 @@ import { Button } from '@twilio-paste/core/button';
 import { DataBarChartIcon } from '@twilio-paste/icons/cjs/DataBarChartIcon';
 import { PlayIcon } from "@twilio-paste/icons/cjs/PlayIcon";
 import { UnpinIcon } from '@twilio-paste/icons/cjs/UnpinIcon';
-import { Table, THead, TBody, Tr, Td, Th } from '@twilio-paste/core/table';
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Box } from '@twilio-paste/core';
 import { Stack } from "@twilio-paste/core/stack";
 import { CustomizationProvider } from "@twilio-paste/core/customization";
 import { Alert } from "@twilio-paste/core/alert";
-
-// TypeScript interface for voicemail data
-interface Voicemail {
-  sid: string;
-  callSid: string;
-  duration: number;
-  dateCreated: string;
-  dateUpdated: string;
-  status: string;
-  source: string;
-  uri: string;
-  createdAt: string;
-}
+import { Breadcrumb, BreadcrumbItem } from '@twilio-paste/core/breadcrumb';
 
 
-// VoicemailPlayer component for NSS voicemail listing
-const VoicemailPlayer = () => {
-  const [voicemails, setVoicemails] = useState<Voicemail[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [showVoicemails, setShowVoicemails] = useState(false);
 
-  const fetchVoicemails = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      // Call our Next.js API proxy (no CORS issues)
-      const response = await fetch('/api/voicemails');
-      const data = await response.json();
-      
-      if (data.success) {
-        setVoicemails(data.voicemails);
-        setShowVoicemails(true);
-      } else {
-        setError(data.error || 'Failed to fetch voicemails');
-      }
-    } catch (err) {
-      setError('Error connecting to voicemail service');
-    }
-    setLoading(false);
-  };
 
-  return (
-    <Box>
-      <Box marginBottom="space40">
-        <Button variant="primary" onClick={fetchVoicemails} loading={loading} disabled={loading}>
-          {loading ? 'Loading...' : 'Load NSS Voicemails'}
-        </Button>
-      </Box>
-      
-      {error && (
-        <Box marginBottom="space40">
-          <Alert variant="error">{error}</Alert>
-        </Box>
-      )}
-      
-      {showVoicemails && voicemails.length > 0 && (
-        <Box marginBottom="space40">
-          <Box marginBottom="space30">
-            <Heading as="h3" variant="heading30">
-              Recent NSS Voicemails ({voicemails.length})
-            </Heading>
-          </Box>
-          <Table>
-            <THead>
-              <Tr>
-                <Th>Date</Th>
-                <Th>Duration</Th>
-                <Th>Playback</Th>
-              </Tr>
-            </THead>
-            <TBody>
-              {voicemails.map((voicemail) => (
-                <Tr key={voicemail.sid}>
-                  <Td>{voicemail.createdAt}</Td>
-                  <Td>{voicemail.duration}s</Td>
-                  <Td>
-                    <audio controls style={{ width: '200px', height: '30px' }}>
-                      <source src={voicemail.uri} type="audio/mpeg" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </Td>
-                </Tr>
-              ))}
-            </TBody>
-          </Table>
-        </Box>
-      )}
-    </Box>
-  );
-};
 
 const Demos: NextPage = () => {
   return (
@@ -116,6 +29,26 @@ const Demos: NextPage = () => {
       <title>Connie Plus Data and Reporting Center</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
+    
+    {/* Logo Header */}
+    <Box marginBottom="space60">
+      <Anchor href="/">
+        <img 
+          src="/assets/connie-plus-logo.svg" 
+          alt="Connie Platform Logo" 
+          style={{ height: '40px', width: 'auto' }}
+        />
+      </Anchor>
+    </Box>
+    
+    {/* Breadcrumb Navigation */}
+    <Box marginBottom="space60">
+      <Breadcrumb aria-label="breadcrumb">
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
+        <BreadcrumbItem>Data Center</BreadcrumbItem>
+      </Breadcrumb>
+    </Box>
+    
     <Heading as="h1" variant="heading10">
       Connie Datacenter
     </Heading><Paragraph>
@@ -177,7 +110,7 @@ const Demos: NextPage = () => {
                 <Heading as="h2" variant="heading30">
                   <MediaObject verticalAlign="center">
                     <MediaBody>
-                      <Anchor href="/data-center/dashboard">Analytics Dashboard</Anchor>
+                      Analytics Dashboard
                     </MediaBody>
                     <MediaFigure align="end" spacing="space40">
                       <Button variant="link">
@@ -186,10 +119,22 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Real-time analytics and insights from your contact center.</Paragraph>
-                <Anchor href="https://docs.google.com/presentation/d/10FvsaIWYulWj72B2wUdXjw0mvJ-bB8uc/edit#slide=id.p10" showExternal>
-                  docs
-                </Anchor>
+                <Paragraph>
+                  Access data and insights from your CBO.{' '}
+                  <Anchor href="https://docs.google.com/presentation/d/10FvsaIWYulWj72B2wUdXjw0mvJ-bB8uc/edit#slide=id.p10" showExternal>
+                    docs
+                  </Anchor>
+                </Paragraph>
+                <Box marginTop="space40">
+                  <Stack orientation="horizontal" spacing="space40">
+                    <Button variant="primary" as="a" href="/data-center/nss-dashboard">
+                      Daily Data
+                    </Button>
+                    <Button variant="secondary" as="a" href="#">
+                      Adhoc Data
+                    </Button>
+                  </Stack>
+                </Box>
               </MediaBody>
             </MediaObject>
           </Card>
@@ -214,13 +159,22 @@ const Demos: NextPage = () => {
                     </MediaFigure>
                   </MediaObject>
                 </Heading>
-                <Paragraph>Retrieve & playback task media & call recordings.</Paragraph>
+                <Paragraph>
+                  Retrieve & playback task media & call recordings.{' '}
+                  <Anchor href="https://docs.google.com/presentation/d/10FvsaIWYulWj72B2wUdXjw0mvJ-bB8uc/edit#slide=id.p10" showExternal>
+                    docs
+                  </Anchor>
+                </Paragraph>
                 <Box marginTop="space40">
-                  <VoicemailPlayer />
+                  <Stack orientation="horizontal" spacing="space40">
+                    <Button variant="primary" as="a" href="/data-center/voicemails">
+                      Load NSS Voicemails
+                    </Button>
+                    <Button variant="secondary" as="a" href="/data-center/faxes">
+                      Load Recent Faxes
+                    </Button>
+                  </Stack>
                 </Box>
-                <Anchor href="https://docs.google.com/presentation/d/10FvsaIWYulWj72B2wUdXjw0mvJ-bB8uc/edit#slide=id.p10" showExternal>
-                  docs
-                </Anchor>
               </MediaBody>
             </MediaObject>
           </Card>

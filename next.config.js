@@ -19,10 +19,11 @@ const nextConfig = {
             key: 'X-Frame-Options',
             value: 'ALLOW-FROM https://flex.twilio.com',
           },
-          {
-            key: 'Content-Security-Policy',
-            value: "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team",
-          },
+          // Temporarily disable CSP for development debugging
+          // {
+          //   key: 'Content-Security-Policy',
+          //   value: "frame-ancestors 'self' https://flex.twilio.com https://*.flex.twilio.com https://nss.connie.team; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'",
+          // },
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
