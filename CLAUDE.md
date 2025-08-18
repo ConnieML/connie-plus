@@ -64,23 +64,30 @@ npm run start  # Test production build
 
 #### **PRODUCTION DEPLOYMENT EXECUTION:**
 ```bash
-# 1. Upload files to EC2 (exclude build artifacts)
-rsync -avz --exclude node_modules --exclude .next --exclude .git . ubuntu@ec2-100-28-144-153.compute-1.amazonaws.com:/var/www/connie.plus/
+# 1. COMMIT AND PUSH CHANGES (PROPER GIT WORKFLOW)
+git add .
+git commit -m "feat: [description of changes]"
+git push origin main
 
-# 2. SSH to production server
-ssh -i /Users/cjberno/projects/connie/v1.connie.plus/connieone.pem ubuntu@ec2-100-28-144-153.compute-1.amazonaws.com
+# 2. DEPLOY TO PRODUCTION SERVER
+# Pull latest changes on server
+ssh ubuntu@ec2-100-28-144-153.compute-1.amazonaws.com "cd /var/www/connie.plus && git stash && git pull origin main"
 
-# 3. Build and restart on server
-cd /var/www/connie.plus
-npm install --legacy-peer-deps  # CRITICAL: Use legacy flag for React 19
-npm run build                   # Build production version
-pm2 restart connie.plus         # Restart PM2 process
-pm2 list                        # Verify process is running
+# Build and restart on server
+ssh ubuntu@ec2-100-28-144-153.compute-1.amazonaws.com "cd /var/www/connie.plus && npm install --legacy-peer-deps && npm run build && pm2 restart connie.plus && pm2 list"
 
-# 4. Verify deployment
+# 3. Verify deployment
 curl -I https://connie.plus/data-center
 curl -I https://connie.plus/admin-tools-data
 # Both should return HTTP 200
+```
+
+#### **LEGACY DEPLOYMENT METHOD (DO NOT USE):**
+```bash
+# OLD METHOD - rsync (causes version drift)
+# rsync -avz --exclude node_modules --exclude .next --exclude .git . ubuntu@ec2-100-28-144-153.compute-1.amazonaws.com:/var/www/connie.plus/
+# SSH to production server
+# ssh -i /Users/cjberno/projects/connie/v1.connie.plus/connieone.pem ubuntu@ec2-100-28-144-153.compute-1.amazonaws.com
 ```
 
 #### **POST-DEPLOYMENT VALIDATION:**
