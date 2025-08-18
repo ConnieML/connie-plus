@@ -3,6 +3,7 @@ import { Theme } from "@twilio-paste/core/theme";
 import type { AppProps, NextWebVitalsMetric } from "next/app";
 import { AuthProvider } from "../lib/auth";
 import { AuthGuard } from "../components/AuthGuard";
+import { GlobalNavigation } from "../components/GlobalNavigation";
 import { useRouter } from "next/router";
 
 const MyApp: React.FC<React.PropsWithChildren<AppProps>> = ({ Component, pageProps }) => {
@@ -11,6 +12,9 @@ const MyApp: React.FC<React.PropsWithChildren<AppProps>> = ({ Component, pagePro
   // Pages that don't require authentication
   const publicPages = ['/callback', '/test-okta', '/simple-test', '/debug'];
   const isPublicPage = publicPages.includes(router.pathname);
+  
+  // Pages that should hide the support buttons (like the support pages themselves)
+  const hideSupportButtons = router.pathname.startsWith('/support/');
 
   return (
     <Theme.Provider theme="default">
@@ -19,6 +23,7 @@ const MyApp: React.FC<React.PropsWithChildren<AppProps>> = ({ Component, pagePro
           <Component {...pageProps} />
         ) : (
           <AuthGuard>
+            {!hideSupportButtons && <GlobalNavigation />}
             <Component {...pageProps} />
           </AuthGuard>
         )}

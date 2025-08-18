@@ -53,7 +53,7 @@ const AdminToolsData: NextPage = () => {
           Core Admin Tools
         </Heading>
         <Grid gutter="space60">
-          <Column span={[12, 6, 4]}>
+          <Column span={[12, 6]}>
             <Card>
               <Heading as="h3" variant="heading30">
                 Channel Manager
@@ -64,9 +64,14 @@ const AdminToolsData: NextPage = () => {
               <Button variant="primary" as="a" href="/channels">
                 Access Channel Manager
               </Button>
+              <Box marginTop="space40">
+                <Anchor href="https://docs.connie.one/end-users/cbo-admins/getting-started" showExternal>
+                  docs
+                </Anchor>
+              </Box>
             </Card>
           </Column>
-          <Column span={[12, 6, 4]}>
+          <Column span={[12, 6]}>
             <Card>
               <Heading as="h3" variant="heading30">
                 Data & Reporting
@@ -77,6 +82,11 @@ const AdminToolsData: NextPage = () => {
               <Button variant="primary" as="a" href="/data-center">
                 View Reports
               </Button>
+              <Box marginTop="space40">
+                <Anchor href="https://docs.connie.one/end-users/cbo-admins/getting-started" showExternal>
+                  docs
+                </Anchor>
+              </Box>
             </Card>
           </Column>
         </Grid>
@@ -88,7 +98,7 @@ const AdminToolsData: NextPage = () => {
           Resources & Documentation
         </Heading>
         <Grid gutter="space60">
-          <Column span={[12, 6, 4]}>
+          <Column span={[12, 6]}>
             <Card>
               <Heading as="h3" variant="heading30">
                 Admin Documentation
@@ -99,9 +109,14 @@ const AdminToolsData: NextPage = () => {
               <Button variant="primary">
                 Access Documentation
               </Button>
+              <Box marginTop="space40">
+                <Anchor href="https://docs.connie.one/end-users/cbo-admins/getting-started" showExternal>
+                  docs
+                </Anchor>
+              </Box>
             </Card>
           </Column>
-          <Column span={[12, 6, 4]}>
+          <Column span={[12, 6]}>
             <Card>
               <Heading as="h3" variant="heading30">
                 What's New with Connie
@@ -112,6 +127,11 @@ const AdminToolsData: NextPage = () => {
               <Button variant="primary">
                 View Roadmap
               </Button>
+              <Box marginTop="space40">
+                <Anchor href="https://docs.connie.one/end-users/cbo-admins/getting-started" showExternal>
+                  docs
+                </Anchor>
+              </Box>
             </Card>
           </Column>
         </Grid>

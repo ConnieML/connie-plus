@@ -1,0 +1,581 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Connie.Plus API Collection",
+		"description": "Complete API testing collection for Connie.Plus endpoints including voicemails, faxes, analytics, and TaskRouter testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{okta_access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Set base URL based on environment",
+					"if (pm.environment.name === 'Production') {",
+					"    pm.globals.set('base_url', 'https://connie.plus');",
+					"} else {",
+					"    pm.globals.set('base_url', 'http://localhost:3000');",
+					"}"
+				]
+			}
+		}
+	],
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Root Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": ["{{base_url}}"],
+							"path": [""]
+						},
+						"description": "Basic health check for the application"
+					},
+					"response": []
+				},
+				{
+					"name": "Data Center Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/data-center",
+							"host": ["{{base_url}}"],
+							"path": ["data-center"]
+						},
+						"description": "Check data center page accessibility"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Voicemail API",
+			"item": [
+				{
+					"name": "List All Voicemails",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/voicemails",
+							"host": ["{{base_url}}"],
+							"path": ["api", "voicemails"]
+						},
+						"description": "Retrieve all voicemails from Twilio serverless proxy"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has voicemails array', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('voicemails');",
+									"    pm.expect(jsonData.voicemails).to.be.an('array');",
+									"});",
+									"",
+									"pm.test('Voicemail objects have required fields', function () {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.voicemails.length > 0) {",
+									"        const voicemail = jsonData.voicemails[0];",
+									"        pm.expect(voicemail).to.have.property('sid');",
+									"        pm.expect(voicemail).to.have.property('from');",
+									"        pm.expect(voicemail).to.have.property('transcription');",
+									"        pm.expect(voicemail).to.have.property('recording_url');",
+									"    }",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Test Voicemail with Specific SID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/voicemails?sid=RE12345example",
+							"host": ["{{base_url}}"],
+							"path": ["api", "voicemails"],
+							"query": [
+								{
+									"key": "sid",
+									"value": "RE12345example",
+									"description": "Test with specific recording SID"
+								}
+							]
+						},
+						"description": "Test voicemail retrieval with specific SID parameter"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fax API",
+			"item": [
+				{
+					"name": "List All Faxes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/faxes",
+							"host": ["{{base_url}}"],
+							"path": ["api", "faxes"]
+						},
+						"description": "Retrieve all faxes from Twilio serverless proxy"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has faxes array', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('faxes');",
+									"    pm.expect(jsonData.faxes).to.be.an('array');",
+									"});",
+									"",
+									"pm.test('Fax objects have required fields', function () {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.faxes.length > 0) {",
+									"        const fax = jsonData.faxes[0];",
+									"        pm.expect(fax).to.have.property('sid');",
+									"        pm.expect(fax).to.have.property('from');",
+									"        pm.expect(fax).to.have.property('to');",
+									"        pm.expect(fax).to.have.property('media_url');",
+									"    }",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Test Fax Authentication Issues",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/faxes?debug=true",
+							"host": ["{{base_url}}"],
+							"path": ["api", "faxes"],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Enable debug mode to check for anonymous task issues"
+								}
+							]
+						},
+						"description": "Test fax retrieval with debug information for TaskRouter troubleshooting"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Analytics API",
+			"item": [
+				{
+					"name": "Get NSS Dashboard Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/analytics",
+							"host": ["{{base_url}}"],
+							"path": ["api", "analytics"]
+						},
+						"description": "Retrieve analytics data from Twilio TaskRouter via serverless proxy"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has analytics data', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('total_calls');",
+									"    pm.expect(jsonData).to.have.property('utilization');",
+									"});",
+									"",
+									"pm.test('Check for anonymous task indicators', function () {",
+									"    const jsonData = pm.response.json();",
+									"    // Test for anonymous task patterns",
+									"    if (jsonData.tasks) {",
+									"        jsonData.tasks.forEach(task => {",
+									"            if (task.attributes) {",
+									"                pm.expect(task.attributes).to.not.be.empty;",
+									"                console.log('Task attributes:', task.attributes);",
+									"            }",
+									"        });",
+									"    }",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "TaskRouter Testing",
+			"item": [
+				{
+					"name": "Simulate Web Form Task Creation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"form_data\": {\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"message\": \"Test web form submission\"\n  },\n  \"source\": \"web_form\",\n  \"task_type\": \"form_submission\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/tasks/create-web-form-task",
+							"host": ["{{base_url}}"],
+							"path": ["api", "tasks", "create-web-form-task"]
+						},
+						"description": "Test web form task creation to verify task attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Test Fax Task Attributes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tasks/recent?channel=fax&limit=5",
+							"host": ["{{base_url}}"],
+							"path": ["api", "tasks", "recent"],
+							"query": [
+								{
+									"key": "channel",
+									"value": "fax",
+									"description": "Filter for fax tasks"
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"description": "Limit to recent 5 tasks"
+								}
+							]
+						},
+						"description": "Retrieve recent fax tasks to check for anonymous task issues"
+					},
+					"response": []
+				},
+				{
+					"name": "Test Voice Task Attributes (Working)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tasks/recent?channel=voice&limit=5",
+							"host": ["{{base_url}}"],
+							"path": ["api", "tasks", "recent"],
+							"query": [
+								{
+									"key": "channel",
+									"value": "voice",
+									"description": "Filter for voice tasks (should have caller attributes)"
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"description": "Limit to recent 5 tasks"
+								}
+							]
+						},
+						"description": "Retrieve recent voice tasks (these should have proper caller attributes based on your test)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Studio Flow Testing",
+			"item": [
+				{
+					"name": "Test H2H Fax Flow Attributes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "From",
+									"value": "+17025551234",
+									"description": "Test caller ID"
+								},
+								{
+									"key": "To",
+									"value": "+17029968438",
+									"description": "NSS H2H fax number"
+								},
+								{
+									"key": "FaxSid",
+									"value": "FX12345test",
+									"description": "Test fax SID"
+								},
+								{
+									"key": "MediaUrl",
+									"value": "https://api.twilio.com/test-fax.pdf",
+									"description": "Test fax media URL"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{twilio_studio_webhook_url}}",
+							"host": ["{{twilio_studio_webhook_url}}"]
+						},
+						"description": "Simulate fax webhook to Studio Flow H2H_FAX (FW4a8f77efed3228912d24048bd756e510) to test task attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sinch Fax Testing",
+			"item": [
+				{
+					"name": "Send Test Fax via Sinch API",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{sinch_service_plan_id}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{sinch_api_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "to",
+									"value": "+17027448981",
+									"description": "Target fax number (NSS test number)",
+									"type": "text"
+								},
+								{
+									"key": "contentUrl",
+									"value": "https://d2k4o22g5zxquf.cloudfront.net/assets/fax-covers/connie-test-fax-1page.pdf",
+									"description": "URL to PDF document to fax",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://fax.api.sinch.com/v3/projects/{{sinch_project_id}}/faxes",
+							"protocol": "https",
+							"host": [
+								"fax",
+								"api",
+								"sinch",
+								"com"
+							],
+							"path": [
+								"v3",
+								"projects",
+								"{{sinch_project_id}}",
+								"faxes"
+							]
+						},
+						"description": "Send test fax via Sinch API - this will trigger TaskRouter task creation and help identify anonymous task issues"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Fax submission successful', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Response contains fax ID', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.globals.set('last_fax_id', jsonData.id);",
+									"    console.log('Fax ID created:', jsonData.id);",
+									"});",
+									"",
+									"// Wait 10 seconds then check TaskRouter for new task",
+									"setTimeout(() => {",
+									"    console.log('Check TaskRouter for new task with this fax...');",
+									"}, 10000);"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Check Fax Delivery Status",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{sinch_service_plan_id}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{sinch_api_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fax.api.sinch.com/v3/projects/{{sinch_project_id}}/faxes/{{last_fax_id}}",
+							"protocol": "https",
+							"host": [
+								"fax",
+								"api",
+								"sinch",
+								"com"
+							],
+							"path": [
+								"v3",
+								"projects",
+								"{{sinch_project_id}}",
+								"faxes",
+								"{{last_fax_id}}"
+							]
+						},
+						"description": "Check status of previously sent fax"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication Testing",
+			"item": [
+				{
+					"name": "Test Okta Authentication",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/debug",
+							"host": ["{{base_url}}"],
+							"path": ["debug"]
+						},
+						"description": "Test Okta authentication status and user information"
+					},
+					"response": []
+				},
+				{
+					"name": "Test Protected Route Access",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/data-center/voicemails",
+							"host": ["{{base_url}}"],
+							"path": ["data-center", "voicemails"]
+						},
+						"description": "Test access to protected data center voicemails page"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://connie.plus",
+			"type": "string"
+		},
+		{
+			"key": "twilio_studio_webhook_url",
+			"value": "https://webhooks.twilio.com/v1/Accounts/YOUR_ACCOUNT_SID/Flows/FW4a8f77efed3228912d24048bd756e510",
+			"type": "string"
+		}
+	]
+}

@@ -3,12 +3,115 @@
 ## Project Overview
 Connie.plus is a Next.js application serving as a resource hub for nonprofit Community Based Organizations (CBOs) using the Connie platform. It provides centralized access to tools, data, and resources for staff agents and administrators.
 
-## ✅ CURRENT DEPLOYMENT INFO (Updated Aug 2025)
+## ✅ CURRENT DEPLOYMENT INFO (Updated Aug 12, 2025)
+- **OFFICIAL PRODUCTION URL**: `https://connie.plus` (NO SUBDOMAIN)
 - **GitHub Repository**: `ConnieML/connie-plus`
-- **Live Domain**: `https://connie.plus`
+- **EC2 Server**: `ubuntu@ec2-100-28-144-153.compute-1.amazonaws.com`
 - **EC2 Directory**: `/var/www/connie.plus`  
-- **PM2 Process**: `connie.plus`
+- **PM2 Process**: `connie.plus` (NO v1, NO v2, NO SUBDOMAINS)
 - **All CRM Containers**: Point to `connie.plus` (NSS, HHOVV, DevSandbox)
+
+## 🚨 CRITICAL DEPLOYMENT SAFETY PROTOCOLS
+
+### ROGUE AGENT PREVENTION (MANDATORY READING)
+**ALL AI AGENTS MUST READ AND ACKNOWLEDGE THESE PROTOCOLS:**
+
+#### ❌ FORBIDDEN ACTIONS:
+1. **NEVER create or start processes named `v1.connie.plus` or `v2.connie.plus`**
+2. **NEVER deploy to legacy subdomain configurations** 
+3. **NEVER assume production configuration without verification**
+4. **NEVER create PM2 processes without explicit CEO approval**
+
+#### ✅ REQUIRED VERIFICATION BEFORE ANY DEPLOYMENT:
+1. **SSH and confirm current PM2 processes**: `pm2 list`
+2. **Verify ONLY `connie.plus` process should exist**
+3. **Confirm deployment target is `/var/www/connie.plus`**
+4. **Check production URL responds at `https://connie.plus`**
+
+#### 🔒 EMERGENCY RESPONSE PROTOCOL:
+If unauthorized processes detected:
+```bash
+# 1. IMMEDIATELY terminate rogue processes
+pm2 delete v1.connie.plus
+pm2 delete v2.connie.plus
+
+# 2. Verify only legitimate process remains
+pm2 list  # Should show ONLY 'connie.plus'
+
+# 3. Report incident to CEO immediately
+```
+
+### AGENT ACCOUNTABILITY:
+- **Any agent creating unauthorized production processes will be flagged**
+- **All production deployments must follow EXACT protocols**
+- **When in doubt, ASK before deploying - never assume**
+
+## ✅ VERIFIED PRODUCTION DEPLOYMENT PROCESS (Updated Aug 12, 2025)
+
+### **THIS IS THE GOLD STANDARD - FOLLOW EXACTLY**
+
+#### **PRE-DEPLOYMENT VERIFICATION:**
+```bash
+# 1. Test locally first - MANDATORY
+cd /Users/cjberno/projects/connie/connie.plus
+npm run dev
+# Test all changes at http://localhost:3000
+
+# 2. Verify production build locally
+npm run build  # Must complete without errors
+npm run start  # Test production build
+```
+
+#### **PRODUCTION DEPLOYMENT EXECUTION:**
+```bash
+# 1. Upload files to EC2 (exclude build artifacts)
+rsync -avz --exclude node_modules --exclude .next --exclude .git . ubuntu@ec2-100-28-144-153.compute-1.amazonaws.com:/var/www/connie.plus/
+
+# 2. SSH to production server
+ssh -i /Users/cjberno/projects/connie/v1.connie.plus/connieone.pem ubuntu@ec2-100-28-144-153.compute-1.amazonaws.com
+
+# 3. Build and restart on server
+cd /var/www/connie.plus
+npm install --legacy-peer-deps  # CRITICAL: Use legacy flag for React 19
+npm run build                   # Build production version
+pm2 restart connie.plus         # Restart PM2 process
+pm2 list                        # Verify process is running
+
+# 4. Verify deployment
+curl -I https://connie.plus/data-center
+curl -I https://connie.plus/admin-tools-data
+# Both should return HTTP 200
+```
+
+#### **POST-DEPLOYMENT VALIDATION:**
+1. **Test in Enhanced CRM Container** (CRITICAL)
+   - Open ConnieRTC Flex environment
+   - Navigate to Enhanced CRM Container
+   - Test updated pages render correctly
+   - Verify data connections are live
+   - Test voicemail playback functionality
+   - Test fax PDF viewer functionality
+
+2. **Monitor for 5 minutes**
+   ```bash
+   pm2 logs connie.plus --lines 20
+   ```
+
+### **SUCCESS CRITERIA:**
+- ✅ All pages render correctly in CRM Container
+- ✅ Live data refreshes on demand
+- ✅ Voicemail playback works
+- ✅ Fax PDF viewer works
+- ✅ No console errors
+- ✅ PM2 process stable
+
+### **DEPLOYMENT COMPLETED BY CTO ON AUG 12, 2025:**
+- **Result**: ERROR-FREE deployment
+- **Features**: UI improvements (centered layouts, updated buttons, alert messages)
+- **Validation**: All features working perfectly in Enhanced CRM Container
+- **Time**: ~10 minutes total
+
+**ALL FUTURE AGENTS: This is your deployment template. Follow it EXACTLY.**
 
 ## Tech Stack
 - **Framework**: Next.js 15.2 with TypeScript

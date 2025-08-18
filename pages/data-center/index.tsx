@@ -93,7 +93,16 @@ const Demos: NextPage = () => {
       >
         <Box padding="space100">
           <Stack orientation="vertical" spacing="space40">
-            <Alert variant="neutral">PLEASE NOTE: As of Connie Prototype v1.5, All reporting feature and functions are under active development. Currently, there are no custom report build tools available. To build a custom report, please download the raw data sets you need and import into a local spreadsheet application. Custom report generation will be generally available as of Connie MVPv1.0. If you would like early access to advanced Connie reporting features, please consider participainting in the Connie Reporting Cohort Group by contacting us <Anchor href="/empty-state">here</Anchor>.</Alert>
+            <Alert variant="neutral">
+              <Box display="flex" justifyContent="space-between" alignItems="flex-start">
+                <Box flex="1">
+                  PLEASE NOTE: As of Connie Prototype v2.0, reporting features and functions are available for early stage user acceptance testing (UAT). While both the real-time and ad hoc reports are fully functional and actively displaying real channel data from your Connie account, please be mindful that you may experience inconsistencies in layout and data accuracy.
+                </Box>
+                <Box marginLeft="space40" fontSize="fontSize20" color="colorTextWeak" fontStyle="italic" whiteSpace="nowrap">
+                  Updated August 12th 2025
+                </Box>
+              </Box>
+            </Alert>
           </Stack>
         </Box>
       </CustomizationProvider>
@@ -168,10 +177,10 @@ const Demos: NextPage = () => {
                 <Box marginTop="space40">
                   <Stack orientation="horizontal" spacing="space40">
                     <Button variant="primary" as="a" href="/data-center/voicemails">
-                      Load NSS Voicemails
+                      Load Voicemails
                     </Button>
                     <Button variant="secondary" as="a" href="/data-center/faxes">
-                      Load Recent Faxes
+                      Load Faxes
                     </Button>
                   </Stack>
                 </Box>
