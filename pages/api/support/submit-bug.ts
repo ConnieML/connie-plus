@@ -29,71 +29,76 @@ export default async function handler(
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Format the email content
-    const emailContent = `
-      <h2>New Bug Report from ${bugReport.organization}</h2>
-      
-      <h3>Issue Details</h3>
-      <p><strong>Title:</strong> ${bugReport.title}</p>
-      <p><strong>Severity:</strong> ${bugReport.severity}</p>
-      <p><strong>Category:</strong> ${bugReport.category}</p>
-      
-      <h3>Description</h3>
-      <p>${bugReport.description.replace(/\n/g, '<br>')}</p>
-      
-      ${bugReport.stepsToReproduce ? `
-        <h3>Steps to Reproduce</h3>
-        <p>${bugReport.stepsToReproduce.replace(/\n/g, '<br>')}</p>
-      ` : ''}
-      
-      ${bugReport.expectedBehavior ? `
-        <h3>Expected Behavior</h3>
-        <p>${bugReport.expectedBehavior.replace(/\n/g, '<br>')}</p>
-      ` : ''}
-      
-      ${bugReport.actualBehavior ? `
-        <h3>Actual Behavior</h3>
-        <p>${bugReport.actualBehavior.replace(/\n/g, '<br>')}</p>
-      ` : ''}
-      
-      <h3>Reporter Information</h3>
-      <p><strong>Name:</strong> ${bugReport.userName}</p>
-      <p><strong>Email:</strong> ${bugReport.userEmail}</p>
-      <p><strong>Organization:</strong> ${bugReport.organization}</p>
-      <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
-    `;
+    // Get browser information for debugging
+    const userAgent = req.headers['user-agent'] || 'Unknown';
+    const referer = req.headers.referer || req.headers.referrer || 'Unknown';
 
-    // TODO: Integrate with Mailgun API
-    // For now, we'll simulate success
-    // In production, you would use:
-    // const mailgun = require('mailgun-js')({apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN});
-    // const data = {
-    //   from: 'Connie Support <support@connie.team>',
-    //   to: 'support@connie.team',
-    //   subject: `[BUG-${bugReport.severity.toUpperCase()}] ${bugReport.title}`,
-    //   html: emailContent,
-    //   'h:Reply-To': bugReport.userEmail
-    // };
-    // await mailgun.messages().send(data);
-    
-    // Log email content for development
-    console.log('Email content would be:', emailContent);
+    // Prepare data for connie.tech serverless function
+    const serverlessPayload = {
+      title: bugReport.title,
+      description: bugReport.description,
+      stepsToReproduce: bugReport.stepsToReproduce,
+      expectedBehavior: bugReport.expectedBehavior,
+      actualBehavior: bugReport.actualBehavior,
+      urgency: bugReport.severity, // Map severity to urgency
+      userName: bugReport.userName,
+      userEmail: bugReport.userEmail,
+      organization: bugReport.organization,
+      userAgent: userAgent,
+      url: referer,
+      timestamp: new Date().toISOString()
+    };
 
-    // Log the bug report for now (in production, save to database)
-    console.log('Bug Report Received:', {
+    // Call connie.tech serverless function for email routing
+    const serverlessUrl = process.env.CONNIE_TECH_SERVERLESS_DOMAIN 
+      ? `https://${process.env.CONNIE_TECH_SERVERLESS_DOMAIN}/send-bug-report-email`
+      : 'https://bug-tracker-functions-dev.twil.io/send-bug-report-email'; // Default development URL
+
+    console.log('Calling serverless function:', serverlessUrl);
+    console.log('Bug report payload:', JSON.stringify(serverlessPayload, null, 2));
+
+    const response = await fetch(serverlessUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(serverlessPayload)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Serverless function error:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText
+      });
+      throw new Error(`Serverless function failed: ${response.status} ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    console.log('Serverless function result:', result);
+
+    // Log the bug report for tracking
+    console.log('Bug Report Successfully Routed to ConnieCare Team:', {
       ...bugReport,
+      mailgunId: result.mailgunId,
       timestamp: new Date().toISOString()
     });
 
     // Send success response
     res.status(200).json({ 
       success: true, 
-      message: 'Bug report submitted successfully',
-      ticketId: `BUG-${Date.now()}` // Generate a simple ticket ID
+      message: 'Bug report submitted successfully and routed to ConnieCare Team',
+      ticketId: `BUG-${Date.now()}`, // Generate a simple ticket ID
+      emailSent: true,
+      mailgunId: result.mailgunId
     });
 
   } catch (error) {
     console.error('Error processing bug report:', error);
-    res.status(500).json({ error: 'Failed to submit bug report' });
+    res.status(500).json({ 
+      error: 'Failed to submit bug report',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }

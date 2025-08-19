@@ -1,6 +1,7 @@
 // import React from 'react';
 import { Heading } from '@twilio-paste/core/heading';
 import { Paragraph } from '@twilio-paste/core/paragraph';
+import { Text } from '@twilio-paste/core/text';
 import { Column, Grid } from '@twilio-paste/core/grid';
 import { Card } from '@twilio-paste/core/card';
 import { MediaObject, MediaBody, MediaFigure } from '@twilio-paste/core/media-object';
@@ -26,14 +27,15 @@ const Demos: NextPage = () => {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     {/* Logo Header */}
-    <Box marginBottom="space60">
-      <Anchor href="/">
-        <img 
-          src="/assets/connie-plus-logo.svg" 
-          alt="Connie Platform Logo" 
-          style={{ height: '40px', width: 'auto' }}
-        />
-      </Anchor>
+    <Box marginBottom="space70">
+      <Heading as="h1" variant="heading10" marginBottom="space0">
+        <Text as="span" fontWeight="fontWeightBold" fontSize="fontSize90" color="colorText">
+          CONNIE
+        </Text>
+        <Text as="span" fontWeight="fontWeightBold" fontSize="fontSize90" color="colorText" marginLeft="space20">
+          +
+        </Text>
+      </Heading>
     </Box>
     
     <Box marginBottom="space60">

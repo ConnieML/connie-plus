@@ -25,55 +25,63 @@ export default async function handler(
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Format the email content
-    const emailContent = `
-      <h2>New Support Request from ${ticket.organization}</h2>
-      
-      <h3>Request Details</h3>
-      <p><strong>Subject:</strong> ${ticket.subject}</p>
-      <p><strong>Category:</strong> ${ticket.category}</p>
-      
-      <h3>Message</h3>
-      <p>${ticket.message.replace(/\n/g, '<br>')}</p>
-      
-      <h3>Contact Information</h3>
-      <p><strong>Name:</strong> ${ticket.userName}</p>
-      <p><strong>Email:</strong> ${ticket.userEmail}</p>
-      <p><strong>Organization:</strong> ${ticket.organization}</p>
-      <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
-    `;
-
     // Determine priority based on category
     const priority = ticket.category === 'urgent' ? 'HIGH' : 'NORMAL';
 
-    // TODO: Integrate with Mailgun API
-    // For now, we'll simulate success
-    // In production, you would use:
-    // const mailgun = require('mailgun-js')({apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN});
-    // const data = {
-    //   from: 'Connie Support <support@connie.team>',
-    //   to: 'support@connie.team',
-    //   subject: `[SUPPORT-${priority}] ${ticket.subject}`,
-    //   html: emailContent,
-    //   'h:Reply-To': ticket.userEmail
-    // };
-    // await mailgun.messages().send(data);
-    
-    // Log email content for development
-    console.log('Email content would be:', emailContent);
+    // Call connie.tech serverless function for email routing
+    const serverlessPayload = {
+      subject: ticket.subject,
+      category: ticket.category,
+      message: ticket.message,
+      userName: ticket.userName,
+      userEmail: ticket.userEmail,
+      organization: ticket.organization,
+      timestamp: new Date().toISOString()
+    };
 
-    // Log the support ticket for now (in production, save to database)
-    console.log('Support Ticket Received:', {
+    const serverlessUrl = process.env.CONNIE_TECH_SERVERLESS_DOMAIN 
+      ? `https://${process.env.CONNIE_TECH_SERVERLESS_DOMAIN}/send-support-ticket-email`
+      : 'https://bug-tracker-functions-dev.twil.io/send-support-ticket-email'; // Default development URL
+
+    console.log('Calling serverless function:', serverlessUrl);
+    console.log('Support ticket payload:', JSON.stringify(serverlessPayload, null, 2));
+
+    const response = await fetch(serverlessUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(serverlessPayload)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Serverless function error:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText
+      });
+      throw new Error(`Serverless function failed: ${response.status} ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    console.log('Serverless function result:', result);
+
+    // Log the support ticket for tracking
+    console.log('Support Ticket Successfully Routed to ConnieCare Team:', {
       ...ticket,
       priority,
+      mailgunId: result.mailgunId,
       timestamp: new Date().toISOString()
     });
 
     // Send success response
     res.status(200).json({ 
       success: true, 
-      message: 'Support request submitted successfully',
-      ticketId: `SUPPORT-${Date.now()}` // Generate a simple ticket ID
+      message: 'Support request submitted successfully and routed to ConnieCare Team',
+      ticketId: `SUPPORT-${Date.now()}`, // Generate a simple ticket ID
+      emailSent: true,
+      mailgunId: result.mailgunId
     });
 
   } catch (error) {

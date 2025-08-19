@@ -3,6 +3,42 @@
 ## Project Overview
 Connie.plus is a Next.js application serving as a resource hub for nonprofit Community Based Organizations (CBOs) using the Connie platform. It provides centralized access to tools, data, and resources for staff agents and administrators.
 
+**CRITICAL**: This application is embedded as an iframe within the Enhanced CRM Container of multiple Twilio Flex instances across different Twilio accounts.
+
+## 🏗️ TWILIO ARCHITECTURE - MANDATORY UNDERSTANDING
+
+### **ConnieRTC Organization Structure**
+**Parent Organization**: ConnieRTC (`AC9abd...591`)
+- **NOTE**: This is NOT a Flex account - it's the organizational umbrella
+
+**4 Full Twilio Accounts Under Organization** (NOT subaccounts):
+1. **NSS** - `AC82c2...43e` (Nevada Senior Services)
+2. **HHOVV** - `AC595d...63f` (Helping Hands of Vegas Valley)
+3. **ConnieRTC(+FLEX)** - `AC6f01...c4a` 
+4. **DevSandBox** - `ACac45...80d5`
+
+### **CRITICAL DISTINCTION: These Are NOT Subaccounts**
+**Per Twilio Support Clarification (Aug 18, 2025):**
+- Each account has **own resources** (phone numbers, configurations)
+- Each account has **own billing balance** 
+- These are **full standalone Twilio accounts/projects**
+- Organization provides **centralized management only**
+- **Subaccounts** would share billing with parent (ours don't)
+
+### **Current Architecture Issues**
+**CEO Assessment**: "We set this up poorly from the get go"
+- **Problem**: Multiple independent Flex instances with no clear hierarchy
+- **Needed**: Designate one account as "Master" Flex instance
+- **Impact**: Complicates management, billing, and resource coordination
+- **Future State**: Consider migrating to true subaccount structure
+
+### **How This Affects connie.plus Development**
+- Must support **multi-tenant architecture** across 4 separate Flex instances
+- Each Flex instance embeds connie.plus via Enhanced CRM Container iframe
+- Middleware must handle CORS for all 4 different domains
+- Support/bug reporting system must identify which Flex instance submitted tickets
+- Future: May need to redesign around single "Master" Flex architecture
+
 ## ✅ CURRENT DEPLOYMENT INFO (Updated Aug 12, 2025)
 - **OFFICIAL PRODUCTION URL**: `https://connie.plus` (NO SUBDOMAIN)
 - **GitHub Repository**: `ConnieML/connie-plus`
