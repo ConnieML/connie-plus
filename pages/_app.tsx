@@ -13,8 +13,8 @@ const MyApp: React.FC<React.PropsWithChildren<AppProps>> = ({ Component, pagePro
   const publicPages = ['/callback', '/test-okta', '/simple-test', '/debug'];
   const isPublicPage = publicPages.includes(router.pathname);
   
-  // Pages that should hide the support buttons (like the support pages themselves)
-  const hideSupportButtons = router.pathname.startsWith('/support/');
+  // Pages that should hide the support buttons (homepage has Quick Actions, support pages don't need them)
+  const hideSupportButtons = router.pathname === '/' || router.pathname.startsWith('/support/');
 
   return (
     <Theme.Provider theme="default">
