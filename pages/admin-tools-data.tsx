@@ -3,12 +3,16 @@ import { Anchor } from "@twilio-paste/core/anchor";
 import { Box } from "@twilio-paste/core/box";
 import { Heading } from "@twilio-paste/core/heading";
 import { Paragraph } from "@twilio-paste/core/paragraph";
+import { Text } from "@twilio-paste/core/text";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Card } from "@twilio-paste/core";
-import { Button } from "@twilio-paste/core";
 import { Grid, Column } from '@twilio-paste/core/grid';
 import { Breadcrumb, BreadcrumbItem } from '@twilio-paste/core/breadcrumb';
+import { EnterpriseCard } from '../components/EnterpriseCard';
+import { AddListIcon } from '@twilio-paste/icons/cjs/AddListIcon';
+import { ProductUsageIcon } from '@twilio-paste/icons/cjs/ProductUsageIcon';
+import { NewIcon } from '@twilio-paste/icons/cjs/NewIcon';
+import { AgentIcon } from '@twilio-paste/icons/cjs/AgentIcon';
 
 const AdminToolsData: NextPage = () => {
   return (
@@ -21,11 +25,12 @@ const AdminToolsData: NextPage = () => {
       {/* Logo Header */}
       <Box marginBottom="space60">
         <Anchor href="/">
-          <img 
-            src="/assets/connie-plus-logo.svg" 
-            alt="Connie Platform Logo" 
-            style={{ height: '40px', width: 'auto' }}
-          />
+          <Text as="span" fontWeight="fontWeightBold" fontSize="fontSize70" color="colorText">
+            CONNIE
+          </Text>
+          <Text as="span" fontWeight="fontWeightBold" fontSize="fontSize70" color="colorText" marginLeft="space20">
+            +
+          </Text>
         </Anchor>
       </Box>
       
@@ -49,90 +54,66 @@ const AdminToolsData: NextPage = () => {
       </Box>
       {/* Admin Tools Section */}
       <Box marginBottom="space120">
-        <Heading as="h2" variant="heading20">
+        <Heading as="h2" variant="heading20" marginBottom="space0">
           Core Admin Tools
         </Heading>
-        <Grid gutter="space60">
-          <Column span={[12, 6]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                Channel Manager
-              </Heading>
-              <Paragraph>
-                Manage voice, messaging, email, web, and social channels for your Connie platform.
-              </Paragraph>
-              <Button variant="primary" as="a" href="/channels">
-                Access Channel Manager
-              </Button>
-              <Box marginTop="space40">
-                <Anchor href="https://docs.connie.one/end-users/cbo-admins/getting-started" showExternal>
-                  docs
-                </Anchor>
-              </Box>
-            </Card>
+        <Grid gutter="space30">
+          <Column>
+            <EnterpriseCard
+              icon={<AddListIcon decorative={true} size="sizeIcon50" />}
+              title="Channel Manager"
+              description="Manage voice, messaging, email, web, and social channels for your Connie platform."
+              href="/channels"
+              status="ua-testing"
+              version="4.1.2"
+              type="Manager"
+              docsLink="https://docs.connie.one/end-users/cbo-admins/getting-started"
+            />
           </Column>
-          <Column span={[12, 6]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                Data & Reporting
-              </Heading>
-              <Paragraph>
-                Access comprehensive reporting tools and analytics for your organization.
-              </Paragraph>
-              <Button variant="primary" as="a" href="/data-center">
-                View Reports
-              </Button>
-              <Box marginTop="space40">
-                <Anchor href="https://docs.connie.one/end-users/cbo-admins/getting-started" showExternal>
-                  docs
-                </Anchor>
-              </Box>
-            </Card>
+          <Column>
+            <EnterpriseCard
+              icon={<ProductUsageIcon decorative={true} size="sizeIcon50" />}
+              title="Data & Reporting"
+              description="Access comprehensive reporting tools and analytics for your organization."
+              href="/data-center"
+              status="ua-testing"
+              version="2.3.1"
+              type="Analytics"
+              docsLink="https://docs.connie.one/end-users/cbo-admins/getting-started"
+            />
           </Column>
         </Grid>
       </Box>
       
       {/* Action Cards Section */}
       <Box marginBottom="space120">
-        <Heading as="h2" variant="heading20">
+        <Heading as="h2" variant="heading20" marginBottom="space0">
           Resources & Documentation
         </Heading>
-        <Grid gutter="space60">
-          <Column span={[12, 6]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                Admin Documentation
-              </Heading>
-              <Paragraph>
-                Comprehensive documentation covering SDKs, sample applications, and integration guides.
-              </Paragraph>
-              <Button variant="primary">
-                Access Documentation
-              </Button>
-              <Box marginTop="space40">
-                <Anchor href="https://docs.connie.one/end-users/cbo-admins/getting-started" showExternal>
-                  docs
-                </Anchor>
-              </Box>
-            </Card>
+        <Grid gutter="space30">
+          <Column>
+            <EnterpriseCard
+              icon={<NewIcon decorative={true} size="sizeIcon50" />}
+              title="Admin Documentation"
+              description="Comprehensive documentation covering SDKs, sample applications, and integration guides."
+              href="https://docs.connie.one/end-users/cbo-admins/getting-started"
+              status="ua-testing"
+              version="3.0.0"
+              type="Docs"
+              docsLink="https://docs.connie.one/end-users/cbo-admins/getting-started"
+            />
           </Column>
-          <Column span={[12, 6]}>
-            <Card>
-              <Heading as="h3" variant="heading30">
-                What's New with Connie
-              </Heading>
-              <Paragraph>
-                Stay updated with the latest product releases and feature announcements on our roadmap.
-              </Paragraph>
-              <Button variant="primary">
-                View Roadmap
-              </Button>
-              <Box marginTop="space40">
-                <Anchor href="https://docs.connie.one/end-users/cbo-admins/getting-started" showExternal>
-                  docs
-                </Anchor>
-              </Box>
-            </Card>
+          <Column>
+            <EnterpriseCard
+              icon={<AgentIcon decorative={true} size="sizeIcon50" />}
+              title="What's New with Connie"
+              description="Stay updated with the latest product releases and feature announcements on our roadmap."
+              href="/demos/connie-broadcast"
+              status="staging"
+              version="1.0.0"
+              type="Roadmap"
+              docsLink="https://docs.connie.one/end-users/cbo-admins/getting-started"
+            />
           </Column>
         </Grid>
       </Box>

@@ -28,20 +28,21 @@ export default async function handler(
     // Determine priority based on category
     const priority = ticket.category === 'urgent' ? 'HIGH' : 'NORMAL';
 
-    // Call connie.tech serverless function for email routing
+    // Call connie.tech serverless function for TaskRouter integration  
     const serverlessPayload = {
-      subject: ticket.subject,
-      category: ticket.category,
-      message: ticket.message,
-      userName: ticket.userName,
-      userEmail: ticket.userEmail,
+      name: ticket.userName,
+      email: ticket.userEmail,
       organization: ticket.organization,
+      issue: ticket.message,
+      priority: priority === 'HIGH' ? 'High' : 'Medium',
+      category: ticket.category,
+      userAgent: req.headers['user-agent'],
       timestamp: new Date().toISOString()
     };
 
     const serverlessUrl = process.env.CONNIE_TECH_SERVERLESS_DOMAIN 
-      ? `https://${process.env.CONNIE_TECH_SERVERLESS_DOMAIN}/send-support-ticket-email`
-      : 'https://bug-tracker-functions-dev.twil.io/send-support-ticket-email'; // Default development URL
+      ? `https://${process.env.CONNIE_TECH_SERVERLESS_DOMAIN}/functions/send-support-ticket`
+      : 'https://connie-bug-tracker-3041-dev.twil.io/functions/send-support-ticket'; // Updated ConnieRTC(+FLEX) URL
 
     console.log('Calling serverless function:', serverlessUrl);
     console.log('Support ticket payload:', JSON.stringify(serverlessPayload, null, 2));

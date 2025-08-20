@@ -99,8 +99,8 @@ const Demos: NextPage = () => {
           icon={<ProductUsageIcon decorative={true} size="sizeIcon50" />}
           title="Learning & Support Center"
           description="Learn everything you need to know to Connie like a pro! Support services."
-          href="/support/get-help"
-          status="ua-testing"
+          href="#"
+          status="development"
           version="1.5.0"
           type="Support"
           docsLink="https://bit.ly/connie-docs"
@@ -111,8 +111,8 @@ const Demos: NextPage = () => {
           icon={<NewIcon decorative={true} size="sizeIcon50" />}
           title="Connie Showroom"
           description="Product Roadmap, pre-release demos, make a suggestion & win cool stuff!"
-          href="/demos/connie-broadcast"
-          status="staging"
+          href="#"
+          status="development"
           version="0.9.0"
           type="Preview"
           docsLink="https://bit.ly/connie-docs"

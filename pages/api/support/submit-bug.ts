@@ -51,8 +51,8 @@ export default async function handler(
 
     // Call connie.tech serverless function for email routing
     const serverlessUrl = process.env.CONNIE_TECH_SERVERLESS_DOMAIN 
-      ? `https://${process.env.CONNIE_TECH_SERVERLESS_DOMAIN}/send-bug-report-email`
-      : 'https://bug-tracker-functions-dev.twil.io/send-bug-report-email'; // Default development URL
+      ? `https://${process.env.CONNIE_TECH_SERVERLESS_DOMAIN}/functions/send-bug-report-email-simple`
+      : 'https://connie-bug-tracker-3041-dev.twil.io/functions/send-bug-report-email-simple'; // Use working email-only function temporarily
 
     console.log('Calling serverless function:', serverlessUrl);
     console.log('Bug report payload:', JSON.stringify(serverlessPayload, null, 2));

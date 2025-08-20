@@ -108,11 +108,17 @@ export const EnterpriseCard: React.FC<EnterpriseCardProps> = ({
       <Box flexGrow={1} display="flex" flexDirection="column">
         {/* Title */}
         <Box marginBottom="space30">
-          <Anchor href={href}>
-            <Text as="h3" fontSize="fontSize50" fontWeight="fontWeightBold" color="colorText">
+          {status === 'development' && href === '#' ? (
+            <Text as="h3" fontSize="fontSize50" fontWeight="fontWeightBold" color="colorTextWeak">
               {title}
             </Text>
-          </Anchor>
+          ) : (
+            <Anchor href={href}>
+              <Text as="h3" fontSize="fontSize50" fontWeight="fontWeightBold" color="colorText">
+                {title}
+              </Text>
+            </Anchor>
+          )}
         </Box>
         
         {/* Description */}

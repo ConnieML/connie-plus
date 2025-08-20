@@ -15,6 +15,10 @@ import { Input } from '@twilio-paste/core/input';
 import { TextArea } from '@twilio-paste/core/textarea';
 import { Select, Option } from '@twilio-paste/core/select';
 import { Spinner } from '@twilio-paste/core/spinner';
+import { Text } from '@twilio-paste/core/text';
+import { Anchor } from '@twilio-paste/core/anchor';
+import { ChatIcon } from '@twilio-paste/icons/cjs/ChatIcon';
+import { NewIcon } from '@twilio-paste/icons/cjs/NewIcon';
 // import { ChatIcon } from '@twilio-paste/icons/esm/ChatIcon';
 // import { EmailIcon } from '@twilio-paste/icons/esm/EmailIcon';
 // import { ArrowBackIcon } from '@twilio-paste/icons/esm/ArrowBackIcon';
@@ -63,8 +67,7 @@ const GetHelp: NextPage = () => {
   const handleStartChat = () => {
     // This would integrate with Twilio WebChat
     // For now, we'll show a placeholder
-    alert('Chat integration coming soon! For immediate help, please use the email form.');
-    setShowEmailForm(true);
+    alert('Chat integration coming soon! For immediate help, please use support tickets below.');
   };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
@@ -125,7 +128,7 @@ const GetHelp: NextPage = () => {
       <Head>
         <title>Get Support - Connie Help Center</title>
       </Head>
-      <Box padding="space70" maxWidth="800px" margin="auto">
+      <Box padding="space70" maxWidth="1200px" margin="auto" backgroundColor="colorBackgroundBody">
         <Stack orientation="vertical" spacing="space60">
           <Button variant="link" size="small" onClick={() => router.back()}>
             ← Back
@@ -159,65 +162,274 @@ const GetHelp: NextPage = () => {
               <Card>
                 <Stack orientation="vertical" spacing="space60">
                   <Heading as="h2" variant="heading20">
-                    How can we help you today?
+                    Welcome to the ConnieCare Team
                   </Heading>
                   
                   <Paragraph>
-                    Choose your preferred support method. Live chat is available during business hours 
-                    (9 AM - 5 PM PST), or you can submit an email ticket anytime.
+                    We're here to help. Choose how you'd like to connect with our support team.
                   </Paragraph>
 
-                  <Stack orientation="vertical" spacing="space40">
-                    {supportAvailable === null ? (
-                      <Box display="flex" justifyContent="center">
-                        <Spinner decorative size="sizeIcon40" />
-                      </Box>
-                    ) : supportAvailable ? (
-                      <Card>
-                        <Stack orientation="horizontal" spacing="space40">
-                          💬
-                          <Box flex="1">
-                            <Heading as="h3" variant="heading30">
-                              Live Chat Available
-                            </Heading>
-                            <Paragraph marginBottom="space0">
-                              Connect with a support agent now for immediate assistance.
-                            </Paragraph>
+                  {supportAvailable === null ? (
+                    <Box display="flex" justifyContent="center" padding="space60">
+                      <Spinner decorative size="sizeIcon40" />
+                    </Box>
+                  ) : (
+                    <Box display="flex" columnGap="space40" flexWrap="wrap">
+                      {/* Live Chat Card */}
+                      <Box
+                        backgroundColor="colorBackgroundBody"
+                        borderStyle="solid"
+                        borderWidth="borderWidth10"
+                        borderColor="colorBorder"
+                        borderRadius="borderRadius30"
+                        padding="space70"
+                        display="flex"
+                        flexDirection="column"
+                        height="100%"
+                        position="relative"
+                        transition="all 0.2s ease"
+                        _hover={{
+                          boxShadow: 'shadowHigh',
+                          transform: 'translateY(-2px)',
+                          borderColor: 'colorBorderPrimary'
+                        }}
+                        style={{
+                          cursor: 'pointer',
+                          boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
+                          width: 'calc(50% - 10px)',
+                          minWidth: '300px'
+                        }}
+                        onClick={handleStartChat}
+                      >
+                        {/* Card Header */}
+                        <Box display="flex" alignItems="flex-start" justifyContent="space-between" marginBottom="space50">
+                          <Box
+                            width="40px"
+                            height="40px"
+                            backgroundColor="colorBackgroundPrimaryWeakest"
+                            borderRadius="borderRadius30"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            flexShrink={0}
+                          >
+                            <ChatIcon decorative={true} size="sizeIcon50" />
                           </Box>
-                          <Button variant="primary" onClick={handleStartChat}>
-                            Start Chat
-                          </Button>
-                        </Stack>
-                      </Card>
-                    ) : (
-                      <Alert variant="neutral">
-                        <Stack orientation="horizontal" spacing="space20">
-                          💬
-                          <span>Live chat is currently offline. Please use email support below.</span>
-                        </Stack>
-                      </Alert>
-                    )}
-
-                    <Card>
-                      <Stack orientation="horizontal" spacing="space40">
-                        📧
-                        <Box flex="1">
-                          <Heading as="h3" variant="heading30">
-                            Email Support
-                          </Heading>
-                          <Paragraph marginBottom="space0">
-                            Submit a ticket and we'll respond within 24 hours.
-                          </Paragraph>
+                          
+                          <Box
+                            display="inline-flex"
+                            alignItems="center"
+                            paddingX="space40"
+                            paddingY="space20"
+                            borderRadius="borderRadius20"
+                            backgroundColor={supportAvailable ? "colorBackgroundSuccess" : "colorBackgroundStrong"}
+                          >
+                            <Text
+                              as="span"
+                              fontSize="fontSize10"
+                              fontWeight="fontWeightBold"
+                              color="colorTextInverse"
+                              textTransform="uppercase"
+                              letterSpacing="wider"
+                            >
+                              UA TESTING
+                            </Text>
+                          </Box>
                         </Box>
-                        <Button 
-                          variant={supportAvailable ? "secondary" : "primary"} 
-                          onClick={() => setShowEmailForm(true)}
+                        
+                        {/* Card Content */}
+                        <Box flexGrow={1} display="flex" flexDirection="column">
+                          <Box marginBottom="space30">
+                            <Text as="h3" fontSize="fontSize50" fontWeight="fontWeightBold" color={supportAvailable ? "colorText" : "colorTextWeak"}>
+                              Live Chat {supportAvailable ? "Available" : "Offline"}
+                            </Text>
+                          </Box>
+                          
+                          <Text as="p" color="colorTextWeak" fontSize="fontSize30" marginBottom="space50">
+                            {supportAvailable ? "Connect with a support agent now for immediate assistance." : "Live chat is currently offline. Please use support tickets."}
+                          </Text>
+                          
+                          <Box marginBottom="space40">
+                            <Anchor href="https://docs.connie.one" showExternal>
+                              docs
+                            </Anchor>
+                          </Box>
+                        </Box>
+                        
+                        {/* Card Metadata */}
+                        <Box
+                          display="flex"
+                          flexWrap="wrap"
+                          columnGap="space50"
+                          rowGap="space20"
+                          paddingTop="space50"
+                          marginTop="auto"
+                          borderTopStyle="solid"
+                          borderTopWidth="borderWidth10"
+                          borderTopColor="colorBorder"
                         >
-                          Send Email
-                        </Button>
-                      </Stack>
-                    </Card>
-                  </Stack>
+                          <Box display="flex" alignItems="center" columnGap="space20">
+                            <Text 
+                              as="span" 
+                              fontWeight="fontWeightSemibold" 
+                              fontSize="fontSize20" 
+                              color="colorTextWeak" 
+                              textTransform="uppercase" 
+                              letterSpacing="wider"
+                            >
+                              Version
+                            </Text>
+                            <Text as="span" fontSize="fontSize20" color="colorText">
+                              1.0.0
+                            </Text>
+                          </Box>
+                          
+                          <Box display="flex" alignItems="center" columnGap="space20">
+                            <Text 
+                              as="span" 
+                              fontWeight="fontWeightSemibold" 
+                              fontSize="fontSize20" 
+                              color="colorTextWeak" 
+                              textTransform="uppercase" 
+                              letterSpacing="wider"
+                            >
+                              Type
+                            </Text>
+                            <Text as="span" fontSize="fontSize20" color="colorText">
+                              Support
+                            </Text>
+                          </Box>
+                        </Box>
+                      </Box>
+
+                      {/* Support Ticket Card */}
+                      <Box
+                        backgroundColor="colorBackgroundBody"
+                        borderStyle="solid"
+                        borderWidth="borderWidth10"
+                        borderColor="colorBorder"
+                        borderRadius="borderRadius30"
+                        padding="space70"
+                        display="flex"
+                        flexDirection="column"
+                        height="100%"
+                        position="relative"
+                        transition="all 0.2s ease"
+                        _hover={{
+                          boxShadow: 'shadowHigh',
+                          transform: 'translateY(-2px)',
+                          borderColor: 'colorBorderPrimary'
+                        }}
+                        style={{
+                          cursor: 'pointer',
+                          boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
+                          width: 'calc(50% - 10px)',
+                          minWidth: '300px'
+                        }}
+                        onClick={() => window.open('https://trouble-ticket-app.vercel.app/', '_blank')}
+                      >
+                        {/* Card Header */}
+                        <Box display="flex" alignItems="flex-start" justifyContent="space-between" marginBottom="space50">
+                          <Box
+                            width="40px"
+                            height="40px"
+                            backgroundColor="colorBackgroundPrimaryWeakest"
+                            borderRadius="borderRadius30"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            flexShrink={0}
+                          >
+                            <NewIcon decorative={true} size="sizeIcon50" />
+                          </Box>
+                          
+                          <Box
+                            display="inline-flex"
+                            alignItems="center"
+                            paddingX="space40"
+                            paddingY="space20"
+                            borderRadius="borderRadius20"
+                            backgroundColor="colorBackgroundSuccess"
+                          >
+                            <Text
+                              as="span"
+                              fontSize="fontSize10"
+                              fontWeight="fontWeightBold"
+                              color="colorTextInverse"
+                              textTransform="uppercase"
+                              letterSpacing="wider"
+                            >
+                              UA TESTING
+                            </Text>
+                          </Box>
+                        </Box>
+                        
+                        {/* Card Content */}
+                        <Box flexGrow={1} display="flex" flexDirection="column">
+                          <Box marginBottom="space30">
+                            <Text as="h3" fontSize="fontSize50" fontWeight="fontWeightBold" color="colorText">
+                              Submit Support Ticket
+                            </Text>
+                          </Box>
+                          
+                          <Text as="p" color="colorTextWeak" fontSize="fontSize30" marginBottom="space50">
+                            Create detailed tickets with tracking - available 24/7.
+                          </Text>
+                          
+                          <Box marginBottom="space40">
+                            <Anchor href="https://docs.connie.one" showExternal>
+                              docs
+                            </Anchor>
+                          </Box>
+                        </Box>
+                        
+                        {/* Card Metadata */}
+                        <Box
+                          display="flex"
+                          flexWrap="wrap"
+                          columnGap="space50"
+                          rowGap="space20"
+                          paddingTop="space50"
+                          marginTop="auto"
+                          borderTopStyle="solid"
+                          borderTopWidth="borderWidth10"
+                          borderTopColor="colorBorder"
+                        >
+                          <Box display="flex" alignItems="center" columnGap="space20">
+                            <Text 
+                              as="span" 
+                              fontWeight="fontWeightSemibold" 
+                              fontSize="fontSize20" 
+                              color="colorTextWeak" 
+                              textTransform="uppercase" 
+                              letterSpacing="wider"
+                            >
+                              Version
+                            </Text>
+                            <Text as="span" fontSize="fontSize20" color="colorText">
+                              1.0.0
+                            </Text>
+                          </Box>
+                          
+                          <Box display="flex" alignItems="center" columnGap="space20">
+                            <Text 
+                              as="span" 
+                              fontWeight="fontWeightSemibold" 
+                              fontSize="fontSize20" 
+                              color="colorTextWeak" 
+                              textTransform="uppercase" 
+                              letterSpacing="wider"
+                            >
+                              Type
+                            </Text>
+                            <Text as="span" fontSize="fontSize20" color="colorText">
+                              Support
+                            </Text>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                  )}
                 </Stack>
               </Card>
             </>
