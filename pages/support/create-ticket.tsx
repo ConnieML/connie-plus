@@ -136,18 +136,18 @@ const CreateTicket: NextPage = () => {
                   <Box display="flex" columnGap="space40">
                     <FormControl>
                       <Label>Submitted By</Label>
-                      <Input type="text" value={submittedTicket.customername} readOnly />
+                      <Input type="text" value={submittedTicket.customerName} readOnly />
                     </FormControl>
                     
                     <FormControl>
                       <Label>Contact</Label>
-                      <Input type="text" value={submittedTicket.customerphone} readOnly />
+                      <Input type="text" value={submittedTicket.customerPhone} readOnly />
                     </FormControl>
                   </Box>
                   
                   <FormControl>
                     <Label>Submitted</Label>
-                    <Input type="text" value={new Date(submittedTicket.createdat).toLocaleString()} readOnly />
+                    <Input type="text" value={new Date(submittedTicket.createdAt).toLocaleString()} readOnly />
                   </FormControl>
                   
                   <HelpText>
