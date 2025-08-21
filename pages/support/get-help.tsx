@@ -81,8 +81,12 @@ const GetHelp: NextPage = () => {
       
       window.parent.postMessage(message, '*');
       console.log('Sent WebChat request to parent:', message);
+      
+      // Show user feedback
+      alert(`Chat request sent for ${customerData.name}. If WebChat doesn't open, the parent window handler may not be loaded.`);
     } else {
       console.log('Not in iframe - WebChat functionality not available');
+      alert('WebChat is only available when running inside the Enhanced CRM Container.');
     }
   };
 
