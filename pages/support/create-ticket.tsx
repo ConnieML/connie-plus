@@ -20,7 +20,7 @@ const CreateTicket: NextPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const [ticketId, setTicketId] = useState('');
+  const [submittedTicket, setSubmittedTicket] = useState<any>(null);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -62,7 +62,7 @@ const CreateTicket: NextPage = () => {
 
       if (response.ok) {
         setSubmitStatus('success');
-        setTicketId(data.id);
+        setSubmittedTicket(data);
         // Clear form
         setFormData({
           title: '',
@@ -71,10 +71,7 @@ const CreateTicket: NextPage = () => {
           customerPhone: '',
           priority: 'medium'
         });
-        // Redirect after 3 seconds to match existing pattern
-        setTimeout(() => {
-          router.push('/support/get-help');
-        }, 3000);
+        // Auto redirect removed - let user see their ticket
       } else {
         setSubmitStatus('error');
         setErrorMessage(data.error || 'Failed to create support ticket');
@@ -102,10 +99,63 @@ const CreateTicket: NextPage = () => {
             Create Support Ticket
           </Heading>
 
-          {submitStatus === 'success' && (
-            <Alert variant="neutral">
-              <strong>Support ticket created successfully!</strong> Ticket ID: {ticketId}. Your request has been sent to the ConnieCare Team and a task has been created in our support queue. Redirecting...
-            </Alert>
+          {submitStatus === 'success' && submittedTicket && (
+            <>
+              <Alert variant="neutral">
+                <strong>Support ticket created successfully!</strong> Your request has been sent to the ConnieCare Team and a task has been created in our support queue.
+              </Alert>
+              
+              <Card>
+                <Stack orientation="vertical" spacing="space40">
+                  <Heading as="h2" variant="heading30">
+                    Your Ticket Details
+                  </Heading>
+                  
+                  <Box display="flex" columnGap="space40">
+                    <FormControl>
+                      <Label>Ticket ID</Label>
+                      <Input type="text" value={submittedTicket.id} readOnly />
+                    </FormControl>
+                    
+                    <FormControl>
+                      <Label>Status</Label>
+                      <Input type="text" value={submittedTicket.status} readOnly />
+                    </FormControl>
+                  </Box>
+                  
+                  <FormControl>
+                    <Label>Title</Label>
+                    <Input type="text" value={submittedTicket.title} readOnly />
+                  </FormControl>
+                  
+                  <FormControl>
+                    <Label>Description</Label>
+                    <TextArea value={submittedTicket.description} readOnly rows={3} />
+                  </FormControl>
+                  
+                  <Box display="flex" columnGap="space40">
+                    <FormControl>
+                      <Label>Submitted By</Label>
+                      <Input type="text" value={submittedTicket.customername} readOnly />
+                    </FormControl>
+                    
+                    <FormControl>
+                      <Label>Contact</Label>
+                      <Input type="text" value={submittedTicket.customerphone} readOnly />
+                    </FormControl>
+                  </Box>
+                  
+                  <FormControl>
+                    <Label>Submitted</Label>
+                    <Input type="text" value={new Date(submittedTicket.createdat).toLocaleString()} readOnly />
+                  </FormControl>
+                  
+                  <HelpText>
+                    Save this ticket ID for your records. You can reference it when following up with the ConnieCare Team.
+                  </HelpText>
+                </Stack>
+              </Card>
+            </>
           )}
 
           {submitStatus === 'error' && (
