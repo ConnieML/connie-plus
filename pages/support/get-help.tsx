@@ -27,7 +27,7 @@ import { NewIcon } from '@twilio-paste/icons/cjs/NewIcon';
 
 const GetHelp: NextPage = () => {
   const router = useRouter();
-  const [supportAvailable, setSupportAvailable] = useState<boolean | null>(null);
+  const [supportAvailable, setSupportAvailable] = useState<boolean | null>(true);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -65,24 +65,7 @@ const GetHelp: NextPage = () => {
     }));
   };
 
-  const handleStartChat = () => {
-    // Initialize Twilio WebChat when user clicks Live Chat
-    if (typeof window !== 'undefined' && (window as any).Twilio) {
-      const appConfig = {
-        deploymentKey: "CVd30e7280b3cd760a06c6aa0ab44bb13b",
-        preEngagementConfig: {
-          fields: [
-            { label: "Name", type: "text", required: true },
-            { label: "Email", type: "email", required: true },
-            { label: "Team", type: "hidden", value: "support" } // Routes to ConnieCare Team
-          ]
-        }
-      };
-      (window as any).Twilio.initWebchat(appConfig);
-    } else {
-      alert('Chat widget is loading. Please try again in a moment.');
-    }
-  };
+  // WebChat will be initialized by the Script onLoad handler
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,6 +124,14 @@ const GetHelp: NextPage = () => {
     <>
       <Head>
         <title>Get Support - Connie Help Center</title>
+        <style>{`
+          /* Simple z-index fix for WebChat */
+          [id*="twilio"],
+          [class*="twilio"],
+          [data-twilio] {
+            z-index: 9999 !important;
+          }
+        `}</style>
       </Head>
       
       {/* Twilio WebChat Script */}
@@ -149,6 +140,24 @@ const GetHelp: NextPage = () => {
         strategy="afterInteractive"
         integrity="sha256-ydLLXnNrb26iFUvKAHsYt9atwfzz0LNcgBmo0NmD5Uk="
         crossOrigin="anonymous"
+        onLoad={() => {
+          console.log('WebChat script loaded, initializing...');
+          if (typeof window !== 'undefined' && (window as any).Twilio) {
+            const appConfig = {
+              deploymentKey: "CVd30e7280b3cd760a06c6aa0ab44bb13b",
+              preEngagementConfig: {
+                fields: [
+                  { label: "Name", type: "text", required: true },
+                  { label: "Email", type: "email", required: true },
+                  { label: "Team", type: "hidden", value: "support" }
+                ]
+              }
+            };
+            
+            (window as any).Twilio.initWebchat(appConfig);
+            console.log('WebChat initialized!');
+          }
+        }}
       />
       
       {/* Twilio WebChat Widget Root */}
@@ -225,11 +234,11 @@ const GetHelp: NextPage = () => {
                           width: 'calc(50% - 10px)',
                           minWidth: '300px'
                         }}
-                        onClick={handleStartChat}
                       >
                         {/* Card Header */}
                         <Box display="flex" alignItems="flex-start" justifyContent="space-between" marginBottom="space50">
                           <Box
+                            id="twilio-chat-launcher-container"
                             width="40px"
                             height="40px"
                             backgroundColor="colorBackgroundPrimaryWeakest"
@@ -267,12 +276,12 @@ const GetHelp: NextPage = () => {
                         <Box flexGrow={1} display="flex" flexDirection="column">
                           <Box marginBottom="space30">
                             <Text as="h3" fontSize="fontSize50" fontWeight="fontWeightBold" color={supportAvailable ? "colorText" : "colorTextWeak"}>
-                              Live Chat {supportAvailable ? "Available" : "Offline"}
+                              Chat with ConnieCare Team
                             </Text>
                           </Box>
                           
                           <Text as="p" color="colorTextWeak" fontSize="fontSize30" marginBottom="space50">
-                            {supportAvailable ? "Connect with a support agent now for immediate assistance." : "Live chat is currently offline. Please use support tickets."}
+                            Connect with a support agent now for immediate assistance.
                           </Text>
                           
                           <Box marginBottom="space40">
