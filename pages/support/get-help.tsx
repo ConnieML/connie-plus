@@ -326,7 +326,7 @@ const GetHelp: NextPage = () => {
                           width: 'calc(50% - 10px)',
                           minWidth: '300px'
                         }}
-                        onClick={() => window.open('https://trouble-ticket-app.vercel.app/', '_blank')}
+                        onClick={() => router.push('/support/create-ticket')}
                       >
                         {/* Card Header */}
                         <Box display="flex" alignItems="flex-start" justifyContent="space-between" marginBottom="space50">

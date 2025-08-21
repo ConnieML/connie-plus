@@ -28,51 +28,45 @@ export default async function handler(
     // Determine priority based on category
     const priority = ticket.category === 'urgent' ? 'HIGH' : 'NORMAL';
 
-    // Call connie.tech serverless function for TaskRouter integration  
-    const serverlessPayload = {
-      name: ticket.userName,
-      email: ticket.userEmail,
-      organization: ticket.organization,
-      issue: ticket.message,
-      priority: priority === 'HIGH' ? 'High' : 'Medium',
-      category: ticket.category,
-      userAgent: req.headers['user-agent'],
-      timestamp: new Date().toISOString()
+    // Call trouble-ticket-app for unified ticket handling
+    const ticketPayload = {
+      title: ticket.subject,
+      description: `Category: ${ticket.category}
+Priority: ${priority}
+
+${ticket.message}`,
+      customerName: ticket.userName,
+      customerPhone: ticket.userEmail // Using email as phone for contact info
     };
 
-    const serverlessUrl = process.env.CONNIE_TECH_SERVERLESS_DOMAIN 
-      ? `https://${process.env.CONNIE_TECH_SERVERLESS_DOMAIN}/functions/send-support-ticket`
-      : 'https://connie-bug-tracker-3041-dev.twil.io/functions/send-support-ticket'; // Updated ConnieRTC(+FLEX) URL
+    console.log('Calling trouble-ticket-app:', JSON.stringify(ticketPayload, null, 2));
 
-    console.log('Calling serverless function:', serverlessUrl);
-    console.log('Support ticket payload:', JSON.stringify(serverlessPayload, null, 2));
-
-    const response = await fetch(serverlessUrl, {
+    const response = await fetch('https://trouble-ticket-app.vercel.app/api/tickets', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(serverlessPayload)
+      body: JSON.stringify(ticketPayload)
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Serverless function error:', {
+      console.error('Trouble-ticket-app error:', {
         status: response.status,
         statusText: response.statusText,
         error: errorText
       });
-      throw new Error(`Serverless function failed: ${response.status} ${response.statusText}`);
+      throw new Error(`Ticket creation failed: ${response.status} ${response.statusText}`);
     }
 
     const result = await response.json();
-    console.log('Serverless function result:', result);
+    console.log('Trouble-ticket-app result:', result);
 
     // Log the support ticket for tracking
-    console.log('Support Ticket Successfully Routed to ConnieCare Team:', {
+    console.log('Support Ticket Successfully Created:', {
       ...ticket,
       priority,
-      mailgunId: result.mailgunId,
+      ticketId: result.id,
       timestamp: new Date().toISOString()
     });
 
@@ -80,9 +74,9 @@ export default async function handler(
     res.status(200).json({ 
       success: true, 
       message: 'Support request submitted successfully and routed to ConnieCare Team',
-      ticketId: `SUPPORT-${Date.now()}`, // Generate a simple ticket ID
-      emailSent: true,
-      mailgunId: result.mailgunId
+      ticketId: result.id,
+      ticketCreated: true,
+      taskCreated: true // This should be true since trouble-ticket-app creates tasks
     });
 
   } catch (error) {
