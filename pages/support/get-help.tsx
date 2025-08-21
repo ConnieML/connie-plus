@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 import { Box } from '@twilio-paste/core/box';
 import { Card } from '@twilio-paste/core/card';
 import { Heading } from '@twilio-paste/core/heading';
@@ -65,9 +66,22 @@ const GetHelp: NextPage = () => {
   };
 
   const handleStartChat = () => {
-    // This would integrate with Twilio WebChat
-    // For now, we'll show a placeholder
-    alert('Chat integration coming soon! For immediate help, please use support tickets below.');
+    // Initialize Twilio WebChat when user clicks Live Chat
+    if (typeof window !== 'undefined' && (window as any).Twilio) {
+      const appConfig = {
+        deploymentKey: "CVd30e7280b3cd760a06c6aa0ab44bb13b",
+        preEngagementConfig: {
+          fields: [
+            { label: "Name", type: "text", required: true },
+            { label: "Email", type: "email", required: true },
+            { label: "Team", type: "hidden", value: "support" } // Routes to ConnieCare Team
+          ]
+        }
+      };
+      (window as any).Twilio.initWebchat(appConfig);
+    } else {
+      alert('Chat widget is loading. Please try again in a moment.');
+    }
   };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
@@ -128,6 +142,18 @@ const GetHelp: NextPage = () => {
       <Head>
         <title>Get Support - Connie Help Center</title>
       </Head>
+      
+      {/* Twilio WebChat Script */}
+      <Script 
+        src="https://media.twiliocdn.com/sdk/js/webchat-v3/releases/3.3.0/webchat.min.js"
+        strategy="afterInteractive"
+        integrity="sha256-ydLLXnNrb26iFUvKAHsYt9atwfzz0LNcgBmo0NmD5Uk="
+        crossOrigin="anonymous"
+      />
+      
+      {/* Twilio WebChat Widget Root */}
+      <div id="twilio-webchat-widget-root"></div>
+      
       <Box padding="space70" maxWidth="1200px" margin="auto" backgroundColor="colorBackgroundBody">
         <Stack orientation="vertical" spacing="space60">
           <Button variant="link" size="small" onClick={() => router.back()}>
