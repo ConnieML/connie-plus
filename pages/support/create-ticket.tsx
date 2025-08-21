@@ -164,8 +164,9 @@ const CreateTicket: NextPage = () => {
             </Alert>
           )}
 
-          <Card>
-            <Form onSubmit={handleSubmit}>
+          {submitStatus !== 'success' && (
+            <Card>
+              <Form onSubmit={handleSubmit}>
               <Stack orientation="vertical" spacing="space60">
                 <FormControl>
                   <Label htmlFor="title" required>
@@ -259,8 +260,9 @@ const CreateTicket: NextPage = () => {
                   </Button>
                 </FormActions>
               </Stack>
-            </Form>
-          </Card>
+              </Form>
+            </Card>
+          )}
         </Stack>
       </Box>
     </>
