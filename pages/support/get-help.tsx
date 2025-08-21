@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import Script from 'next/script';
 import { Box } from '@twilio-paste/core/box';
 import { Card } from '@twilio-paste/core/card';
 import { Heading } from '@twilio-paste/core/heading';
@@ -42,6 +41,11 @@ const GetHelp: NextPage = () => {
     organization: ''
   });
 
+  const [chatFormData, setChatFormData] = useState({
+    name: '',
+    email: ''
+  });
+
   useEffect(() => {
     checkSupportAvailability();
   }, []);
@@ -65,7 +69,22 @@ const GetHelp: NextPage = () => {
     }));
   };
 
-  // WebChat will be initialized by the Script onLoad handler
+  // Handle WebChat via postMessage to parent Flex window
+  const startWebChat = (customerData: { name: string; email: string }) => {
+    if (typeof window !== 'undefined' && window.parent && window.parent !== window) {
+      // Send message to parent Flex window to initialize WebChat
+      const message = {
+        type: 'START_WEBCHAT',
+        customerData,
+        deploymentKey: 'CVd30e7280b3cd760a06c6aa0ab44bb13b'
+      };
+      
+      window.parent.postMessage(message, '*');
+      console.log('Sent WebChat request to parent:', message);
+    } else {
+      console.log('Not in iframe - WebChat functionality not available');
+    }
+  };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,34 +153,7 @@ const GetHelp: NextPage = () => {
         `}</style>
       </Head>
       
-      {/* Twilio WebChat Script */}
-      <Script 
-        src="https://media.twiliocdn.com/sdk/js/webchat-v3/releases/3.3.0/webchat.min.js"
-        strategy="afterInteractive"
-        integrity="sha256-ydLLXnNrb26iFUvKAHsYt9atwfzz0LNcgBmo0NmD5Uk="
-        crossOrigin="anonymous"
-        onLoad={() => {
-          console.log('WebChat script loaded, initializing...');
-          if (typeof window !== 'undefined' && (window as any).Twilio) {
-            const appConfig = {
-              deploymentKey: "CVd30e7280b3cd760a06c6aa0ab44bb13b",
-              preEngagementConfig: {
-                fields: [
-                  { label: "Name", type: "text", required: true },
-                  { label: "Email", type: "email", required: true },
-                  { label: "Team", type: "hidden", value: "support" }
-                ]
-              }
-            };
-            
-            (window as any).Twilio.initWebchat(appConfig);
-            console.log('WebChat initialized!');
-          }
-        }}
-      />
-      
-      {/* Twilio WebChat Widget Root */}
-      <div id="twilio-webchat-widget-root"></div>
+      {/* WebChat now handled by parent Flex window via postMessage */}
       
       <Box padding="space70" maxWidth="1200px" margin="auto" backgroundColor="colorBackgroundBody">
         <Stack orientation="vertical" spacing="space60">
@@ -283,6 +275,45 @@ const GetHelp: NextPage = () => {
                           <Text as="p" color="colorTextWeak" fontSize="fontSize30" marginBottom="space50">
                             Connect with a support agent now for immediate assistance.
                           </Text>
+
+                          {/* Quick chat form */}
+                          <Stack orientation="vertical" spacing="space30">
+                            <FormControl>
+                              <Label htmlFor="chatName">Your Name</Label>
+                              <Input
+                                id="chatName"
+                                type="text"
+                                value={chatFormData.name}
+                                onChange={(e) => setChatFormData({...chatFormData, name: e.target.value})}
+                                placeholder="Enter your name"
+                                required
+                              />
+                            </FormControl>
+                            
+                            <FormControl>
+                              <Label htmlFor="chatEmail">Email</Label>
+                              <Input
+                                id="chatEmail"
+                                type="email"
+                                value={chatFormData.email}
+                                onChange={(e) => setChatFormData({...chatFormData, email: e.target.value})}
+                                placeholder="Enter your email"
+                                required
+                              />
+                            </FormControl>
+                            
+                            <Button 
+                              variant="primary" 
+                              onClick={() => {
+                                if (chatFormData.name && chatFormData.email) {
+                                  startWebChat(chatFormData);
+                                }
+                              }}
+                              disabled={!chatFormData.name || !chatFormData.email}
+                            >
+                              Start Live Chat
+                            </Button>
+                          </Stack>
                           
                           <Box marginBottom="space40">
                             <Anchor href="https://docs.connie.one" showExternal>
