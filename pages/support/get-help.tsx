@@ -728,9 +728,11 @@ const GetHelp: NextPage = () => {
                   </Text>
                 </Box>
                 <Box flexGrow={1} textAlign="center">
-                  <Heading as="h2" variant="heading30" marginBottom="space30">
-                    Join the Growing Connie Community
-                  </Heading>
+                  <Box marginBottom="space30">
+                    <Heading as="h2" variant="heading30">
+                      Join the Growing Connie Community
+                    </Heading>
+                  </Box>
                   <Text as="p" color="colorTextWeak" fontSize="fontSize40">
                     Connect with other CBOs, share best practices, and get help from the community.
                   </Text>
