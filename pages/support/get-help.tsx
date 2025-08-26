@@ -188,129 +188,6 @@ const GetHelp: NextPage = () => {
             Get Support
           </Heading>
 
-          {/* Ticket Status Section */}
-          <Card>
-            <Stack orientation="vertical" spacing="space40">
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Heading as="h2" variant="heading30">
-                  Your Open Tickets
-                </Heading>
-                <Button
-                  variant="link"
-                  size="small"
-                  onClick={() => setShowTicketLookup(!showTicketLookup)}
-                >
-                  {showTicketLookup ? 'Hide Lookup' : 'Check Ticket Status'}
-                </Button>
-              </Box>
-
-              {showTicketLookup && (
-                <Box backgroundColor="colorBackgroundBody" padding="space40" borderRadius="borderRadius20">
-                  <Form onSubmit={handleTicketLookupSubmit}>
-                    <Stack orientation="vertical" spacing="space40">
-                      <Text as="p" fontSize="fontSize30" color="colorTextWeak">
-                        Enter your name and contact info to view your open support tickets:
-                      </Text>
-                      
-                      <Box display="flex" columnGap="space40">
-                        <FormControl>
-                          <Label htmlFor="customerName">Your Name</Label>
-                          <Input
-                            id="customerName"
-                            name="customerName"
-                            type="text"
-                            value={ticketLookup.customerName}
-                            onChange={handleTicketLookupChange}
-                            placeholder="Full name used when submitting tickets"
-                          />
-                        </FormControl>
-
-                        <FormControl>
-                          <Label htmlFor="customerPhone">Email or Phone</Label>
-                          <Input
-                            id="customerPhone"
-                            name="customerPhone"
-                            type="text"
-                            value={ticketLookup.customerPhone}
-                            onChange={handleTicketLookupChange}
-                            placeholder="Contact info used when submitting tickets"
-                          />
-                        </FormControl>
-                      </Box>
-
-                      <FormActions>
-                        <Button variant="primary" type="submit" disabled={isLoadingTickets}>
-                          {isLoadingTickets ? (
-                            <>
-                              <Spinner decorative size="sizeIcon20" />
-                              Loading...
-                            </>
-                          ) : (
-                            'Check My Tickets'
-                          )}
-                        </Button>
-                      </FormActions>
-                    </Stack>
-                  </Form>
-                </Box>
-              )}
-
-              {userTickets.length > 0 && (
-                <Stack orientation="vertical" spacing="space30">
-                  <Alert variant="neutral">
-                    Found {userTickets.length} open ticket{userTickets.length !== 1 ? 's' : ''} for your account:
-                  </Alert>
-                  
-                  {userTickets.slice(0, 5).map((ticket) => (
-                    <Box 
-                      key={ticket.id}
-                      padding="space30"
-                      borderStyle="solid"
-                      borderWidth="borderWidth10"
-                      borderColor="colorBorder"
-                      borderRadius="borderRadius20"
-                      backgroundColor="colorBackgroundBody"
-                    >
-                      <Stack orientation="horizontal" spacing="space40">
-                        <Box minWidth="80px">
-                          <Paragraph marginBottom="space0">
-                            <strong>#{ticket.id}</strong>
-                          </Paragraph>
-                        </Box>
-                        <Box flex="1">
-                          <Paragraph marginBottom="space0">{ticket.title}</Paragraph>
-                        </Box>
-                        <Box>
-                          <Paragraph marginBottom="space0">
-                            <strong style={{color: ticket.status === 'Open' ? '#04b85c' : '#757575'}}>
-                              {ticket.status}
-                            </strong>
-                          </Paragraph>
-                        </Box>
-                        <Box minWidth="120px">
-                          <Paragraph marginBottom="space0">
-                            <small>{new Date(ticket.createdat).toLocaleDateString()}</small>
-                          </Paragraph>
-                        </Box>
-                      </Stack>
-                    </Box>
-                  ))}
-                  
-                  <Alert variant="neutral">
-                    Reference these ticket numbers when following up with the ConnieCare Team. 
-                    Tickets are handled in order of priority and submission time.
-                  </Alert>
-                </Stack>
-              )}
-
-              {showTicketLookup && userTickets.length === 0 && !isLoadingTickets && ticketLookup.customerName && ticketLookup.customerPhone && (
-                <Alert variant="neutral">
-                  No open tickets found for the provided contact information.
-                </Alert>
-              )}
-            </Stack>
-          </Card>
-
           {submitStatus === 'success' && submittedTicket && (
             <>
               <Alert variant="neutral">
@@ -708,6 +585,178 @@ const GetHelp: NextPage = () => {
               </Card>
             </>
           )}
+
+          {/* Ticket Status Section - moved below support cards */}
+          <Card>
+            <Stack orientation="vertical" spacing="space40">
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Heading as="h2" variant="heading30">
+                  Your Open Tickets
+                </Heading>
+                <Button
+                  variant="link"
+                  size="small"
+                  onClick={() => setShowTicketLookup(!showTicketLookup)}
+                >
+                  {showTicketLookup ? 'Hide Lookup' : 'Check Ticket Status'}
+                </Button>
+              </Box>
+
+              {showTicketLookup && (
+                <Box backgroundColor="colorBackgroundBody" padding="space40" borderRadius="borderRadius20">
+                  <Form onSubmit={handleTicketLookupSubmit}>
+                    <Stack orientation="vertical" spacing="space40">
+                      <Text as="p" fontSize="fontSize30" color="colorTextWeak">
+                        Enter your name and contact info to view your open support tickets:
+                      </Text>
+                      
+                      <Box display="flex" columnGap="space40">
+                        <FormControl>
+                          <Label htmlFor="customerName">Your Name</Label>
+                          <Input
+                            id="customerName"
+                            name="customerName"
+                            type="text"
+                            value={ticketLookup.customerName}
+                            onChange={handleTicketLookupChange}
+                            placeholder="Full name used when submitting tickets"
+                          />
+                        </FormControl>
+
+                        <FormControl>
+                          <Label htmlFor="customerPhone">Email or Phone</Label>
+                          <Input
+                            id="customerPhone"
+                            name="customerPhone"
+                            type="text"
+                            value={ticketLookup.customerPhone}
+                            onChange={handleTicketLookupChange}
+                            placeholder="Contact info used when submitting tickets"
+                          />
+                        </FormControl>
+                      </Box>
+
+                      <FormActions>
+                        <Button variant="primary" type="submit" disabled={isLoadingTickets}>
+                          {isLoadingTickets ? (
+                            <>
+                              <Spinner decorative size="sizeIcon20" />
+                              Loading...
+                            </>
+                          ) : (
+                            'Check My Tickets'
+                          )}
+                        </Button>
+                      </FormActions>
+                    </Stack>
+                  </Form>
+                </Box>
+              )}
+
+              {userTickets.length > 0 && (
+                <Stack orientation="vertical" spacing="space30">
+                  <Alert variant="neutral">
+                    Found {userTickets.length} open ticket{userTickets.length !== 1 ? 's' : ''} for your account:
+                  </Alert>
+                  
+                  {userTickets.slice(0, 5).map((ticket) => (
+                    <Box 
+                      key={ticket.id}
+                      padding="space30"
+                      borderStyle="solid"
+                      borderWidth="borderWidth10"
+                      borderColor="colorBorder"
+                      borderRadius="borderRadius20"
+                      backgroundColor="colorBackgroundBody"
+                    >
+                      <Stack orientation="horizontal" spacing="space40">
+                        <Box minWidth="80px">
+                          <Paragraph marginBottom="space0">
+                            <strong>#{ticket.id}</strong>
+                          </Paragraph>
+                        </Box>
+                        <Box flex="1">
+                          <Paragraph marginBottom="space0">{ticket.title}</Paragraph>
+                        </Box>
+                        <Box>
+                          <Paragraph marginBottom="space0">
+                            <strong style={{color: ticket.status === 'Open' ? '#04b85c' : '#757575'}}>
+                              {ticket.status}
+                            </strong>
+                          </Paragraph>
+                        </Box>
+                        <Box minWidth="120px">
+                          <Paragraph marginBottom="space0">
+                            <small>{new Date(ticket.createdat).toLocaleDateString()}</small>
+                          </Paragraph>
+                        </Box>
+                      </Stack>
+                    </Box>
+                  ))}
+                  
+                  <Alert variant="neutral">
+                    Reference these ticket numbers when following up with the ConnieCare Team. 
+                    Tickets are handled in order of priority and submission time.
+                  </Alert>
+                </Stack>
+              )}
+
+              {showTicketLookup && userTickets.length === 0 && !isLoadingTickets && ticketLookup.customerName && ticketLookup.customerPhone && (
+                <Alert variant="neutral">
+                  No open tickets found for the provided contact information.
+                </Alert>
+              )}
+            </Stack>
+          </Card>
+
+          {/* Community Slack Card */}
+          <Card>
+            <Stack orientation="vertical" spacing="space50">
+              <Box display="flex" alignItems="center" justifyContent="center" columnGap="space40">
+                <Box
+                  width="60px"
+                  height="60px"
+                  backgroundColor="colorBackgroundPrimaryWeakest"
+                  borderRadius="borderRadius30"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  {/* Slack-style icon using existing Paste icons */}
+                  <Text fontSize="fontSize70" fontWeight="fontWeightBold" color="colorTextIconBrandHighlight">
+                    #
+                  </Text>
+                </Box>
+                <Box flexGrow={1} textAlign="center">
+                  <Heading as="h2" variant="heading30" marginBottom="space30">
+                    Join the Growing Connie Community
+                  </Heading>
+                  <Text as="p" color="colorTextWeak" fontSize="fontSize40">
+                    Connect with other CBOs, share best practices, and get help from the community.
+                  </Text>
+                </Box>
+              </Box>
+              
+              <Box textAlign="center">
+                <Alert variant="neutral">
+                  <Stack orientation="vertical" spacing="space30">
+                    <Text as="p">
+                      <strong>Coming Soon!</strong> Our Slack workspace will provide:
+                    </Text>
+                    <Box display="flex" justifyContent="center" flexWrap="wrap" columnGap="space60" rowGap="space20">
+                      <Text as="span" fontSize="fontSize30">• Peer support network</Text>
+                      <Text as="span" fontSize="fontSize30">• Best practice sharing</Text>
+                      <Text as="span" fontSize="fontSize30">• Feature discussions</Text>
+                      <Text as="span" fontSize="fontSize30">• Community events</Text>
+                    </Box>
+                    <Text as="p" fontSize="fontSize30" color="colorTextWeak">
+                      Stay tuned for updates on joining the Connie Community Slack!
+                    </Text>
+                  </Stack>
+                </Alert>
+              </Box>
+            </Stack>
+          </Card>
 
           {showEmailForm && (
             <Card>
