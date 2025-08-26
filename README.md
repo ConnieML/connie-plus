@@ -51,7 +51,7 @@ pm2 list
 
 ### 📦 Step-by-Step Deployment Process
 
-#### Step 1: Local Testing (MANDATORY)
+#### Step 1: Local Development Testing (MANDATORY)
 ```bash
 # 1. In your local connie.plus directory
 cd /Users/cjberno/projects/connie/connie.plus
@@ -59,15 +59,26 @@ cd /Users/cjberno/projects/connie/connie.plus
 # 2. Install dependencies (use legacy flag for React 19 compatibility)
 npm install --legacy-peer-deps
 
-# 3. Test build locally 
+# 3. Start development server
+npm run dev
+
+# 4. Test at http://localhost:3000
+# Key testing paths:
+# - /support/get-help (routes to create-ticket form)
+# - /support/create-ticket (test ticket submission with details display)
+# - /data-center (test data connections)
+# - /channels (test Twilio API integration)
+
+# 5. Test production build locally
 npm run build
-
-# 4. Test production build
 npm run start
-
-# 5. Verify functionality at http://localhost:3000
-# Test key features: /data-center, /channels, authentication
+# Verify at http://localhost:3000 (production mode)
 ```
+
+**IMPORTANT**: Support ticket testing requires CORS configuration:
+- trouble-ticket-app configured to accept `http://localhost:3000` for development
+- Test tickets create real entries in database and TaskRouter
+- Use clear test subjects like "localhost test [number]" for easy identification
 
 #### Step 2: Deploy to Production
 ```bash
