@@ -723,7 +723,7 @@ const GetHelp: NextPage = () => {
                   justifyContent="center"
                 >
                   {/* Slack-style icon using existing Paste icons */}
-                  <Text fontSize="fontSize70" fontWeight="fontWeightBold" color="colorTextIconBrandHighlight">
+                  <Text as="span" fontSize="fontSize70" fontWeight="fontWeightBold" color="colorTextIconBrandHighlight">
                     #
                   </Text>
                 </Box>
