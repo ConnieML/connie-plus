@@ -16,11 +16,40 @@
             console.log('Twilio available:', !!window.Twilio);
             console.log('Twilio keys:', window.Twilio ? Object.keys(window.Twilio) : 'none');
             
+            // Detect organization from referrer and use appropriate deployment key
+            const referrer = document.referrer;
+            console.log('Referrer:', referrer);
+            
+            let deploymentKey;
+            let organizationName;
+            
+            if (referrer.includes('nss.connie.team')) {
+                deploymentKey = 'CV8c8c75ecb84c0208b1166dbe53bdb81a'; // NSS
+                organizationName = 'NSS';
+            } else if (referrer.includes('hhovv.connie.team')) {
+                deploymentKey = 'CV0d858ad49e486f7e52415c67d4eb4eb6'; // HHOVV
+                organizationName = 'HHOVV';
+            } else if (referrer.includes('dev.connie.team')) {
+                deploymentKey = 'CV98ac935efbf6a1ac3bd09de09126b5de'; // DevSandBox
+                organizationName = 'DevSandBox';
+            } else if (referrer.includes('localhost:3000')) {
+                deploymentKey = 'CV98ac935efbf6a1ac3bd09de09126b5de'; // Default to DevSandBox for local testing
+                organizationName = 'DevSandBox (localhost)';
+            } else {
+                // Fallback to NSS if referrer doesn't match
+                deploymentKey = 'CV8c8c75ecb84c0208b1166dbe53bdb81a'; // NSS
+                organizationName = 'NSS (fallback)';
+                console.warn('Unknown referrer, defaulting to NSS deployment');
+            }
+            
+            console.log(`Detected organization: ${organizationName}`);
+            console.log(`Using deployment key: ${deploymentKey}`);
+            
             if (window.Twilio && window.Twilio.initWebchat) {
                 const appConfig = {
-                    deploymentKey: "CVd30e7280b3cd760a06c6aa0ab44bb13b"
+                    deploymentKey: deploymentKey
                 }
-                console.log('Initializing WebChat...');
+                console.log(`Initializing WebChat for ${organizationName}...`);
                 window.Twilio.initWebchat(appConfig);
                 console.log('WebChat initialized!');
             } else {
