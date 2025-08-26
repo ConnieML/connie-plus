@@ -254,32 +254,31 @@ const GetHelp: NextPage = () => {
                           </Box>
                           
                           <Text as="p" color="colorTextWeak" fontSize="fontSize30" marginBottom="space50">
-                            Using working WebChat implementation via iframe.
+                            Click the button below to open WebChat in a new window.
                           </Text>
 
-                          {/* Iframe embedding the working WebChat HTML */}
-                          <Box 
-                            padding="space40"
-                            borderStyle="solid"
-                            borderWidth="borderWidth10"
-                            borderColor="colorBorderWeak"
-                            borderRadius="borderRadius20"
-                            marginBottom="space40"
-                          >
-                            <iframe 
-                              src="/test-webchat.html" 
-                              width="100%" 
-                              height="500px"
-                              style={{ border: 'none' }}
-                              title="WebChat Support"
-                            />
-                          </Box>
-                          
-                          <Alert variant="neutral">
-                            <Text as="p" fontSize="fontSize30">
-                              <strong>WebChat Status:</strong> Using proven working implementation
-                            </Text>
-                          </Alert>
+                          {/* Open WebChat in new window to avoid iframe-in-iframe issues */}
+                          <Stack orientation="vertical" spacing="space40">
+                            <Button 
+                              variant="primary" 
+                              onClick={() => {
+                                // Open the working WebChat HTML in a new window
+                                const webChatWindow = window.open('/test-webchat.html', 'ConnieWebChat', 'width=400,height=600');
+                                if (!webChatWindow) {
+                                  alert('Please allow popups for this site to use WebChat');
+                                }
+                              }}
+                              size="default"
+                            >
+                              Open WebChat Support
+                            </Button>
+                            
+                            <Alert variant="neutral">
+                              <Text as="p" fontSize="fontSize30">
+                                <strong>Note:</strong> WebChat will open in a new window to ensure proper functionality when accessed from the CRM container.
+                              </Text>
+                            </Alert>
+                          </Stack>
                           
                           <Box marginBottom="space40">
                             <Anchor href="https://docs.connie.one" showExternal>
