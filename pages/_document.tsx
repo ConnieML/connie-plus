@@ -1,19 +1,21 @@
-import React from "react";
-import { Head, Html, Main, NextScript } from "next/document";
+import { Html, Head, Main, NextScript } from 'next/document'
 
-const Document = (): React.ReactElement => {
+export default function Document() {
   return (
     <Html>
       <Head>
-        <link rel="preconnect" href="https://assets.twilio.com" crossOrigin="" />
-        <link rel="stylesheet" href="https://assets.twilio.com/public_assets/paste-fonts/1.5.2/fonts.css" />
+        {/* Twilio WebChat SDK - Static Loading (Support's Recommendation) */}
+        <script 
+          defer 
+          src="https://media.twiliocdn.com/sdk/js/webchat-v3/releases/3.3.0/webchat.min.js" 
+          integrity="sha256-ydLLXnNrb26iFUvKAHsYt9atwfzz0LNcgBmo0NmD5Uk=" 
+          crossOrigin="anonymous"
+        />
       </Head>
       <body>
         <Main />
         <NextScript />
       </body>
     </Html>
-  );
-};
-
-export default Document;
+  )
+}

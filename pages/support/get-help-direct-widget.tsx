@@ -19,10 +19,13 @@ import { Text } from '@twilio-paste/core/text';
 import { Anchor } from '@twilio-paste/core/anchor';
 import { ChatIcon } from '@twilio-paste/icons/cjs/ChatIcon';
 import { NewIcon } from '@twilio-paste/icons/cjs/NewIcon';
-// import { ChatIcon } from '@twilio-paste/icons/esm/ChatIcon';
-// import { EmailIcon } from '@twilio-paste/icons/esm/EmailIcon';
-// import { ArrowBackIcon } from '@twilio-paste/icons/esm/ArrowBackIcon';
-// import { CalendarIcon } from '@twilio-paste/icons/esm/CalendarIcon';
+
+// Declare Twilio global for TypeScript
+declare global {
+  interface Window {
+    Twilio?: any;
+  }
+}
 
 const GetHelp: NextPage = () => {
   const router = useRouter();
@@ -31,6 +34,8 @@ const GetHelp: NextPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [webChatLoaded, setWebChatLoaded] = useState(false);
+  const [webChatInitialized, setWebChatInitialized] = useState(false);
 
   const [formData, setFormData] = useState({
     subject: '',
@@ -41,9 +46,19 @@ const GetHelp: NextPage = () => {
     organization: ''
   });
 
+  const [chatFormData, setChatFormData] = useState({
+    name: '',
+    email: ''
+  });
 
   useEffect(() => {
     checkSupportAvailability();
+    detectChildAccount();
+  }, []);
+
+  // Load WebChat SDK when component mounts
+  useEffect(() => {
+    loadWebChatScript();
   }, []);
 
   const checkSupportAvailability = async () => {
@@ -57,6 +72,53 @@ const GetHelp: NextPage = () => {
     }
   };
 
+  // Detect which child account is accessing this page
+  const detectChildAccount = () => {
+    // Check if we're in an iframe
+    if (typeof window !== 'undefined' && window.parent !== window) {
+      // Try to detect from referrer or parent URL
+      const referrer = document.referrer;
+      console.log('Detected referrer:', referrer);
+      
+      // Parse subdomain from referrer
+      if (referrer) {
+        try {
+          const url = new URL(referrer);
+          const hostname = url.hostname;
+          
+          // Store the child account info
+          sessionStorage.setItem('childAccount', hostname);
+          sessionStorage.setItem('isInIframe', 'true');
+          
+          console.log('Child account detected:', hostname);
+        } catch (e) {
+          console.error('Error parsing referrer:', e);
+        }
+      }
+    }
+  };
+
+  // Load Twilio WebChat SDK
+  const loadWebChatScript = () => {
+    if (document.querySelector('script[src*="webchat.min.js"]')) {
+      console.log('WebChat script already loaded');
+      setWebChatLoaded(true);
+      return;
+    }
+    
+    const script = document.createElement('script');
+    script.src = 'https://media.twiliocdn.com/sdk/js/webchat/v3.0/webchat.min.js';
+    script.async = true;
+    script.onload = () => {
+      console.log('WebChat SDK loaded successfully');
+      setWebChatLoaded(true);
+    };
+    script.onerror = () => {
+      console.error('Failed to load WebChat SDK');
+    };
+    document.head.appendChild(script);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -65,7 +127,127 @@ const GetHelp: NextPage = () => {
     }));
   };
 
-  // WebChat now handled via iframe - no postMessage needed
+  // Initialize WebChat with direct widget approach (Support's recommendation)
+  const startWebChat = (customerData: { name: string; email: string }) => {
+    if (!webChatLoaded || typeof window.Twilio === 'undefined') {
+      alert('WebChat is still loading. Please try again in a moment.');
+      return;
+    }
+
+    if (webChatInitialized) {
+      console.log('WebChat already initialized - expanding widget');
+      // If already initialized, just expand it
+      if (window.Twilio?.FlexWebChat?.Actions?.toggleChatVisibility) {
+        window.Twilio.FlexWebChat.Actions.toggleChatVisibility();
+      }
+      return;
+    }
+
+    // Get child account info from sessionStorage
+    const childAccount = sessionStorage.getItem('childAccount') || 'unknown';
+    const isInIframe = sessionStorage.getItem('isInIframe') === 'true';
+
+    console.log('Initializing WebChat with context:', {
+      childAccount,
+      customerData,
+      isInIframe
+    });
+
+    // Configuration following Support's exact pattern
+    const appConfig = {
+      accountSid: 'AC[redacted]', // ConnieCare Team account
+      flexFlowSid: 'FO43b2a992702a247a309c284e5e0be796', // From your WebChannel list
+      
+      // Context to pass to parent Flex
+      context: {
+        childAccount: childAccount,
+        agentName: customerData.name,
+        agentEmail: customerData.email,
+        supportRequest: true,
+        timestamp: new Date().toISOString()
+      },
+
+      // Pre-engagement form configuration
+      startEngagementOnInit: false,
+      preEngagementConfig: {
+        description: "Let's get you connected with the ConnieCare Team",
+        fields: [
+          {
+            label: 'Name',
+            type: 'InputItem',
+            attributes: {
+              name: 'friendlyName',
+              type: 'text',
+              required: true,
+              value: customerData.name,
+              readOnly: false
+            }
+          },
+          {
+            label: 'Email',
+            type: 'InputItem',
+            attributes: {
+              name: 'email',
+              type: 'email',
+              required: true,
+              value: customerData.email,
+              readOnly: false
+            }
+          },
+          {
+            label: 'Your Organization',
+            type: 'InputItem',
+            attributes: {
+              name: 'childAccount',
+              type: 'text',
+              required: true,
+              value: childAccount,
+              readOnly: true
+            }
+          },
+          {
+            label: 'How can we help?',
+            type: 'TextareaItem',
+            attributes: {
+              name: 'question',
+              type: 'text',
+              required: false,
+              placeholder: 'Describe your issue or question...'
+            }
+          }
+        ],
+        submitLabel: 'Start Chat with ConnieCare Team'
+      },
+
+      // UI Configuration
+      colorTheme: {
+        overrides: {
+          backgroundColors: {
+            colorBackgroundBody: '#FFFFFF'
+          }
+        }
+      }
+    };
+
+    try {
+      // Initialize WebChat
+      window.Twilio.FlexWebChat.renderWebChat(appConfig);
+      setWebChatInitialized(true);
+      
+      console.log('WebChat initialized successfully');
+      
+      // Auto-open the chat widget after a brief delay
+      setTimeout(() => {
+        if (window.Twilio?.FlexWebChat?.Actions?.toggleChatVisibility) {
+          window.Twilio.FlexWebChat.Actions.toggleChatVisibility();
+        }
+      }, 500);
+      
+    } catch (error) {
+      console.error('Failed to initialize WebChat:', error);
+      alert('Failed to start chat. Please try again or use the support ticket option.');
+    }
+  };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,16 +307,27 @@ const GetHelp: NextPage = () => {
       <Head>
         <title>Get Support - Connie Help Center</title>
         <style>{`
-          /* Simple z-index fix for WebChat */
+          /* Ensure WebChat widget appears above everything */
+          #twilio-webchat-frame,
+          .twilio-webchat,
           [id*="twilio"],
           [class*="twilio"],
           [data-twilio] {
-            z-index: 9999 !important;
+            z-index: 999999 !important;
+          }
+          
+          /* Container for the WebChat widget */
+          #webchat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999999;
           }
         `}</style>
       </Head>
       
-      {/* WebChat now handled by parent Flex window via postMessage */}
+      {/* WebChat widget will render in this container */}
+      <div id="webchat-container"></div>
       
       <Box padding="space70" maxWidth="1200px" margin="auto" backgroundColor="colorBackgroundBody">
         <Stack orientation="vertical" spacing="space60">
@@ -145,6 +338,19 @@ const GetHelp: NextPage = () => {
           <Heading as="h1" variant="heading10">
             Get Support
           </Heading>
+
+          {/* Debug info for testing */}
+          {process.env.NODE_ENV === 'development' && (
+            <Alert variant="neutral">
+              <Text as="p" fontSize="fontSize20">
+                <strong>Debug Info:</strong><br />
+                Child Account: {sessionStorage.getItem('childAccount') || 'Not detected'}<br />
+                In iFrame: {sessionStorage.getItem('isInIframe') || 'false'}<br />
+                WebChat Loaded: {webChatLoaded ? 'Yes' : 'No'}<br />
+                WebChat Initialized: {webChatInitialized ? 'Yes' : 'No'}
+              </Text>
+            </Alert>
+          )}
 
           {submitStatus === 'success' && (
             <Alert variant="neutral">
@@ -240,7 +446,7 @@ const GetHelp: NextPage = () => {
                               textTransform="uppercase"
                               letterSpacing="wider"
                             >
-                              UA TESTING
+                              DIRECT WIDGET
                             </Text>
                           </Box>
                         </Box>
@@ -254,34 +460,49 @@ const GetHelp: NextPage = () => {
                           </Box>
                           
                           <Text as="p" color="colorTextWeak" fontSize="fontSize30" marginBottom="space50">
-                            Using working WebChat implementation via iframe.
+                            Connect with a support agent now for immediate assistance.
                           </Text>
 
-                          {/* Iframe embedding the working WebChat HTML */}
-                          <Box 
-                            padding="space40"
-                            borderStyle="solid"
-                            borderWidth="borderWidth10"
-                            borderColor="colorBorderWeak"
-                            borderRadius="borderRadius20"
-                            marginBottom="space40"
-                          >
-                            <iframe 
-                              src="/test-webchat.html" 
-                              width="100%" 
-                              height="500px"
-                              style={{ border: 'none' }}
-                              title="WebChat Support"
-                            />
-                          </Box>
+                          {/* Quick chat form */}
+                          <Stack orientation="vertical" spacing="space30">
+                            <FormControl>
+                              <Label htmlFor="chatName">Your Name</Label>
+                              <Input
+                                id="chatName"
+                                type="text"
+                                value={chatFormData.name}
+                                onChange={(e) => setChatFormData({...chatFormData, name: e.target.value})}
+                                placeholder="Enter your name"
+                                required
+                              />
+                            </FormControl>
+                            
+                            <FormControl>
+                              <Label htmlFor="chatEmail">Email</Label>
+                              <Input
+                                id="chatEmail"
+                                type="email"
+                                value={chatFormData.email}
+                                onChange={(e) => setChatFormData({...chatFormData, email: e.target.value})}
+                                placeholder="Enter your email"
+                                required
+                              />
+                            </FormControl>
+                            
+                            <Button 
+                              variant="primary" 
+                              onClick={() => {
+                                if (chatFormData.name && chatFormData.email) {
+                                  startWebChat(chatFormData);
+                                }
+                              }}
+                              disabled={!chatFormData.name || !chatFormData.email || !webChatLoaded}
+                            >
+                              {!webChatLoaded ? 'Loading WebChat...' : 'Start Live Chat'}
+                            </Button>
+                          </Stack>
                           
-                          <Alert variant="neutral">
-                            <Text as="p" fontSize="fontSize30">
-                              <strong>WebChat Status:</strong> Using proven working implementation
-                            </Text>
-                          </Alert>
-                          
-                          <Box marginBottom="space40">
+                          <Box marginBottom="space40" marginTop="space40">
                             <Anchor href="https://docs.connie.one" showExternal>
                               docs
                             </Anchor>
@@ -312,7 +533,7 @@ const GetHelp: NextPage = () => {
                               Version
                             </Text>
                             <Text as="span" fontSize="fontSize20" color="colorText">
-                              1.0.0
+                              2.0.0
                             </Text>
                           </Box>
                           
@@ -328,7 +549,7 @@ const GetHelp: NextPage = () => {
                               Type
                             </Text>
                             <Text as="span" fontSize="fontSize20" color="colorText">
-                              Support
+                              WebChat 3.0
                             </Text>
                           </Box>
                         </Box>
@@ -391,7 +612,7 @@ const GetHelp: NextPage = () => {
                               textTransform="uppercase"
                               letterSpacing="wider"
                             >
-                              UA TESTING
+                              AVAILABLE 24/7
                             </Text>
                           </Box>
                         </Box>

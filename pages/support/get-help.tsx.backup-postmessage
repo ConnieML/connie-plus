@@ -8,23 +8,43 @@ import { Heading } from '@twilio-paste/core/heading';
 import { Paragraph } from '@twilio-paste/core/paragraph';
 import { Button } from '@twilio-paste/core/button';
 import { Stack } from '@twilio-paste/core/stack';
+import { Alert } from '@twilio-paste/core/alert';
+import { Form, FormControl, FormActions } from '@twilio-paste/core/form';
+import { Label } from '@twilio-paste/core/label';
+import { Input } from '@twilio-paste/core/input';
+import { TextArea } from '@twilio-paste/core/textarea';
+import { Select, Option } from '@twilio-paste/core/select';
 import { Spinner } from '@twilio-paste/core/spinner';
 import { Text } from '@twilio-paste/core/text';
 import { Anchor } from '@twilio-paste/core/anchor';
 import { ChatIcon } from '@twilio-paste/icons/cjs/ChatIcon';
 import { NewIcon } from '@twilio-paste/icons/cjs/NewIcon';
+// import { ChatIcon } from '@twilio-paste/icons/esm/ChatIcon';
+// import { EmailIcon } from '@twilio-paste/icons/esm/EmailIcon';
+// import { ArrowBackIcon } from '@twilio-paste/icons/esm/ArrowBackIcon';
+// import { CalendarIcon } from '@twilio-paste/icons/esm/CalendarIcon';
 
-// TypeScript declarations for Crisp
-declare global {
-  interface Window {
-    $crisp: any;
-    CRISP_WEBSITE_ID: string;
-  }
-}
-
-const GetHelpCrisp: NextPage = () => {
+const GetHelp: NextPage = () => {
   const router = useRouter();
   const [supportAvailable, setSupportAvailable] = useState<boolean | null>(true);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [formData, setFormData] = useState({
+    subject: '',
+    category: 'general',
+    message: '',
+    userName: '',
+    userEmail: '',
+    organization: ''
+  });
+
+  const [chatFormData, setChatFormData] = useState({
+    name: '',
+    email: ''
+  });
 
   useEffect(() => {
     checkSupportAvailability();
@@ -36,42 +56,108 @@ const GetHelpCrisp: NextPage = () => {
       const data = await response.json();
       setSupportAvailable(data.available);
     } catch (error) {
-      console.error('Error checking availability:', error);
+      // Default to email if check fails
       setSupportAvailable(false);
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
-  // Initialize Crisp chat
-  useEffect(() => {
-    // Load Crisp chat widget
-    if (typeof window !== 'undefined') {
-      window.$crisp = [];
-      window.CRISP_WEBSITE_ID = "d7569150-ce93-42e1-8f9c-e40340a2f588";
+  // Handle WebChat via postMessage to parent Flex window
+  const startWebChat = (customerData: { name: string; email: string }) => {
+    if (typeof window !== 'undefined' && window.parent && window.parent !== window) {
+      // Send message to parent Flex window to initialize WebChat
+      const message = {
+        type: 'START_WEBCHAT',
+        customerData,
+        deploymentKey: 'CV[redacted]'
+      };
       
-      const d = document;
-      const s = d.createElement("script");
-      s.src = "https://client.crisp.chat/l.js";
-      s.async = true;
-      d.getElementsByTagName("head")[0].appendChild(s);
+      window.parent.postMessage(message, '*');
+      console.log('Sent WebChat request to parent:', message);
       
-      console.log('Crisp chat widget loaded');
+      // Show user feedback
+      alert(`Chat request sent for ${customerData.name}. If WebChat doesn't open, the parent window handler may not be loaded.`);
+    } else {
+      console.log('Not in iframe - WebChat functionality not available');
+      alert('WebChat is only available when running inside the Enhanced CRM Container.');
     }
-  }, []);
+  };
 
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/support/submit-ticket', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        // Clear form
+        setFormData({
+          subject: '',
+          category: 'general',
+          message: '',
+          userName: '',
+          userEmail: '',
+          organization: ''
+        });
+        // Redirect after 3 seconds
+        setTimeout(() => {
+          router.push('/');
+        }, 3000);
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage(data.error || 'Failed to submit support request');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage('Network error. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getCurrentTime = () => {
+    const now = new Date();
+    return now.toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      timeZoneName: 'short' 
+    });
+  };
 
   return (
     <>
       <Head>
-        <title>Get Support - Connie Help Center (Crisp Test)</title>
+        <title>Get Support - Connie Help Center</title>
         <style>{`
-          /* Simple z-index fix for any chat widgets */
-          [id*="crisp"],
-          [class*="crisp"] {
+          /* Simple z-index fix for WebChat */
+          [id*="twilio"],
+          [class*="twilio"],
+          [data-twilio] {
             z-index: 9999 !important;
           }
         `}</style>
       </Head>
+      
+      {/* WebChat now handled by parent Flex window via postMessage */}
       
       <Box padding="space70" maxWidth="1200px" margin="auto" backgroundColor="colorBackgroundBody">
         <Stack orientation="vertical" spacing="space60">
@@ -80,10 +166,30 @@ const GetHelpCrisp: NextPage = () => {
           </Button>
 
           <Heading as="h1" variant="heading10">
-            Get Support (Crisp Test)
+            Get Support
           </Heading>
 
-          <>
+          {submitStatus === 'success' && (
+            <Alert variant="neutral">
+              <strong>Support request submitted!</strong> We'll get back to you within 24 hours. Redirecting...
+            </Alert>
+          )}
+
+          {submitStatus === 'error' && (
+            <Alert variant="error">
+              <strong>Error submitting request:</strong> {errorMessage}
+            </Alert>
+          )}
+
+          {!showEmailForm && (
+            <>
+              <Alert variant="neutral">
+                <Stack orientation="horizontal" spacing="space20">
+                  🕒
+                  <span>Current time: {getCurrentTime()}</span>
+                </Stack>
+              </Alert>
+
               <Card>
                 <Stack orientation="vertical" spacing="space60">
                   <Heading as="h2" variant="heading20">
@@ -93,14 +199,14 @@ const GetHelpCrisp: NextPage = () => {
                   <Paragraph>
                     We're here to help. Choose how you'd like to connect with our support team.
                   </Paragraph>
-                  
+
                   {supportAvailable === null ? (
                     <Box display="flex" justifyContent="center" padding="space60">
                       <Spinner decorative size="sizeIcon40" />
                     </Box>
                   ) : (
                     <Box display="flex" columnGap="space40" flexWrap="wrap">
-                      {/* Live Chat Card - Now using Crisp */}
+                      {/* Live Chat Card */}
                       <Box
                         backgroundColor="colorBackgroundBody"
                         borderStyle="solid"
@@ -124,16 +230,11 @@ const GetHelpCrisp: NextPage = () => {
                           width: 'calc(50% - 10px)',
                           minWidth: '300px'
                         }}
-                        onClick={() => {
-                          // Try to trigger Crisp chat if it's loaded
-                          if (typeof window !== 'undefined' && window.$crisp) {
-                            window.$crisp.push(["do", "chat:open"]);
-                          }
-                        }}
                       >
                         {/* Card Header */}
                         <Box display="flex" alignItems="flex-start" justifyContent="space-between" marginBottom="space50">
                           <Box
+                            id="twilio-chat-launcher-container"
                             width="40px"
                             height="40px"
                             backgroundColor="colorBackgroundPrimaryWeakest"
@@ -152,7 +253,7 @@ const GetHelpCrisp: NextPage = () => {
                             paddingX="space40"
                             paddingY="space20"
                             borderRadius="borderRadius20"
-                            backgroundColor="colorBackgroundSuccess"
+                            backgroundColor={supportAvailable ? "colorBackgroundSuccess" : "colorBackgroundStrong"}
                           >
                             <Text
                               as="span"
@@ -162,7 +263,7 @@ const GetHelpCrisp: NextPage = () => {
                               textTransform="uppercase"
                               letterSpacing="wider"
                             >
-                              CRISP TEST
+                              UA TESTING
                             </Text>
                           </Box>
                         </Box>
@@ -170,14 +271,53 @@ const GetHelpCrisp: NextPage = () => {
                         {/* Card Content */}
                         <Box flexGrow={1} display="flex" flexDirection="column">
                           <Box marginBottom="space30">
-                            <Text as="h3" fontSize="fontSize50" fontWeight="fontWeightBold" color="colorText">
+                            <Text as="h3" fontSize="fontSize50" fontWeight="fontWeightBold" color={supportAvailable ? "colorText" : "colorTextWeak"}>
                               Chat with ConnieCare Team
                             </Text>
                           </Box>
                           
                           <Text as="p" color="colorTextWeak" fontSize="fontSize30" marginBottom="space50">
-                            Connect with a support agent now for immediate assistance. (Testing Crisp integration)
+                            Connect with a support agent now for immediate assistance.
                           </Text>
+
+                          {/* Quick chat form */}
+                          <Stack orientation="vertical" spacing="space30">
+                            <FormControl>
+                              <Label htmlFor="chatName">Your Name</Label>
+                              <Input
+                                id="chatName"
+                                type="text"
+                                value={chatFormData.name}
+                                onChange={(e) => setChatFormData({...chatFormData, name: e.target.value})}
+                                placeholder="Enter your name"
+                                required
+                              />
+                            </FormControl>
+                            
+                            <FormControl>
+                              <Label htmlFor="chatEmail">Email</Label>
+                              <Input
+                                id="chatEmail"
+                                type="email"
+                                value={chatFormData.email}
+                                onChange={(e) => setChatFormData({...chatFormData, email: e.target.value})}
+                                placeholder="Enter your email"
+                                required
+                              />
+                            </FormControl>
+                            
+                            <Button 
+                              variant="primary" 
+                              onClick={() => {
+                                if (chatFormData.name && chatFormData.email) {
+                                  startWebChat(chatFormData);
+                                }
+                              }}
+                              disabled={!chatFormData.name || !chatFormData.email}
+                            >
+                              Start Live Chat
+                            </Button>
+                          </Stack>
                           
                           <Box marginBottom="space40">
                             <Anchor href="https://docs.connie.one" showExternal>
@@ -207,10 +347,10 @@ const GetHelpCrisp: NextPage = () => {
                               textTransform="uppercase" 
                               letterSpacing="wider"
                             >
-                              Provider
+                              Version
                             </Text>
                             <Text as="span" fontSize="fontSize20" color="colorText">
-                              Crisp
+                              1.0.0
                             </Text>
                           </Box>
                           
@@ -226,7 +366,7 @@ const GetHelpCrisp: NextPage = () => {
                               Type
                             </Text>
                             <Text as="span" fontSize="fontSize20" color="colorText">
-                              Test
+                              Support
                             </Text>
                           </Box>
                         </Box>
@@ -362,11 +502,139 @@ const GetHelpCrisp: NextPage = () => {
                   )}
                 </Stack>
               </Card>
-          </>
+            </>
+          )}
+
+          {showEmailForm && (
+            <Card>
+              <Form onSubmit={handleEmailSubmit}>
+                <Stack orientation="vertical" spacing="space60">
+                  <Heading as="h2" variant="heading20">
+                    Submit Support Request
+                  </Heading>
+
+                  <FormControl>
+                    <Label htmlFor="subject" required>
+                      Subject
+                    </Label>
+                    <Input
+                      id="subject"
+                      name="subject"
+                      type="text"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Brief description of your issue"
+                    />
+                  </FormControl>
+
+                  <FormControl>
+                    <Label htmlFor="category" required>
+                      Category
+                    </Label>
+                    <Select
+                      id="category"
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <Option value="general">General Question</Option>
+                      <Option value="technical">Technical Issue</Option>
+                      <Option value="training">Training Request</Option>
+                      <Option value="feature">Feature Question</Option>
+                      <Option value="urgent">Urgent - System Down</Option>
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <Label htmlFor="message" required>
+                      Message
+                    </Label>
+                    <TextArea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Please describe your issue or question in detail"
+                    />
+                  </FormControl>
+
+                  <Heading as="h3" variant="heading30">
+                    Contact Information
+                  </Heading>
+
+                  <FormControl>
+                    <Label htmlFor="userName" required>
+                      Your Name
+                    </Label>
+                    <Input
+                      id="userName"
+                      name="userName"
+                      type="text"
+                      value={formData.userName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </FormControl>
+
+                  <FormControl>
+                    <Label htmlFor="userEmail" required>
+                      Email Address
+                    </Label>
+                    <Input
+                      id="userEmail"
+                      name="userEmail"
+                      type="email"
+                      value={formData.userEmail}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </FormControl>
+
+                  <FormControl>
+                    <Label htmlFor="organization" required>
+                      Organization
+                    </Label>
+                    <Input
+                      id="organization"
+                      name="organization"
+                      type="text"
+                      value={formData.organization}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="e.g., NSS, HHOVV"
+                    />
+                  </FormControl>
+
+                  <FormActions>
+                    <Button variant="primary" type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? (
+                        <>
+                          <Spinner decorative size="sizeIcon20" />
+                          Submitting...
+                        </>
+                      ) : (
+                        'Submit Request'
+                      )}
+                    </Button>
+                    <Button 
+                      variant="secondary" 
+                      type="button" 
+                      onClick={() => setShowEmailForm(false)}
+                    >
+                      Back
+                    </Button>
+                  </FormActions>
+                </Stack>
+              </Form>
+            </Card>
+          )}
         </Stack>
       </Box>
     </>
   );
 };
 
-export default GetHelpCrisp;
+export default GetHelp;
