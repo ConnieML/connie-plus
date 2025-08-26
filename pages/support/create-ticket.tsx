@@ -14,6 +14,7 @@ import { Button } from '@twilio-paste/core/button';
 import { Alert } from '@twilio-paste/core/alert';
 import { HelpText } from '@twilio-paste/core/help-text';
 import { Stack } from '@twilio-paste/core/stack';
+import { Paragraph } from '@twilio-paste/core/paragraph';
 
 const CreateTicket: NextPage = () => {
   const router = useRouter();
@@ -21,6 +22,7 @@ const CreateTicket: NextPage = () => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [submittedTicket, setSubmittedTicket] = useState<any>(null);
+  const [userTickets, setUserTickets] = useState<any[]>([]);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -36,6 +38,18 @@ const CreateTicket: NextPage = () => {
       ...prev,
       [name]: value
     }));
+  };
+
+  const fetchUserTickets = async (customerName: string, customerPhone: string) => {
+    try {
+      const response = await fetch(`https://trouble-ticket-app.vercel.app/api/tickets?name=${encodeURIComponent(customerName)}&phone=${encodeURIComponent(customerPhone)}`);
+      if (response.ok) {
+        const tickets = await response.json();
+        setUserTickets(tickets || []);
+      }
+    } catch (error) {
+      console.error('Error fetching user tickets:', error);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -63,6 +77,8 @@ const CreateTicket: NextPage = () => {
       if (response.ok) {
         setSubmitStatus('success');
         setSubmittedTicket(data);
+        // Fetch user's other tickets to show status
+        await fetchUserTickets(formData.customerName, formData.customerPhone);
         // Clear form
         setFormData({
           title: '',
@@ -155,6 +171,58 @@ const CreateTicket: NextPage = () => {
                   </HelpText>
                 </Stack>
               </Card>
+
+              {/* User's Ticket History */}
+              {userTickets.length > 0 && (
+                <Card>
+                  <Stack orientation="vertical" spacing="space40">
+                    <Heading as="h2" variant="heading30">
+                      Your Open Tickets ({userTickets.length})
+                    </Heading>
+                    
+                    <Stack orientation="vertical" spacing="space30">
+                      {userTickets.slice(0, 5).map((ticket) => (
+                        <Box 
+                          key={ticket.id}
+                          padding="space30"
+                          borderStyle="solid"
+                          borderWidth="borderWidth10"
+                          borderColor="colorBorder"
+                          borderRadius="borderRadius20"
+                        >
+                          <Stack orientation="horizontal" spacing="space40">
+                            <Box minWidth="80px">
+                              <Paragraph marginBottom="space0">
+                                <strong>#{ticket.id}</strong>
+                              </Paragraph>
+                            </Box>
+                            <Box flex="1">
+                              <Paragraph marginBottom="space0">{ticket.title}</Paragraph>
+                            </Box>
+                            <Box>
+                              <Paragraph marginBottom="space0">
+                                <strong style={{color: ticket.status === 'Open' ? '#04b85c' : '#757575'}}>
+                                  {ticket.status}
+                                </strong>
+                              </Paragraph>
+                            </Box>
+                            <Box minWidth="120px">
+                              <Paragraph marginBottom="space0">
+                                <small>{new Date(ticket.createdat).toLocaleDateString()}</small>
+                              </Paragraph>
+                            </Box>
+                          </Stack>
+                        </Box>
+                      ))}
+                    </Stack>
+                    
+                    <Alert variant="neutral">
+                      You can reference these ticket numbers when following up with the ConnieCare Team. 
+                      Tickets are handled in order of priority and submission time.
+                    </Alert>
+                  </Stack>
+                </Card>
+              )}
             </>
           )}
 

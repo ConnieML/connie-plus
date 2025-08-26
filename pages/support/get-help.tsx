@@ -31,6 +31,16 @@ const GetHelp: NextPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [submittedTicket, setSubmittedTicket] = useState<any>(null);
+  
+  // Ticket status tracking
+  const [userTickets, setUserTickets] = useState<any[]>([]);
+  const [showTicketLookup, setShowTicketLookup] = useState(false);
+  const [ticketLookup, setTicketLookup] = useState({
+    customerName: '',
+    customerPhone: ''
+  });
+  const [isLoadingTickets, setIsLoadingTickets] = useState(false);
 
   const [formData, setFormData] = useState({
     subject: '',
@@ -57,6 +67,36 @@ const GetHelp: NextPage = () => {
     }
   };
 
+  const fetchUserTickets = async (customerName: string, customerPhone: string) => {
+    if (!customerName || !customerPhone) return;
+    
+    setIsLoadingTickets(true);
+    try {
+      const response = await fetch(`https://trouble-ticket-app.vercel.app/api/tickets?name=${encodeURIComponent(customerName)}&phone=${encodeURIComponent(customerPhone)}`);
+      if (response.ok) {
+        const tickets = await response.json();
+        setUserTickets(tickets || []);
+      }
+    } catch (error) {
+      console.error('Error fetching user tickets:', error);
+    } finally {
+      setIsLoadingTickets(false);
+    }
+  };
+
+  const handleTicketLookupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTicketLookup(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleTicketLookupSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchUserTickets(ticketLookup.customerName, ticketLookup.customerPhone);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -69,11 +109,13 @@ const GetHelp: NextPage = () => {
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted, starting API call');
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
 
     try {
+      console.log('Making API call to:', '/api/support/submit-ticket');
       const response = await fetch('/api/support/submit-ticket', {
         method: 'POST',
         headers: {
@@ -83,22 +125,22 @@ const GetHelp: NextPage = () => {
       });
 
       const data = await response.json();
+      console.log('API Response:', data);
 
       if (response.ok) {
         setSubmitStatus('success');
-        // Clear form
-        setFormData({
-          subject: '',
-          category: 'general',
-          message: '',
-          userName: '',
-          userEmail: '',
-          organization: ''
-        });
-        // Redirect after 3 seconds
-        setTimeout(() => {
-          router.push('/');
-        }, 3000);
+        // The local API returns {success: true, ticketId: 123, ...} not the ticket object directly
+        // So let's create a mock ticket object for display
+        const ticketForDisplay = {
+          id: data.ticketId,
+          ticketId: data.ticketId,
+          status: 'Open',
+          ...data
+        };
+        setSubmittedTicket(ticketForDisplay);
+        console.log('Submitted ticket state:', ticketForDisplay);
+        // Store original form data for display
+        // Don't clear form immediately - show details first
       } else {
         setSubmitStatus('error');
         setErrorMessage(data.error || 'Failed to submit support request');
@@ -146,10 +188,211 @@ const GetHelp: NextPage = () => {
             Get Support
           </Heading>
 
-          {submitStatus === 'success' && (
-            <Alert variant="neutral">
-              <strong>Support request submitted!</strong> We'll get back to you within 24 hours. Redirecting...
-            </Alert>
+          {/* Ticket Status Section */}
+          <Card>
+            <Stack orientation="vertical" spacing="space40">
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Heading as="h2" variant="heading30">
+                  Your Open Tickets
+                </Heading>
+                <Button
+                  variant="link"
+                  size="small"
+                  onClick={() => setShowTicketLookup(!showTicketLookup)}
+                >
+                  {showTicketLookup ? 'Hide Lookup' : 'Check Ticket Status'}
+                </Button>
+              </Box>
+
+              {showTicketLookup && (
+                <Box backgroundColor="colorBackgroundBody" padding="space40" borderRadius="borderRadius20">
+                  <Form onSubmit={handleTicketLookupSubmit}>
+                    <Stack orientation="vertical" spacing="space40">
+                      <Text as="p" fontSize="fontSize30" color="colorTextWeak">
+                        Enter your name and contact info to view your open support tickets:
+                      </Text>
+                      
+                      <Box display="flex" columnGap="space40">
+                        <FormControl>
+                          <Label htmlFor="customerName">Your Name</Label>
+                          <Input
+                            id="customerName"
+                            name="customerName"
+                            type="text"
+                            value={ticketLookup.customerName}
+                            onChange={handleTicketLookupChange}
+                            placeholder="Full name used when submitting tickets"
+                          />
+                        </FormControl>
+
+                        <FormControl>
+                          <Label htmlFor="customerPhone">Email or Phone</Label>
+                          <Input
+                            id="customerPhone"
+                            name="customerPhone"
+                            type="text"
+                            value={ticketLookup.customerPhone}
+                            onChange={handleTicketLookupChange}
+                            placeholder="Contact info used when submitting tickets"
+                          />
+                        </FormControl>
+                      </Box>
+
+                      <FormActions>
+                        <Button variant="primary" type="submit" disabled={isLoadingTickets}>
+                          {isLoadingTickets ? (
+                            <>
+                              <Spinner decorative size="sizeIcon20" />
+                              Loading...
+                            </>
+                          ) : (
+                            'Check My Tickets'
+                          )}
+                        </Button>
+                      </FormActions>
+                    </Stack>
+                  </Form>
+                </Box>
+              )}
+
+              {userTickets.length > 0 && (
+                <Stack orientation="vertical" spacing="space30">
+                  <Alert variant="neutral">
+                    Found {userTickets.length} open ticket{userTickets.length !== 1 ? 's' : ''} for your account:
+                  </Alert>
+                  
+                  {userTickets.slice(0, 5).map((ticket) => (
+                    <Box 
+                      key={ticket.id}
+                      padding="space30"
+                      borderStyle="solid"
+                      borderWidth="borderWidth10"
+                      borderColor="colorBorder"
+                      borderRadius="borderRadius20"
+                      backgroundColor="colorBackgroundBody"
+                    >
+                      <Stack orientation="horizontal" spacing="space40">
+                        <Box minWidth="80px">
+                          <Paragraph marginBottom="space0">
+                            <strong>#{ticket.id}</strong>
+                          </Paragraph>
+                        </Box>
+                        <Box flex="1">
+                          <Paragraph marginBottom="space0">{ticket.title}</Paragraph>
+                        </Box>
+                        <Box>
+                          <Paragraph marginBottom="space0">
+                            <strong style={{color: ticket.status === 'Open' ? '#04b85c' : '#757575'}}>
+                              {ticket.status}
+                            </strong>
+                          </Paragraph>
+                        </Box>
+                        <Box minWidth="120px">
+                          <Paragraph marginBottom="space0">
+                            <small>{new Date(ticket.createdat).toLocaleDateString()}</small>
+                          </Paragraph>
+                        </Box>
+                      </Stack>
+                    </Box>
+                  ))}
+                  
+                  <Alert variant="neutral">
+                    Reference these ticket numbers when following up with the ConnieCare Team. 
+                    Tickets are handled in order of priority and submission time.
+                  </Alert>
+                </Stack>
+              )}
+
+              {showTicketLookup && userTickets.length === 0 && !isLoadingTickets && ticketLookup.customerName && ticketLookup.customerPhone && (
+                <Alert variant="neutral">
+                  No open tickets found for the provided contact information.
+                </Alert>
+              )}
+            </Stack>
+          </Card>
+
+          {submitStatus === 'success' && submittedTicket && (
+            <>
+              <Alert variant="neutral">
+                <strong>Support ticket created successfully!</strong> Your request has been sent to the Connie Care Team and a task has been created in our support queue.
+              </Alert>
+              
+              <Card>
+                <Stack orientation="vertical" spacing="space40">
+                  <Heading as="h2" variant="heading30">
+                    Your Ticket Details
+                  </Heading>
+                  
+                  <Box display="flex" columnGap="space40">
+                    <FormControl>
+                      <Label>Ticket ID</Label>
+                      <Input type="text" value={submittedTicket.ticketId || submittedTicket.id || 'N/A'} readOnly />
+                    </FormControl>
+                    
+                    <FormControl>
+                      <Label>Status</Label>
+                      <Input type="text" value="Open" readOnly />
+                    </FormControl>
+                  </Box>
+                  
+                  <FormControl>
+                    <Label>Subject</Label>
+                    <Input type="text" value={formData.subject} readOnly />
+                  </FormControl>
+                  
+                  <FormControl>
+                    <Label>Message</Label>
+                    <TextArea value={formData.message} readOnly rows={3} />
+                  </FormControl>
+                  
+                  <Box display="flex" columnGap="space40">
+                    <FormControl>
+                      <Label>Submitted By</Label>
+                      <Input type="text" value={formData.userName} readOnly />
+                    </FormControl>
+                    
+                    <FormControl>
+                      <Label>Contact</Label>
+                      <Input type="text" value={formData.userEmail} readOnly />
+                    </FormControl>
+                  </Box>
+                  
+                  <FormControl>
+                    <Label>Submitted</Label>
+                    <Input type="text" value={new Date().toLocaleString()} readOnly />
+                  </FormControl>
+                  
+                  <Alert variant="neutral">
+                    <Text as="p">
+                      <strong>What happens next:</strong> Your ticket has been routed to the Connie Care Team. 
+                      A team member will review your request and respond within 24 hours. 
+                      Save your Ticket ID for reference when following up.
+                    </Text>
+                  </Alert>
+                  
+                  <FormActions>
+                    <Button variant="primary" onClick={() => router.push('/')}>
+                      Return to Dashboard
+                    </Button>
+                    <Button variant="secondary" onClick={() => {
+                      setSubmitStatus('idle');
+                      setSubmittedTicket(null);
+                      setShowEmailForm(false);
+                      setFormData({
+                        subject: '',
+                        category: 'general',
+                        message: '',
+                        userName: '',
+                        userEmail: '',
+                        organization: ''
+                      });
+                    }}>
+                      Submit Another Request
+                    </Button>
+                  </FormActions>
+                </Stack>
+              </Card>
+            </>
           )}
 
           {submitStatus === 'error' && (
