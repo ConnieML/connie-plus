@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HHOVV WebChat Support</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .org-info { background: #f3e5f5; padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>HHOVV Live Chat Support</h2>
+    </div>
+    
+    <div class="org-info">
+        <strong>Organization:</strong> Helping Hands of Vegas Valley (HHOVV)<br>
+        <strong>Access:</strong> Enhanced CRM Container Only
+    </div>
+
+    <!-- Twilio WebChat 3.0 -->
+    <script src="https://media.twiliocdn.com/sdk/js/conversations/releases/3.4.1/twilio-conversations.min.js"></script>
+    <script src="https://assets.flex.twilio.com/releases/webchat-ui/3.1.10/twilio-flex-webchat.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('HHOVV WebChat initializing...');
+            
+            // Security check - only allow from HHOVV Enhanced CRM Container
+            const referrer = document.referrer;
+            console.log('Referrer:', referrer);
+            
+            if (!referrer.includes('hhovv.connie.team') && !referrer.includes('localhost')) {
+                document.body.innerHTML = `
+                    <div style="padding: 40px; text-align: center; color: #d32f2f;">
+                        <h2>🔒 Access Restricted</h2>
+                        <p>HHOVV WebChat is only available through the HHOVV Enhanced CRM Container.</p>
+                        <p>Please access through: <strong>hhovv.connie.team</strong></p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // HHOVV-specific configuration
+            const organizationName = 'HHOVV';
+            const deploymentKey = 'CV0d858ad49e486f7e52415c67d4eb4eb6'; // HHOVV WebChat
+            
+            console.log(`Initializing WebChat for ${organizationName}`);
+            console.log(`Using deployment key: ${deploymentKey}`);
+            
+            if (window.Twilio && window.Twilio.initWebchat) {
+                const appConfig = {
+                    deploymentKey: deploymentKey,
+                    context: {
+                        organization: organizationName,
+                        referrer: referrer,
+                        source: 'enhanced_crm_container_hhovv',
+                        page: 'hhovv-webchat'
+                    }
+                }
+                console.log(`HHOVV WebChat initialized with context:`, appConfig.context);
+                window.Twilio.initWebchat(appConfig);
+            } else {
+                console.error('WebChat not available');
+                document.body.innerHTML += '<div style="text-align: center; color: #d32f2f; margin-top: 20px;">❌ WebChat failed to load</div>';
+            }
+        })
+    </script>
+</body>
+</html>

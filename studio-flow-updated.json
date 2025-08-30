@@ -1,0 +1,63 @@
+{
+  "description": "A New Flow",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "trigger",
+      "transitions": [
+        {
+          "event": "incomingMessage"
+        },
+        {
+          "event": "incomingCall"
+        },
+        {
+          "next": "send_webchat_to_flex_1",
+          "event": "incomingConversationMessage"
+        },
+        {
+          "event": "incomingRequest"
+        },
+        {
+          "event": "incomingParent"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "name": "send_webchat_to_flex_1",
+      "type": "send-to-flex",
+      "transitions": [
+        {
+          "event": "callComplete"
+        },
+        {
+          "event": "failedToEnqueue"
+        },
+        {
+          "event": "callFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -50,
+          "y": 280
+        },
+        "workflow": "WW2c597b1d5a96635b6cb0b6d261c9ede8",
+        "channel": "TCbea5653bb870058ae31bc02690f35f63",
+        "attributes": "{\n  \"skill\": \"Web Chat\",\n  \"customerName\": \"{{trigger.conversation.ChannelAttributes.pre_engagement_data.friendlyName}}\",\n  \"customerEmail\": \"{{trigger.conversation.ChannelAttributes.pre_engagement_data.email}}\",\n  \"organization\": \"NSS\",\n  \"origin\": \"NSS\",\n  \"channel\": \"webchat\",\n  \"channelType\": \"support\",\n  \"customers\": {\n    \"name\": \"{{trigger.conversation.ChannelAttributes.pre_engagement_data.friendlyName}}\",\n    \"email\": \"{{trigger.conversation.ChannelAttributes.pre_engagement_data.email}}\",\n    \"phone\": \"{{trigger.conversation.ChannelAttributes.pre_engagement_data.email}}\"\n  },\n  \"query\": \"{{trigger.conversation.ChannelAttributes.pre_engagement_data.query}}\",\n  \"source\": \"webchat_widget\",\n  \"createdAt\": \"{{trigger.dateCreated}}\"\n}",
+        "priority": "0",
+        "timeout": "3600"
+      }
+    }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": true
+  }
+}

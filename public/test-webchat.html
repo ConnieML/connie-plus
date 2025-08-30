@@ -20,38 +20,40 @@
             const referrer = document.referrer;
             console.log('Referrer:', referrer);
             
-            let deploymentKey;
+            // Single deployment key for all support channels - dynamic organization detection
+            const deploymentKey = 'CV8c8c75ecb84c0208b1166dbe53bdb81a'; // ConnieRTC Support Channel
             let organizationName;
             
+            // Detect organization from referrer
             if (referrer.includes('nss.connie.team')) {
-                deploymentKey = 'CV8c8c75ecb84c0208b1166dbe53bdb81a'; // NSS → ConnieRTC Support (original)
                 organizationName = 'NSS';
             } else if (referrer.includes('hhovv.connie.team')) {
-                deploymentKey = 'CV0d858ad49e486f7e52415c67d4eb4eb6'; // HHOVV
                 organizationName = 'HHOVV';
             } else if (referrer.includes('dev.connie.team')) {
-                deploymentKey = 'CV98ac935efbf6a1ac3bd09de09126b5de'; // DevSandBox
                 organizationName = 'DevSandBox';
             } else if (referrer.includes('localhost:3000')) {
-                deploymentKey = 'CV98ac935efbf6a1ac3bd09de09126b5de'; // Default to DevSandBox for local testing
                 organizationName = 'DevSandBox (localhost)';
             } else {
                 // Fallback to NSS if referrer doesn't match
-                deploymentKey = 'CV8c8c75ecb84c0208b1166dbe53bdb81a'; // NSS
                 organizationName = 'NSS (fallback)';
-                console.warn('Unknown referrer, defaulting to NSS deployment');
+                console.warn('Unknown referrer, defaulting to NSS');
             }
             
             console.log(`Detected organization: ${organizationName}`);
-            console.log(`Using deployment key: ${deploymentKey}`);
+            console.log(`Using single ConnieRTC Support deployment key: ${deploymentKey}`);
             
             if (window.Twilio && window.Twilio.initWebchat) {
                 const appConfig = {
-                    deploymentKey: deploymentKey
+                    deploymentKey: deploymentKey,
+                    context: {
+                        organization: organizationName,
+                        referrer: referrer,
+                        source: 'enhanced_crm_container'
+                    }
                 }
-                console.log(`Initializing WebChat for ${organizationName}...`);
+                console.log(`Initializing WebChat for ${organizationName} via single support channel...`);
                 window.Twilio.initWebchat(appConfig);
-                console.log('WebChat initialized!');
+                console.log('WebChat initialized with dynamic organization context!');
             } else {
                 console.error('WebChat not available');
             }

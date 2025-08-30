@@ -382,8 +382,28 @@ const GetHelp: NextPage = () => {
                             <Button 
                               variant="primary" 
                               onClick={() => {
-                                // Open the working WebChat HTML in a new window
-                                const webChatWindow = window.open('/test-webchat.html', 'ConnieWebChat', 'width=400,height=600');
+                                // Dynamic routing to organization-specific WebChat page
+                                const referrer = document.referrer;
+                                let webChatPage;
+                                let orgName;
+                                
+                                if (referrer.includes('nss.connie.team')) {
+                                  webChatPage = '/nss-webchat.html';
+                                  orgName = 'NSS';
+                                } else if (referrer.includes('hhovv.connie.team')) {
+                                  webChatPage = '/hhovv-webchat.html';
+                                  orgName = 'HHOVV';
+                                } else if (referrer.includes('dev.connie.team')) {
+                                  webChatPage = '/test-webchat.html'; // DevSandbox fallback
+                                  orgName = 'DevSandbox';
+                                } else {
+                                  // Fallback for testing/unknown
+                                  webChatPage = '/test-webchat.html';
+                                  orgName = 'Test';
+                                }
+                                
+                                console.log(`Opening ${orgName} WebChat: ${webChatPage}`);
+                                const webChatWindow = window.open(webChatPage, 'ConnieWebChat', 'width=400,height=600');
                                 if (!webChatWindow) {
                                   alert('Please allow popups for this site to use WebChat');
                                 }
