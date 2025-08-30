@@ -28,16 +28,20 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('NSS WebChat initializing...');
             
-            // Security check - only allow from NSS Enhanced CRM Container
-            const referrer = document.referrer;
-            console.log('Referrer:', referrer);
+            // Get organization from URL parameters (passed from get-help.tsx)
+            const urlParams = new URLSearchParams(window.location.search);
+            const orgFromParam = urlParams.get('org');
+            const sourceFromParam = urlParams.get('source');
             
-            if (!referrer.includes('nss.connie.team') && !referrer.includes('localhost')) {
+            console.log('URL Parameters:', { org: orgFromParam, source: sourceFromParam });
+            
+            // Security check - verify this is NSS WebChat page
+            if (orgFromParam !== 'NSS') {
                 document.body.innerHTML = `
                     <div style="padding: 40px; text-align: center; color: #d32f2f;">
                         <h2>🔒 Access Restricted</h2>
-                        <p>NSS WebChat is only available through the NSS Enhanced CRM Container.</p>
-                        <p>Please access through: <strong>nss.connie.team</strong></p>
+                        <p>This is the NSS WebChat page. Organization parameter: "${orgFromParam}"</p>
+                        <p>Please access through the correct organization page.</p>
                     </div>
                 `;
                 return;

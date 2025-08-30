@@ -382,27 +382,27 @@ const GetHelp: NextPage = () => {
                             <Button 
                               variant="primary" 
                               onClick={() => {
-                                // Dynamic routing to organization-specific WebChat page
+                                // Dynamic routing with URL parameters to preserve organization context
                                 const referrer = document.referrer;
-                                let webChatPage;
                                 let orgName;
+                                let webChatPage;
                                 
                                 if (referrer.includes('nss.connie.team')) {
-                                  webChatPage = '/nss-webchat.html';
                                   orgName = 'NSS';
+                                  webChatPage = `/nss-webchat.html?org=NSS&source=${encodeURIComponent(referrer)}`;
                                 } else if (referrer.includes('hhovv.connie.team')) {
-                                  webChatPage = '/hhovv-webchat.html';
                                   orgName = 'HHOVV';
+                                  webChatPage = `/hhovv-webchat.html?org=HHOVV&source=${encodeURIComponent(referrer)}`;
                                 } else if (referrer.includes('dev.connie.team')) {
-                                  webChatPage = '/test-webchat.html'; // DevSandbox fallback
                                   orgName = 'DevSandbox';
+                                  webChatPage = `/test-webchat.html?org=DevSandbox&source=${encodeURIComponent(referrer)}`;
                                 } else {
                                   // Fallback for testing/unknown
-                                  webChatPage = '/test-webchat.html';
                                   orgName = 'Test';
+                                  webChatPage = `/test-webchat.html?org=Test&source=${encodeURIComponent(referrer)}`;
                                 }
                                 
-                                console.log(`Opening ${orgName} WebChat: ${webChatPage}`);
+                                console.log(`Opening ${orgName} WebChat with parameters: ${webChatPage}`);
                                 const webChatWindow = window.open(webChatPage, 'ConnieWebChat', 'width=400,height=600');
                                 if (!webChatWindow) {
                                   alert('Please allow popups for this site to use WebChat');
