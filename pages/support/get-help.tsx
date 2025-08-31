@@ -382,28 +382,8 @@ const GetHelp: NextPage = () => {
                             <Button 
                               variant="primary" 
                               onClick={() => {
-                                // Dynamic routing with URL parameters to preserve organization context
-                                const referrer = document.referrer;
-                                let orgName;
-                                let webChatPage;
-                                
-                                if (referrer.includes('nss.connie.team')) {
-                                  orgName = 'NSS';
-                                  webChatPage = `/nss-webchat.html?org=NSS&source=${encodeURIComponent(referrer)}`;
-                                } else if (referrer.includes('hhovv.connie.team')) {
-                                  orgName = 'HHOVV';
-                                  webChatPage = `/hhovv-webchat.html?org=HHOVV&source=${encodeURIComponent(referrer)}`;
-                                } else if (referrer.includes('dev.connie.team')) {
-                                  orgName = 'DevSandbox';
-                                  webChatPage = `/test-webchat.html?org=DevSandbox&source=${encodeURIComponent(referrer)}`;
-                                } else {
-                                  // Fallback for testing/unknown
-                                  orgName = 'Test';
-                                  webChatPage = `/test-webchat.html?org=Test&source=${encodeURIComponent(referrer)}`;
-                                }
-                                
-                                console.log(`Opening ${orgName} WebChat with parameters: ${webChatPage}`);
-                                const webChatWindow = window.open(webChatPage, 'ConnieWebChat', 'width=400,height=600');
+                                // Simple approach - just open WebChat and let Twilio handle organization detection
+                                const webChatWindow = window.open('/test-webchat.html', 'ConnieWebChat', 'width=400,height=600');
                                 if (!webChatWindow) {
                                   alert('Please allow popups for this site to use WebChat');
                                 }
