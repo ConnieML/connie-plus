@@ -16,16 +16,42 @@
             console.log('Twilio available:', !!window.Twilio);
             console.log('Twilio keys:', window.Twilio ? Object.keys(window.Twilio) : 'none');
             
-            // Detect organization from referrer and use appropriate deployment key
+            // Get organization and source from URL parameters (passed from get-help.tsx)
+            const urlParams = new URLSearchParams(window.location.search);
+            const orgFromParam = urlParams.get('org');
+            const sourceFromParam = urlParams.get('source');
+            
+            // Also check document.referrer as fallback
             const referrer = document.referrer;
-            console.log('Referrer:', referrer);
+            console.log('URL Parameters:', { org: orgFromParam, source: sourceFromParam });
+            console.log('Document Referrer:', referrer);
             
             // Single deployment key for all support channels - dynamic organization detection
             const deploymentKey = 'CV8c8c75ecb84c0208b1166dbe53bdb81a'; // ConnieRTC Support Channel
             let organizationName;
             
-            // Detect organization from referrer
-            if (referrer.includes('nss.connie.team')) {
+            // Priority 1: Use org parameter if provided
+            if (orgFromParam) {
+                organizationName = orgFromParam;
+                console.log(`Using organization from URL parameter: ${organizationName}`);
+            }
+            // Priority 2: Detect from source parameter (original referrer)
+            else if (sourceFromParam) {
+                if (sourceFromParam.includes('nss.connie.team')) {
+                    organizationName = 'NSS';
+                } else if (sourceFromParam.includes('hhovv.connie.team')) {
+                    organizationName = 'HHOVV';
+                } else if (sourceFromParam.includes('dev.connie.team')) {
+                    organizationName = 'DevSandBox';
+                } else if (sourceFromParam.includes('localhost:3000')) {
+                    organizationName = 'DevSandBox (localhost)';
+                } else {
+                    organizationName = 'NSS (source fallback)';
+                }
+                console.log(`Detected organization from source parameter: ${organizationName}`);
+            }
+            // Priority 3: Detect from document referrer (legacy)
+            else if (referrer.includes('nss.connie.team')) {
                 organizationName = 'NSS';
             } else if (referrer.includes('hhovv.connie.team')) {
                 organizationName = 'HHOVV';
@@ -34,9 +60,9 @@
             } else if (referrer.includes('localhost:3000')) {
                 organizationName = 'DevSandBox (localhost)';
             } else {
-                // Fallback to NSS if referrer doesn't match
-                organizationName = 'NSS (fallback)';
-                console.warn('Unknown referrer, defaulting to NSS');
+                // Final fallback
+                organizationName = 'NSS (final fallback)';
+                console.warn('Could not detect organization from any source, defaulting to NSS');
             }
             
             console.log(`Detected organization: ${organizationName}`);
@@ -48,7 +74,9 @@
                     context: {
                         organization: organizationName,
                         referrer: referrer,
-                        source: 'enhanced_crm_container'
+                        originalSource: sourceFromParam || referrer,
+                        source: 'enhanced_crm_container',
+                        page: 'test-webchat'
                     }
                 }
                 console.log(`Initializing WebChat for ${organizationName} via single support channel...`);
