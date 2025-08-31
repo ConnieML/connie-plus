@@ -47,8 +47,8 @@
                 return;
             }
             
-            // NSS-specific configuration
-            const organizationName = 'NSS';
+            // NSS-specific configuration (use URL parameter if available)
+            const organizationName = orgFromParam || 'NSS';
             const deploymentKey = 'CV8c8c75ecb84c0208b1166dbe53bdb81a'; // NSS WebChat
             
             console.log(`Initializing WebChat for ${organizationName}`);

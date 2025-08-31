@@ -47,8 +47,8 @@
                 return;
             }
             
-            // HHOVV-specific configuration
-            const organizationName = 'HHOVV';
+            // HHOVV-specific configuration (use URL parameter if available)
+            const organizationName = orgFromParam || 'HHOVV';
             const deploymentKey = 'CV0d858ad49e486f7e52415c67d4eb4eb6'; // HHOVV WebChat
             
             console.log(`Initializing WebChat for ${organizationName}`);
