@@ -105,7 +105,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         xTwilioWebhookEnabled: 'true' as any  // CRITICAL: This ensures the webhook fires!
       } as any);
 
-    console.log(`Message sent with webhook enabled - Studio Flow should now create task`);
+    console.log(`Message sent: ${message.sid} - Studio Flow should now create task`);
 
     return res.status(200).json({
       success: true,
