@@ -16,12 +16,23 @@
             console.log('Twilio available:', !!window.Twilio);
             console.log('Twilio keys:', window.Twilio ? Object.keys(window.Twilio) : 'none');
             
-            // Simple hardcoded approach - this page is embedded in NSS Enhanced CRM Container
-            const organizationName = 'NSS';
-            const deploymentKey = 'CV8c8c75ecb84c0208b1166dbe53bdb81a'; // ConnieRTC Support Channel
+            // Detect which organization is requesting support from the parent window
+            let organizationName = 'Unknown';
+            try {
+                const referrer = document.referrer;
+                if (referrer.includes('nss.connie.team')) organizationName = 'NSS';
+                else if (referrer.includes('hhovv.connie.team')) organizationName = 'HHOVV';
+                else if (referrer.includes('dev.connie.team')) organizationName = 'DevSandbox';
+                else if (referrer.includes('localhost')) organizationName = 'Development';
+            } catch (e) {
+                console.log('Could not detect organization, defaulting to NSS');
+                organizationName = 'NSS';
+            }
+            
+            const deploymentKey = 'CVd30e7280b3cd760a06c6aa0ab44bb13b'; // Parent Care Team deployment key
             
             console.log(`Detected organization: ${organizationName}`);
-            console.log(`Using single ConnieRTC Support deployment key: ${deploymentKey}`);
+            console.log(`Using Care Team deployment key: ${deploymentKey}`);
             
             if (window.Twilio && window.Twilio.initWebchat) {
                 const appConfig = {
