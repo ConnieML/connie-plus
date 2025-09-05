@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connie Support WebChat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        .agent-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        #twilio-webchat-widget-root {
+            min-height: 500px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Connie Support</h1>
+        <div class="agent-info" id="agentInfo">
+            <div class="loading">Loading agent information...</div>
+        </div>
+        <div id="twilio-webchat-widget-root"></div>
+    </div>
+    
+    <script defer src="https://media.twiliocdn.com/sdk/js/webchat-v3/releases/3.3.0/webchat.min.js" 
+            integrity="sha256-ydLLXnNrb26iFUvKAHsYt9atwfzz0LNcgBmo0NmD5Uk=" 
+            crossorigin="anonymous"></script>
+    <script>
+        window.addEventListener("load", () => {
+            console.log('WebChat page loaded');
+            
+            // Get agent context from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const agentName = urlParams.get('agentName') || 'Support User';
+            const agentEmail = urlParams.get('agentEmail') || 'user@connie.one';
+            const accountSid = urlParams.get('accountSid') || 'DEVSANDBOX_DEFAULT';
+            
+            // Determine organization from account SID prefix (GitHub secret scanning safe)
+            const orgMapping = {
+                'ACac45c': 'DevSandBox',
+                'AC595d7': 'HHOVV', 
+                'AC82c28': 'NSS',
+                'DEVSANDBOX_DEFAULT': 'DevSandBox'
+            };
+            
+            // Match account SID prefix to organization
+            const orgKey = Object.keys(orgMapping).find(key => accountSid.startsWith(key) || accountSid === key);
+            const organizationName = orgKey ? orgMapping[orgKey] : 'Unknown Account';
+            
+            // Display agent info
+            document.getElementById('agentInfo').innerHTML = `
+                <strong>Agent:</strong> ${agentName} (${agentEmail})<br>
+                <strong>Organization:</strong> ${organizationName}<br>
+                <strong>Account:</strong> ${accountSid}
+            `;
+            
+            console.log('Agent context:', { agentName, agentEmail, accountSid, organizationName });
+            
+            // Initialize WebChat when Twilio is available
+            const initWebChat = () => {
+                if (window.Twilio && window.Twilio.initWebchat) {
+                    const appConfig = {
+                        deploymentKey: "CVd30e7280b3cd760a06c6aa0ab44bb13b", // Care Team deployment key
+                        context: {
+                            // Pass agent information as context to Care Team
+                            customerName: agentName,
+                            customerEmail: agentEmail,
+                            requestingAccountSid: accountSid,
+                            requestingOrganization: organizationName,
+                            supportRequestType: 'agent-support',
+                            userType: 'flex-agent',
+                            source: 'enhanced_crm_container'
+                        }
+                    };
+                    
+                    console.log('Initializing WebChat with config:', appConfig);
+                    try {
+                        window.Twilio.initWebchat(appConfig);
+                        console.log('WebChat initialized successfully!');
+                    } catch (error) {
+                        console.error('Failed to initialize WebChat:', error);
+                        document.getElementById('twilio-webchat-widget-root').innerHTML = 
+                            '<div style="color: red; padding: 20px;">Failed to initialize WebChat. Please refresh and try again.</div>';
+                    }
+                } else {
+                    console.log('Twilio WebChat not ready, retrying...');
+                    setTimeout(initWebChat, 500);
+                }
+            };
+            
+            initWebChat();
+        });
+    </script>
+</body>
+</html>

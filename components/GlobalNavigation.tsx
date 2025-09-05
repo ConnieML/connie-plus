@@ -13,6 +13,12 @@ export const GlobalNavigation: React.FC = () => {
   // Placeholder for future real-time support status
   const isSupportOnline = true;
 
+  // Hide navigation buttons on support pages to avoid confusion
+  const isOnSupportPage = router.pathname.startsWith('/support');
+  if (isOnSupportPage) {
+    return null;
+  }
+
   const handleGetSupport = () => {
     router.push('/support/');
   };
