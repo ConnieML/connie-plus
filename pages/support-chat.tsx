@@ -29,22 +29,20 @@ const SupportChat: NextPage = () => {
 
     const { agentName, agentEmail, accountSid } = router.query;
 
-    // Validate required parameters
-    if (!agentName || !agentEmail || !accountSid) {
-      setError('🔐 Authorization Required: This support chat is only available to authenticated Connie agents. Please access this page through your Connie interface to get live support.');
-      setIsLoading(false);
-      return;
-    }
+    // Set default values if parameters are missing
+    const finalAgentName = agentName || 'Support User';
+    const finalAgentEmail = agentEmail || 'user@connie.one';
+    const finalAccountSid = accountSid || 'ACac45c';
 
     // Store agent context
     setAgentContext({
-      name: agentName as string,
-      email: agentEmail as string,
-      accountSid: accountSid as string,
+      name: finalAgentName as string,
+      email: finalAgentEmail as string,
+      accountSid: finalAccountSid as string,
     });
 
     // Initialize WebChat with context
-    initializeWebChat(agentName as string, agentEmail as string, accountSid as string);
+    initializeWebChat(finalAgentName as string, finalAgentEmail as string, finalAccountSid as string);
   }, [router.isReady, router.query]);
 
   const initializeWebChat = (agentName: string, agentEmail: string, accountSid: string) => {
