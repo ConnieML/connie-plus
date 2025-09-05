@@ -84,8 +84,22 @@
             // Initialize WebChat when Twilio is available
             const initWebChat = () => {
                 if (window.Twilio && window.Twilio.initWebchat) {
+                    // Account-specific deployment keys to prevent cross-contamination
+                    const deploymentKeyMapping = {
+                        'ACac45c': 'CVd30e7280b3cd760a06c6aa0ab44bb13b', // DevSandBox
+                        'AC595d7': 'CV0d858ad49e486f7e52415c67d4eb4eb6', // HHOVV
+                        'AC82c28': 'CV8c8c75ecb84c0208b1166dbe53bdb81a', // NSS
+                        'DEVSANDBOX_DEFAULT': 'CVd30e7280b3cd760a06c6aa0ab44bb13b' // Default fallback
+                    };
+                    
+                    // Get the correct deployment key for this account
+                    const accountPrefix = accountSid.substring(0, 7);
+                    const deploymentKey = deploymentKeyMapping[accountPrefix] || deploymentKeyMapping[accountSid] || 'CVd30e7280b3cd760a06c6aa0ab44bb13b';
+                    
+                    console.log(`Using deployment key for ${accountSid}: ${deploymentKey}`);
+                    
                     const appConfig = {
-                        deploymentKey: "CVd30e7280b3cd760a06c6aa0ab44bb13b", // Care Team deployment key
+                        deploymentKey: deploymentKey, // Account-specific key to prevent cross-contamination
                         context: {
                             // Pass agent information as context to Care Team
                             customerName: agentName,
