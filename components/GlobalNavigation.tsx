@@ -14,7 +14,7 @@ export const GlobalNavigation: React.FC = () => {
   const isSupportOnline = true;
 
   const handleGetSupport = () => {
-    router.push('/support/get-help');
+    router.push('/support/');
   };
 
   const handleReportBug = () => {

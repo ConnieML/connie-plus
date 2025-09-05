@@ -45,7 +45,7 @@ const Demos: NextPage = () => {
         },
         { 
           label: 'Get Support', 
-          href: '/support/get-help',
+          href: '/support/',
           variant: 'secondary',
           statusIndicator: (
             <Box 
