@@ -359,5 +359,20 @@ module.exports = {
 - The user pays for Claude services and will provide credit when appropriate
 - Focus on clean, professional commit messages describing the actual changes
 
+## 📚 SUPPORT DOCUMENTATION LOCATION
+
+**CRITICAL**: All support system documentation has been moved to:
+### `/Users/cjberno/projects/connie/support.connie/`
+
+Key documents:
+- **LIVE-CHAT-PROTECTION-GUIDE.md** - Emergency restoration for Live Chat (8 days of work!)
+- **README.md** - Support system overview and navigation
+- **CLAUDE.md** - Technical implementation details
+
+**Before ANY support page deployment:**
+1. Read `/support.connie/LIVE-CHAT-PROTECTION-GUIDE.md`
+2. Create backup: `cp pages/support/index.tsx pages/support/index.tsx.backup-$(date +%Y%m%d)`
+3. Test in iframe: `http://localhost:3000/iframe-test.html`
+
 ## Notes
 This project contains learning artifacts and cruft that could be cleaned up, but maintains functional nonprofit resource management capabilities.

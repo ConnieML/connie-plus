@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -19,6 +19,8 @@ import { Text } from '@twilio-paste/core/text';
 import { Anchor } from '@twilio-paste/core/anchor';
 import { ChatIcon } from '@twilio-paste/icons/cjs/ChatIcon';
 import { NewIcon } from '@twilio-paste/icons/cjs/NewIcon';
+import { SearchIcon } from '@twilio-paste/icons/cjs/SearchIcon';
+import { TicketIcon } from '@twilio-paste/icons/cjs/TicketIcon';
 
 const SupportPortal: NextPage = () => {
   const router = useRouter();
@@ -29,12 +31,22 @@ const SupportPortal: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [submittedTicket, setSubmittedTicket] = useState<any>(null);
   
+  // Ticket status tracking
+  const [userTickets, setUserTickets] = useState<any[]>([]);
+  const [showTicketLookup, setShowTicketLookup] = useState(false);
+  const [ticketLookup, setTicketLookup] = useState({
+    customerName: '',
+    customerPhone: ''
+  });
+  const [isLoadingTickets, setIsLoadingTickets] = useState(false);
   
   // Quick ticket lookup
   const [quickTicketId, setQuickTicketId] = useState('');
   const [quickTicketResult, setQuickTicketResult] = useState<any>(null);
   const [quickTicketLoading, setQuickTicketLoading] = useState(false);
-  const autoRefresh = true;
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
 
   const [formData, setFormData] = useState({
     subject: '',
@@ -61,20 +73,23 @@ const SupportPortal: NextPage = () => {
     }
   };
 
-  const lookupTicketById = useCallback(async (isAutoRefresh = false) => {
+  const lookupTicketById = async (isAutoRefresh = false) => {
     const ticketId = quickTicketId.trim();
     if (!ticketId) return;
     
-    setQuickTicketLoading(true);
+    if (isAutoRefresh) {
+      setIsRefreshing(true);
+    } else {
+      setQuickTicketLoading(true);
+    }
     
     try {
       const response = await fetch(`https://trouble-ticket-app.vercel.app/api/tickets/${ticketId}`);
       if (response.ok) {
         const ticket = await response.json();
-        console.log('Ticket lookup successful:', ticket);
         setQuickTicketResult(ticket);
+        setLastRefresh(new Date());
       } else {
-        console.log('Ticket lookup failed:', response.status, response.statusText);
         if (!isAutoRefresh) {
           setQuickTicketResult(null);
           alert(`Ticket #${ticketId} not found`);
@@ -87,9 +102,13 @@ const SupportPortal: NextPage = () => {
         alert('Error looking up ticket');
       }
     } finally {
-      setQuickTicketLoading(false);
+      if (isAutoRefresh) {
+        setIsRefreshing(false);
+      } else {
+        setQuickTicketLoading(false);
+      }
     }
-  }, [quickTicketId]);
+  };
 
   // Auto-refresh for ticket lookup
   useEffect(() => {
@@ -100,8 +119,37 @@ const SupportPortal: NextPage = () => {
 
       return () => clearInterval(interval);
     }
-  }, [quickTicketResult, autoRefresh, quickTicketId, lookupTicketById]);
+  }, [quickTicketResult, autoRefresh, quickTicketId]);
 
+  const fetchUserTickets = async (customerName: string, customerPhone: string) => {
+    if (!customerName || !customerPhone) return;
+    
+    setIsLoadingTickets(true);
+    try {
+      const response = await fetch(`https://trouble-ticket-app.vercel.app/api/tickets?name=${encodeURIComponent(customerName)}&phone=${encodeURIComponent(customerPhone)}`);
+      if (response.ok) {
+        const tickets = await response.json();
+        setUserTickets(tickets || []);
+      }
+    } catch (error) {
+      console.error('Error fetching user tickets:', error);
+    } finally {
+      setIsLoadingTickets(false);
+    }
+  };
+
+  const handleTicketLookupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTicketLookup(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleTicketLookupSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchUserTickets(ticketLookup.customerName, ticketLookup.customerPhone);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -153,6 +201,14 @@ const SupportPortal: NextPage = () => {
     }
   };
 
+  const getCurrentTime = () => {
+    const now = new Date();
+    return now.toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      timeZoneName: 'short' 
+    });
+  };
 
   return (
     <>
@@ -271,182 +327,21 @@ const SupportPortal: NextPage = () => {
 
           {!showEmailForm && submitStatus !== 'success' && (
             <>
-              {/* Self-Help Section */}
-              <Card>
-                <Stack orientation="vertical" spacing="space50">
-                  <Heading as="h2" variant="heading20">
-                    Start Here
-                  </Heading>
-                  
-                  <Paragraph>
-                    Try these self-help options first for quick answers.
-                  </Paragraph>
-
-                  <Box
-                    display="flex"
-                    flexWrap="wrap"
-                    columnGap="space50"
-                    rowGap="space50"
-                  >
-                    {/* Docs Card (L1) */}
-                    <Box
-                      backgroundColor="colorBackgroundBody"
-                      borderStyle="solid"
-                      borderWidth="borderWidth10"
-                      borderColor="colorBorder"
-                      borderRadius="borderRadius30"
-                      padding="space50"
-                      display="flex"
-                      flexDirection="row"
-                      alignItems="center"
-                      minHeight="120px"
-                      position="relative"
-                      transition="all 0.2s ease"
-                      _hover={{
-                        boxShadow: 'shadowHigh',
-                        transform: 'translateY(-2px)',
-                        borderColor: 'colorBorderPrimary'
-                      }}
-                      style={{
-                        boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
-                        width: 'calc(50% - 25px)',
-                        minWidth: '200px',
-                        cursor: 'pointer'
-                      }}
-                      onClick={() => window.open('https://docs.connie.one', '_blank')}
-                    >
-                      {/* Development Badge */}
-                      <Box
-                        position="absolute"
-                        top="space30"
-                        right="space30"
-                        display="inline-flex"
-                        alignItems="center"
-                        paddingX="space30"
-                        paddingY="space10"
-                        borderRadius="borderRadius20"
-                        backgroundColor="colorBackgroundStrong"
-                      >
-                        <Text
-                          as="span"
-                          fontSize="fontSize10"
-                          fontWeight="fontWeightBold"
-                          color="colorTextInverse"
-                          textTransform="uppercase"
-                          letterSpacing="wider"
-                        >
-                          DEVELOPMENT
-                        </Text>
-                      </Box>
-                      <Box
-                        width="60px"
-                        height="60px"
-                        marginRight="space40"
-                        flexShrink={0}
-                      >
-                        <img 
-                          src="/images/connie-docs.png" 
-                          alt="Connie Docs" 
-                          width="55" 
-                          height="55"
-                          style={{ borderRadius: '50%', objectFit: 'cover' }}
-                        />
-                      </Box>
-                      <Box display="flex" flexDirection="column">
-                        <Text as="span" fontSize="fontSize40" fontWeight="fontWeightSemibold" marginBottom="space20">
-                          Connie Docs
-                        </Text>
-                        <Text as="span" fontSize="fontSize20" color="colorTextWeak">
-                          Start Here!, Knowledge Base, Guides, Tutorials
-                        </Text>
-                      </Box>
-                    </Box>
-
-                    {/* Slack Community Card (L2) */}
-                    <Box
-                      backgroundColor="colorBackgroundBody"
-                      borderStyle="solid"
-                      borderWidth="borderWidth10"
-                      borderColor="colorBorder"
-                      borderRadius="borderRadius30"
-                      padding="space50"
-                      display="flex"
-                      flexDirection="row"
-                      alignItems="center"
-                      minHeight="120px"
-                      position="relative"
-                      transition="all 0.2s ease"
-                      _hover={{
-                        boxShadow: 'shadowHigh',
-                        transform: 'translateY(-2px)',
-                        borderColor: 'colorBorderPrimary'
-                      }}
-                      style={{
-                        boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
-                        width: 'calc(50% - 25px)',
-                        minWidth: '200px',
-                        cursor: 'pointer'
-                      }}
-                      onClick={() => alert('Slack community coming soon!')}
-                    >
-                      {/* Development Badge */}
-                      <Box
-                        position="absolute"
-                        top="space30"
-                        right="space30"
-                        display="inline-flex"
-                        alignItems="center"
-                        paddingX="space30"
-                        paddingY="space10"
-                        borderRadius="borderRadius20"
-                        backgroundColor="colorBackgroundStrong"
-                      >
-                        <Text
-                          as="span"
-                          fontSize="fontSize10"
-                          fontWeight="fontWeightBold"
-                          color="colorTextInverse"
-                          textTransform="uppercase"
-                          letterSpacing="wider"
-                        >
-                          DEVELOPMENT
-                        </Text>
-                      </Box>
-                      <Box
-                        width="60px"
-                        height="60px"
-                        marginRight="space40"
-                        flexShrink={0}
-                      >
-                        <img 
-                          src="/images/connie-community.png" 
-                          alt="Connie Community" 
-                          width="60" 
-                          height="60"
-                          style={{ borderRadius: '50%' }}
-                        />
-                      </Box>
-                      <Box display="flex" flexDirection="column">
-                        <Text as="span" fontSize="fontSize40" fontWeight="fontWeightSemibold" marginBottom="space20">
-                          Connie Community College
-                        </Text>
-                        <Text as="span" fontSize="fontSize20" color="colorTextWeak">
-                          Connect, Engage and Serve ... Together!
-                        </Text>
-                      </Box>
-                    </Box>
-                  </Box>
+              <Alert variant="neutral">
+                <Stack orientation="horizontal" spacing="space20">
+                  🕒
+                  <span>Current time: {getCurrentTime()}</span>
                 </Stack>
-              </Card>
+              </Alert>
 
               <Card>
                 <Stack orientation="vertical" spacing="space60">
                   <Heading as="h2" variant="heading20">
-                    Get Support
+                    Welcome to the ConnieCare Team
                   </Heading>
                   
                   <Paragraph>
-                    Need more help? Connect with our support team.
+                    We're here to help. Choose how you'd like to connect with our support team.
                   </Paragraph>
 
                   {supportAvailable === null ? (
@@ -457,7 +352,6 @@ const SupportPortal: NextPage = () => {
                     <Box display="flex" columnGap="space40" flexWrap="wrap">
                       {/* Live Chat Card */}
                       <Box
-                        order={2}
                         backgroundColor="colorBackgroundBody"
                         borderStyle="solid"
                         borderWidth="borderWidth10"
@@ -503,7 +397,7 @@ const SupportPortal: NextPage = () => {
                             paddingX="space40"
                             paddingY="space20"
                             borderRadius="borderRadius20"
-                            style={{ backgroundColor: '#16a34a' }}
+                            backgroundColor={supportAvailable ? "colorBackgroundSuccess" : "colorBackgroundStrong"}
                           >
                             <Text
                               as="span"
@@ -513,7 +407,7 @@ const SupportPortal: NextPage = () => {
                               textTransform="uppercase"
                               letterSpacing="wider"
                             >
-                              BETA TESTING
+                              LIVE SUPPORT
                             </Text>
                           </Box>
                         </Box>
@@ -558,13 +452,10 @@ const SupportPortal: NextPage = () => {
                                 <strong>Note:</strong> WebChat will open in a new window to ensure proper functionality when accessed from the CRM container.
                               </Text>
                             </Alert>
-                            
-                            {/* Extra spacing to balance card heights */}
-                            <Box paddingY="space40"></Box>
                           </Stack>
                           
                           <Box marginBottom="space40">
-                            <Anchor href="#">
+                            <Anchor href="https://docs.connie.one" showExternal>
                               docs
                             </Anchor>
                           </Box>
@@ -610,9 +501,7 @@ const SupportPortal: NextPage = () => {
                               Type
                             </Text>
                             <Text as="span" fontSize="fontSize20" color="colorText">
-                              <Anchor href="#">
-                                Premium Support
-                              </Anchor>
+                              Support
                             </Text>
                           </Box>
                         </Box>
@@ -620,7 +509,6 @@ const SupportPortal: NextPage = () => {
 
                       {/* Support Ticket Card */}
                       <Box
-                        order={1}
                         backgroundColor="colorBackgroundBody"
                         borderStyle="solid"
                         borderWidth="borderWidth10"
@@ -664,7 +552,7 @@ const SupportPortal: NextPage = () => {
                             paddingX="space40"
                             paddingY="space20"
                             borderRadius="borderRadius20"
-                            style={{ backgroundColor: '#16a34a' }}
+                            backgroundColor="colorBackgroundWarning"
                           >
                             <Text
                               as="span"
@@ -674,7 +562,7 @@ const SupportPortal: NextPage = () => {
                               textTransform="uppercase"
                               letterSpacing="wider"
                             >
-                              BETA TESTING
+                              24/7 TRACKING
                             </Text>
                           </Box>
                         </Box>
@@ -691,8 +579,7 @@ const SupportPortal: NextPage = () => {
                             Create detailed tickets with tracking - available 24/7.
                           </Text>
                           
-                          <Box marginBottom="space40">
-                          <Stack orientation="horizontal" spacing="space30">
+                          <Stack orientation="horizontal" spacing="space30" marginBottom="space40">
                             <Button 
                               variant="primary" 
                               onClick={() => window.open('https://trouble-ticket-app.vercel.app/', '_blank')}
@@ -706,55 +593,9 @@ const SupportPortal: NextPage = () => {
                               Show All Tickets
                             </Button>
                           </Stack>
-                          </Box>
-                          
-                          {/* Quick Ticket Lookup */}
-                          <Alert variant="neutral">
-                            <Stack orientation="vertical" spacing="space30">
-                              <Text as="p" fontSize="fontSize30">
-                                <strong>Quick Ticket Lookup:</strong> Have a ticket number? Enter it below for instant status updates!
-                              </Text>
-                              
-                              <Box display="flex" columnGap="space30">
-                                <Box flex="1">
-                                  <Input
-                                    type="text"
-                                    placeholder="Enter ticket number (e.g., 49)"
-                                    value={quickTicketId}
-                                    onChange={(e) => setQuickTicketId(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && lookupTicketById()}
-                                  />
-                                </Box>
-                                <Button 
-                                  variant="secondary"
-                                  size="small"
-                                  onClick={() => lookupTicketById()}
-                                  disabled={quickTicketLoading || !quickTicketId.trim()}
-                                >
-                                  {quickTicketLoading ? 'Searching...' : 'Track'}
-                                </Button>
-                              </Box>
-                              
-                              {quickTicketResult && (
-                                <Box backgroundColor="colorBackgroundBodyInverse" padding="space30" borderRadius="borderRadius20">
-                                  <div style={{color: 'white'}}>
-                                    <h3>#{quickTicketResult.id} - {quickTicketResult.title}</h3>
-                                    <p><strong>Status:</strong> {quickTicketResult.status}</p>
-                                    <p><strong>Customer:</strong> {quickTicketResult.customername}</p>
-                                    <p><strong>Description:</strong> {quickTicketResult.description}</p>
-                                  </div>
-                                  {autoRefresh && (
-                                    <Text as="p" fontSize="fontSize10" color="colorTextWeak">
-                                      Auto-refreshing every 30 seconds
-                                    </Text>
-                                  )}
-                                </Box>
-                              )}
-                            </Stack>
-                          </Alert>
                           
                           <Box marginBottom="space40">
-                            <Anchor href="#">
+                            <Anchor href="https://docs.connie.one" showExternal>
                               docs
                             </Anchor>
                           </Box>
@@ -800,9 +641,7 @@ const SupportPortal: NextPage = () => {
                               Type
                             </Text>
                             <Text as="span" fontSize="fontSize20" color="colorText">
-                              <Anchor href="#">
-                                BETA TESTING
-                              </Anchor>
+                              Support
                             </Text>
                           </Box>
                         </Box>
@@ -814,8 +653,279 @@ const SupportPortal: NextPage = () => {
             </>
           )}
 
+          {/* Quick Ticket Lookup Section */}
+          <Card>
+            <Stack orientation="vertical" spacing="space40">
+              <Box display="flex" alignItems="center" columnGap="space30">
+                <Box
+                  width="32px"
+                  height="32px"
+                  backgroundColor="colorBackgroundPrimaryWeakest"
+                  borderRadius="borderRadius30"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  flexShrink={0}
+                >
+                  <SearchIcon decorative={true} size="sizeIcon40" />
+                </Box>
+                <Heading as="h2" variant="heading30">
+                  Quick Ticket Lookup
+                </Heading>
+              </Box>
+              
+              <Text as="p" color="colorTextWeak">
+                Have a ticket number? Get instant status updates!
+              </Text>
+              
+              <Box display="flex" columnGap="space30">
+                <Box flex="1">
+                  <Input
+                    type="text"
+                    placeholder="Enter ticket number (e.g., 49)"
+                    value={quickTicketId}
+                    onChange={(e) => setQuickTicketId(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && lookupTicketById()}
+                  />
+                </Box>
+                <Button 
+                  variant="primary"
+                  onClick={() => lookupTicketById()}
+                  disabled={quickTicketLoading || !quickTicketId.trim()}
+                >
+                  {quickTicketLoading ? (
+                    <>
+                      <Spinner decorative size="sizeIcon20" />
+                      Searching...
+                    </>
+                  ) : (
+                    'Track Ticket'
+                  )}
+                </Button>
+              </Box>
 
+              {/* Lookup Result */}
+              {quickTicketResult && (
+                <Box backgroundColor="colorBackgroundBody" padding="space40" borderRadius="borderRadius20" borderStyle="solid" borderWidth="borderWidth10" borderColor="colorBorder">
+                  <Stack orientation="vertical" spacing="space30">
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Heading as="h3" variant="heading40">
+                        #{quickTicketResult.id} - {quickTicketResult.title}
+                      </Heading>
+                      <Box
+                        display="inline-flex"
+                        alignItems="center"
+                        paddingX="space30"
+                        paddingY="space10"
+                        borderRadius="borderRadius20"
+                        backgroundColor={
+                          quickTicketResult.status === "Open" 
+                            ? "colorBackgroundSuccess"
+                            : quickTicketResult.status === "In Progress"
+                            ? "colorBackgroundWarning"
+                            : "colorBackgroundStrong"
+                        }
+                      >
+                        <Text
+                          as="span"
+                          fontSize="fontSize20"
+                          fontWeight="fontWeightBold"
+                          color="colorTextInverse"
+                        >
+                          {quickTicketResult.status}
+                        </Text>
+                      </Box>
+                    </Box>
+                    
+                    {/* Auto-refresh controls */}
+                    <Box display="flex" justifyContent="space-between" alignItems="center" padding="space20" backgroundColor="colorBackgroundBody" borderRadius="borderRadius20">
+                      <Box display="flex" alignItems="center" columnGap="space30">
+                        <Box display="flex" alignItems="center" columnGap="space20">
+                          <input
+                            type="checkbox"
+                            id="autoRefresh"
+                            checked={autoRefresh}
+                            onChange={(e) => setAutoRefresh(e.target.checked)}
+                            style={{ cursor: 'pointer' }}
+                          />
+                          <Label htmlFor="autoRefresh" marginBottom="space0">
+                            Auto-refresh (30s)
+                          </Label>
+                        </Box>
+                        
+                        <Button
+                          variant="link"
+                          size="small"
+                          onClick={() => lookupTicketById(true)}
+                          disabled={isRefreshing}
+                        >
+                          {isRefreshing ? 'Refreshing...' : 'Refresh Now'}
+                        </Button>
+                      </Box>
+                      
+                      {lastRefresh && (
+                        <Text as="span" fontSize="fontSize10" color="colorTextWeak">
+                          Last updated: {lastRefresh.toLocaleTimeString()}
+                        </Text>
+                      )}
+                    </Box>
+                    
+                    <Paragraph>{quickTicketResult.description}</Paragraph>
+                    
+                    <Box display="grid" gridTemplateColumns="1fr 1fr" columnGap="space40">
+                      <Box>
+                        <Text as="p" fontWeight="fontWeightBold">Customer:</Text>
+                        <Text as="p">{quickTicketResult.customername || quickTicketResult.customerName}</Text>
+                      </Box>
+                      <Box>
+                        <Text as="p" fontWeight="fontWeightBold">Contact:</Text>
+                        <Text as="p">{quickTicketResult.customerphone || quickTicketResult.customerPhone}</Text>
+                      </Box>
+                      <Box>
+                        <Text as="p" fontWeight="fontWeightBold">Created:</Text>
+                        <Text as="p">{quickTicketResult.createdat ? new Date(quickTicketResult.createdat).toLocaleDateString() : 'N/A'}</Text>
+                      </Box>
+                      <Box>
+                        <Text as="p" fontWeight="fontWeightBold">Updated:</Text>
+                        <Text as="p">{quickTicketResult.updatedat ? new Date(quickTicketResult.updatedat).toLocaleDateString() : 'N/A'}</Text>
+                      </Box>
+                    </Box>
+                    
+                    {quickTicketResult.notes && (
+                      <Box padding="space30" backgroundColor="colorBackgroundBody" borderRadius="borderRadius20">
+                        <Text as="p" fontWeight="fontWeightBold">Internal Notes:</Text>
+                        <Paragraph marginTop="space20">{quickTicketResult.notes}</Paragraph>
+                      </Box>
+                    )}
+                  </Stack>
+                </Box>
+              )}
+            </Stack>
+          </Card>
 
+          {/* Ticket Status Section */}
+          <Card>
+            <Stack orientation="vertical" spacing="space40">
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Heading as="h2" variant="heading30">
+                  Your Open Tickets
+                </Heading>
+                <Button
+                  variant="link"
+                  size="small"
+                  onClick={() => setShowTicketLookup(!showTicketLookup)}
+                >
+                  {showTicketLookup ? 'Hide Lookup' : 'Check Ticket Status'}
+                </Button>
+              </Box>
+
+              {showTicketLookup && (
+                <Box backgroundColor="colorBackgroundBody" padding="space40" borderRadius="borderRadius20">
+                  <Form onSubmit={handleTicketLookupSubmit}>
+                    <Stack orientation="vertical" spacing="space40">
+                      <Text as="p" fontSize="fontSize30" color="colorTextWeak">
+                        Enter your name and contact info to view your open support tickets:
+                      </Text>
+                      
+                      <Box display="flex" columnGap="space40">
+                        <FormControl>
+                          <Label htmlFor="customerName">Your Name</Label>
+                          <Input
+                            id="customerName"
+                            name="customerName"
+                            type="text"
+                            value={ticketLookup.customerName}
+                            onChange={handleTicketLookupChange}
+                            placeholder="Full name used when submitting tickets"
+                          />
+                        </FormControl>
+
+                        <FormControl>
+                          <Label htmlFor="customerPhone">Email or Phone</Label>
+                          <Input
+                            id="customerPhone"
+                            name="customerPhone"
+                            type="text"
+                            value={ticketLookup.customerPhone}
+                            onChange={handleTicketLookupChange}
+                            placeholder="Contact info used when submitting tickets"
+                          />
+                        </FormControl>
+                      </Box>
+
+                      <FormActions>
+                        <Button variant="primary" type="submit" disabled={isLoadingTickets}>
+                          {isLoadingTickets ? (
+                            <>
+                              <Spinner decorative size="sizeIcon20" />
+                              Loading...
+                            </>
+                          ) : (
+                            'Check My Tickets'
+                          )}
+                        </Button>
+                      </FormActions>
+                    </Stack>
+                  </Form>
+                </Box>
+              )}
+
+              {userTickets.length > 0 && (
+                <Stack orientation="vertical" spacing="space30">
+                  <Alert variant="neutral">
+                    Found {userTickets.length} open ticket{userTickets.length !== 1 ? 's' : ''} for your account:
+                  </Alert>
+                  
+                  {userTickets.slice(0, 5).map((ticket) => (
+                    <Box 
+                      key={ticket.id}
+                      padding="space30"
+                      borderStyle="solid"
+                      borderWidth="borderWidth10"
+                      borderColor="colorBorder"
+                      borderRadius="borderRadius20"
+                      backgroundColor="colorBackgroundBody"
+                    >
+                      <Stack orientation="horizontal" spacing="space40">
+                        <Box minWidth="80px">
+                          <Paragraph marginBottom="space0">
+                            <strong>#{ticket.id}</strong>
+                          </Paragraph>
+                        </Box>
+                        <Box flex="1">
+                          <Paragraph marginBottom="space0">{ticket.title}</Paragraph>
+                        </Box>
+                        <Box>
+                          <Paragraph marginBottom="space0">
+                            <strong style={{color: ticket.status === 'Open' ? '#04b85c' : '#757575'}}>
+                              {ticket.status}
+                            </strong>
+                          </Paragraph>
+                        </Box>
+                        <Box minWidth="120px">
+                          <Paragraph marginBottom="space0">
+                            <small>{new Date(ticket.createdat).toLocaleDateString()}</small>
+                          </Paragraph>
+                        </Box>
+                      </Stack>
+                    </Box>
+                  ))}
+                  
+                  <Alert variant="neutral">
+                    Reference these ticket numbers when following up with the ConnieCare Team. 
+                    Tickets are handled in order of priority and submission time.
+                  </Alert>
+                </Stack>
+              )}
+
+              {showTicketLookup && userTickets.length === 0 && !isLoadingTickets && ticketLookup.customerName && ticketLookup.customerPhone && (
+                <Alert variant="neutral">
+                  No open tickets found for "{ticketLookup.customerName}". 
+                  Make sure you're using the same name and contact info used when submitting tickets.
+                </Alert>
+              )}
+            </Stack>
+          </Card>
 
           {showEmailForm && submitStatus !== 'success' && (
             <Card>
@@ -927,101 +1037,6 @@ const SupportPortal: NextPage = () => {
               </Stack>
             </Card>
           )}
-
-          {/* Professional Services Section */}
-          <Card>
-            <Stack orientation="vertical" spacing="space50">
-              <Heading as="h2" variant="heading20">
-                Professional Services
-              </Heading>
-              
-              <Paragraph>
-                Need expert help with customization, setup, or training? Our professional team is here to help.
-              </Paragraph>
-
-              <Box
-                backgroundColor="colorBackgroundBody"
-                borderStyle="solid"
-                borderWidth="borderWidth10"
-                borderColor="colorBorder"
-                borderRadius="borderRadius30"
-                padding="space70"
-                display="flex"
-                alignItems="center"
-                position="relative"
-                transition="all 0.2s ease"
-                _hover={{
-                  boxShadow: 'shadowHigh',
-                  transform: 'translateY(-2px)',
-                  borderColor: 'colorBorderPrimary'
-                }}
-                style={{
-                  boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
-                  cursor: 'pointer'
-                }}
-                onClick={() => window.open('#', '_blank')}
-              >
-                {/* Human Image */}
-                <Box
-                  width="120px"
-                  height="120px"
-                  marginRight="space60"
-                  flexShrink={0}
-                >
-                  <img 
-                    src="/images/connie-service-team-sq.png" 
-                    alt="Connie Professional Services Team" 
-                    width="120" 
-                    height="120"
-                    style={{ 
-                      borderRadius: '15px', 
-                      objectFit: 'cover',
-                      border: '2px solid #e2e8f0'
-                    }}
-                  />
-                </Box>
-
-                {/* Hero Text */}
-                <Box flexGrow={1} display="flex" flexDirection="column" justifyContent="center">
-                  <Text as="h3" fontSize="fontSize70" fontWeight="fontWeightBold" marginBottom="space30">
-                    GET PROFESSIONAL Services
-                  </Text>
-                  <Text as="p" fontSize="fontSize40" color="colorTextWeak" marginBottom="space40">
-                    Expert consulting, custom implementations, and dedicated support for your organization.
-                  </Text>
-                  <Text as="p" fontSize="fontSize30" color="colorTextWeak">
-                    ✓ Custom Setup & Configuration  ✓ Staff Training  ✓ Ongoing Consulting
-                  </Text>
-                </Box>
-
-                {/* Action Buttons */}
-                <Box marginLeft="space60" flexShrink={0}>
-                  <Stack orientation="vertical" spacing="space30">
-                    <Button 
-                      variant="primary" 
-                      size="default"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open('#', '_blank');
-                      }}
-                    >
-                      Learn More
-                    </Button>
-                    <Button 
-                      variant="secondary" 
-                      size="default"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open('#', '_blank');
-                      }}
-                    >
-                      Chat Now
-                    </Button>
-                  </Stack>
-                </Box>
-              </Box>
-            </Stack>
-          </Card>
         </Stack>
       </Box>
     </>

@@ -19,6 +19,7 @@ import { Text } from '@twilio-paste/core/text';
 import { Anchor } from '@twilio-paste/core/anchor';
 import { ChatIcon } from '@twilio-paste/icons/cjs/ChatIcon';
 import { NewIcon } from '@twilio-paste/icons/cjs/NewIcon';
+import { SearchIcon } from '@twilio-paste/icons/cjs/SearchIcon';
 
 const SupportPortal: NextPage = () => {
   const router = useRouter();
@@ -29,12 +30,22 @@ const SupportPortal: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [submittedTicket, setSubmittedTicket] = useState<any>(null);
   
+  // Ticket status tracking
+  const [userTickets, setUserTickets] = useState<any[]>([]);
+  const [showTicketLookup, setShowTicketLookup] = useState(false);
+  const [ticketLookup, setTicketLookup] = useState({
+    customerName: '',
+    customerPhone: ''
+  });
+  const [isLoadingTickets, setIsLoadingTickets] = useState(false);
   
   // Quick ticket lookup
   const [quickTicketId, setQuickTicketId] = useState('');
   const [quickTicketResult, setQuickTicketResult] = useState<any>(null);
   const [quickTicketLoading, setQuickTicketLoading] = useState(false);
-  const autoRefresh = true;
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
 
   const [formData, setFormData] = useState({
     subject: '',
@@ -65,16 +76,19 @@ const SupportPortal: NextPage = () => {
     const ticketId = quickTicketId.trim();
     if (!ticketId) return;
     
-    setQuickTicketLoading(true);
+    if (isAutoRefresh) {
+      setIsRefreshing(true);
+    } else {
+      setQuickTicketLoading(true);
+    }
     
     try {
       const response = await fetch(`https://trouble-ticket-app.vercel.app/api/tickets/${ticketId}`);
       if (response.ok) {
         const ticket = await response.json();
-        console.log('Ticket lookup successful:', ticket);
         setQuickTicketResult(ticket);
+        setLastRefresh(new Date());
       } else {
-        console.log('Ticket lookup failed:', response.status, response.statusText);
         if (!isAutoRefresh) {
           setQuickTicketResult(null);
           alert(`Ticket #${ticketId} not found`);
@@ -87,7 +101,11 @@ const SupportPortal: NextPage = () => {
         alert('Error looking up ticket');
       }
     } finally {
-      setQuickTicketLoading(false);
+      if (isAutoRefresh) {
+        setIsRefreshing(false);
+      } else {
+        setQuickTicketLoading(false);
+      }
     }
   }, [quickTicketId]);
 
@@ -102,6 +120,35 @@ const SupportPortal: NextPage = () => {
     }
   }, [quickTicketResult, autoRefresh, quickTicketId, lookupTicketById]);
 
+  const fetchUserTickets = async (customerName: string, customerPhone: string) => {
+    if (!customerName || !customerPhone) return;
+    
+    setIsLoadingTickets(true);
+    try {
+      const response = await fetch(`https://trouble-ticket-app.vercel.app/api/tickets?name=${encodeURIComponent(customerName)}&phone=${encodeURIComponent(customerPhone)}`);
+      if (response.ok) {
+        const tickets = await response.json();
+        setUserTickets(tickets || []);
+      }
+    } catch (error) {
+      console.error('Error fetching user tickets:', error);
+    } finally {
+      setIsLoadingTickets(false);
+    }
+  };
+
+  const handleTicketLookupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTicketLookup(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleTicketLookupSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchUserTickets(ticketLookup.customerName, ticketLookup.customerPhone);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -153,6 +200,14 @@ const SupportPortal: NextPage = () => {
     }
   };
 
+  const getCurrentTime = () => {
+    const now = new Date();
+    return now.toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      timeZoneName: 'short' 
+    });
+  };
 
   return (
     <>
@@ -271,182 +326,21 @@ const SupportPortal: NextPage = () => {
 
           {!showEmailForm && submitStatus !== 'success' && (
             <>
-              {/* Self-Help Section */}
-              <Card>
-                <Stack orientation="vertical" spacing="space50">
-                  <Heading as="h2" variant="heading20">
-                    Start Here
-                  </Heading>
-                  
-                  <Paragraph>
-                    Try these self-help options first for quick answers.
-                  </Paragraph>
-
-                  <Box
-                    display="flex"
-                    flexWrap="wrap"
-                    columnGap="space50"
-                    rowGap="space50"
-                  >
-                    {/* Docs Card (L1) */}
-                    <Box
-                      backgroundColor="colorBackgroundBody"
-                      borderStyle="solid"
-                      borderWidth="borderWidth10"
-                      borderColor="colorBorder"
-                      borderRadius="borderRadius30"
-                      padding="space50"
-                      display="flex"
-                      flexDirection="row"
-                      alignItems="center"
-                      minHeight="120px"
-                      position="relative"
-                      transition="all 0.2s ease"
-                      _hover={{
-                        boxShadow: 'shadowHigh',
-                        transform: 'translateY(-2px)',
-                        borderColor: 'colorBorderPrimary'
-                      }}
-                      style={{
-                        boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
-                        width: 'calc(50% - 25px)',
-                        minWidth: '200px',
-                        cursor: 'pointer'
-                      }}
-                      onClick={() => window.open('https://docs.connie.one', '_blank')}
-                    >
-                      {/* Development Badge */}
-                      <Box
-                        position="absolute"
-                        top="space30"
-                        right="space30"
-                        display="inline-flex"
-                        alignItems="center"
-                        paddingX="space30"
-                        paddingY="space10"
-                        borderRadius="borderRadius20"
-                        backgroundColor="colorBackgroundStrong"
-                      >
-                        <Text
-                          as="span"
-                          fontSize="fontSize10"
-                          fontWeight="fontWeightBold"
-                          color="colorTextInverse"
-                          textTransform="uppercase"
-                          letterSpacing="wider"
-                        >
-                          DEVELOPMENT
-                        </Text>
-                      </Box>
-                      <Box
-                        width="60px"
-                        height="60px"
-                        marginRight="space40"
-                        flexShrink={0}
-                      >
-                        <img 
-                          src="/images/connie-docs.png" 
-                          alt="Connie Docs" 
-                          width="55" 
-                          height="55"
-                          style={{ borderRadius: '50%', objectFit: 'cover' }}
-                        />
-                      </Box>
-                      <Box display="flex" flexDirection="column">
-                        <Text as="span" fontSize="fontSize40" fontWeight="fontWeightSemibold" marginBottom="space20">
-                          Connie Docs
-                        </Text>
-                        <Text as="span" fontSize="fontSize20" color="colorTextWeak">
-                          Start Here!, Knowledge Base, Guides, Tutorials
-                        </Text>
-                      </Box>
-                    </Box>
-
-                    {/* Slack Community Card (L2) */}
-                    <Box
-                      backgroundColor="colorBackgroundBody"
-                      borderStyle="solid"
-                      borderWidth="borderWidth10"
-                      borderColor="colorBorder"
-                      borderRadius="borderRadius30"
-                      padding="space50"
-                      display="flex"
-                      flexDirection="row"
-                      alignItems="center"
-                      minHeight="120px"
-                      position="relative"
-                      transition="all 0.2s ease"
-                      _hover={{
-                        boxShadow: 'shadowHigh',
-                        transform: 'translateY(-2px)',
-                        borderColor: 'colorBorderPrimary'
-                      }}
-                      style={{
-                        boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
-                        width: 'calc(50% - 25px)',
-                        minWidth: '200px',
-                        cursor: 'pointer'
-                      }}
-                      onClick={() => alert('Slack community coming soon!')}
-                    >
-                      {/* Development Badge */}
-                      <Box
-                        position="absolute"
-                        top="space30"
-                        right="space30"
-                        display="inline-flex"
-                        alignItems="center"
-                        paddingX="space30"
-                        paddingY="space10"
-                        borderRadius="borderRadius20"
-                        backgroundColor="colorBackgroundStrong"
-                      >
-                        <Text
-                          as="span"
-                          fontSize="fontSize10"
-                          fontWeight="fontWeightBold"
-                          color="colorTextInverse"
-                          textTransform="uppercase"
-                          letterSpacing="wider"
-                        >
-                          DEVELOPMENT
-                        </Text>
-                      </Box>
-                      <Box
-                        width="60px"
-                        height="60px"
-                        marginRight="space40"
-                        flexShrink={0}
-                      >
-                        <img 
-                          src="/images/connie-community.png" 
-                          alt="Connie Community" 
-                          width="60" 
-                          height="60"
-                          style={{ borderRadius: '50%' }}
-                        />
-                      </Box>
-                      <Box display="flex" flexDirection="column">
-                        <Text as="span" fontSize="fontSize40" fontWeight="fontWeightSemibold" marginBottom="space20">
-                          Connie Community College
-                        </Text>
-                        <Text as="span" fontSize="fontSize20" color="colorTextWeak">
-                          Connect, Engage and Serve ... Together!
-                        </Text>
-                      </Box>
-                    </Box>
-                  </Box>
+              <Alert variant="neutral">
+                <Stack orientation="horizontal" spacing="space20">
+                  🕒
+                  <span>Current time: {getCurrentTime()}</span>
                 </Stack>
-              </Card>
+              </Alert>
 
               <Card>
                 <Stack orientation="vertical" spacing="space60">
                   <Heading as="h2" variant="heading20">
-                    Get Support
+                    Welcome to the ConnieCare Team
                   </Heading>
                   
                   <Paragraph>
-                    Need more help? Connect with our support team.
+                    We're here to help. Choose how you'd like to connect with our support team.
                   </Paragraph>
 
                   {supportAvailable === null ? (
@@ -457,7 +351,6 @@ const SupportPortal: NextPage = () => {
                     <Box display="flex" columnGap="space40" flexWrap="wrap">
                       {/* Live Chat Card */}
                       <Box
-                        order={2}
                         backgroundColor="colorBackgroundBody"
                         borderStyle="solid"
                         borderWidth="borderWidth10"
@@ -503,7 +396,7 @@ const SupportPortal: NextPage = () => {
                             paddingX="space40"
                             paddingY="space20"
                             borderRadius="borderRadius20"
-                            style={{ backgroundColor: '#16a34a' }}
+                            backgroundColor={supportAvailable ? "colorBackgroundSuccess" : "colorBackgroundStrong"}
                           >
                             <Text
                               as="span"
@@ -513,7 +406,7 @@ const SupportPortal: NextPage = () => {
                               textTransform="uppercase"
                               letterSpacing="wider"
                             >
-                              BETA TESTING
+                              LIVE SUPPORT
                             </Text>
                           </Box>
                         </Box>
@@ -558,13 +451,10 @@ const SupportPortal: NextPage = () => {
                                 <strong>Note:</strong> WebChat will open in a new window to ensure proper functionality when accessed from the CRM container.
                               </Text>
                             </Alert>
-                            
-                            {/* Extra spacing to balance card heights */}
-                            <Box paddingY="space40"></Box>
                           </Stack>
                           
                           <Box marginBottom="space40">
-                            <Anchor href="#">
+                            <Anchor href="https://docs.connie.one" showExternal>
                               docs
                             </Anchor>
                           </Box>
@@ -610,9 +500,7 @@ const SupportPortal: NextPage = () => {
                               Type
                             </Text>
                             <Text as="span" fontSize="fontSize20" color="colorText">
-                              <Anchor href="#">
-                                Premium Support
-                              </Anchor>
+                              Support
                             </Text>
                           </Box>
                         </Box>
@@ -620,7 +508,6 @@ const SupportPortal: NextPage = () => {
 
                       {/* Support Ticket Card */}
                       <Box
-                        order={1}
                         backgroundColor="colorBackgroundBody"
                         borderStyle="solid"
                         borderWidth="borderWidth10"
@@ -664,7 +551,7 @@ const SupportPortal: NextPage = () => {
                             paddingX="space40"
                             paddingY="space20"
                             borderRadius="borderRadius20"
-                            style={{ backgroundColor: '#16a34a' }}
+                            backgroundColor="colorBackgroundWarning"
                           >
                             <Text
                               as="span"
@@ -674,7 +561,7 @@ const SupportPortal: NextPage = () => {
                               textTransform="uppercase"
                               letterSpacing="wider"
                             >
-                              BETA TESTING
+                              24/7 TRACKING
                             </Text>
                           </Box>
                         </Box>
@@ -737,24 +624,29 @@ const SupportPortal: NextPage = () => {
                               
                               {quickTicketResult && (
                                 <Box backgroundColor="colorBackgroundBodyInverse" padding="space30" borderRadius="borderRadius20">
-                                  <div style={{color: 'white'}}>
-                                    <h3>#{quickTicketResult.id} - {quickTicketResult.title}</h3>
-                                    <p><strong>Status:</strong> {quickTicketResult.status}</p>
-                                    <p><strong>Customer:</strong> {quickTicketResult.customername}</p>
-                                    <p><strong>Description:</strong> {quickTicketResult.description}</p>
-                                  </div>
-                                  {autoRefresh && (
-                                    <Text as="p" fontSize="fontSize10" color="colorTextWeak">
-                                      Auto-refreshing every 30 seconds
-                                    </Text>
-                                  )}
+                                  <Stack orientation="vertical" spacing="space20">
+                                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                                      <Text as="p" fontSize="fontSize30" fontWeight="fontWeightBold">
+                                        #{quickTicketResult.id} - {quickTicketResult.title}
+                                      </Text>
+                                      <Text as="span" fontSize="fontSize20" fontWeight="fontWeightBold">
+                                        {quickTicketResult.status}
+                                      </Text>
+                                    </Box>
+                                    <Text as="p" fontSize="fontSize20">{quickTicketResult.description}</Text>
+                                    {autoRefresh && (
+                                      <Text as="p" fontSize="fontSize10" color="colorTextWeak">
+                                        Auto-refreshing every 30 seconds
+                                      </Text>
+                                    )}
+                                  </Stack>
                                 </Box>
                               )}
                             </Stack>
                           </Alert>
                           
                           <Box marginBottom="space40">
-                            <Anchor href="#">
+                            <Anchor href="https://docs.connie.one" showExternal>
                               docs
                             </Anchor>
                           </Box>
@@ -800,9 +692,7 @@ const SupportPortal: NextPage = () => {
                               Type
                             </Text>
                             <Text as="span" fontSize="fontSize20" color="colorText">
-                              <Anchor href="#">
-                                BETA TESTING
-                              </Anchor>
+                              Support
                             </Text>
                           </Box>
                         </Box>
@@ -927,101 +817,6 @@ const SupportPortal: NextPage = () => {
               </Stack>
             </Card>
           )}
-
-          {/* Professional Services Section */}
-          <Card>
-            <Stack orientation="vertical" spacing="space50">
-              <Heading as="h2" variant="heading20">
-                Professional Services
-              </Heading>
-              
-              <Paragraph>
-                Need expert help with customization, setup, or training? Our professional team is here to help.
-              </Paragraph>
-
-              <Box
-                backgroundColor="colorBackgroundBody"
-                borderStyle="solid"
-                borderWidth="borderWidth10"
-                borderColor="colorBorder"
-                borderRadius="borderRadius30"
-                padding="space70"
-                display="flex"
-                alignItems="center"
-                position="relative"
-                transition="all 0.2s ease"
-                _hover={{
-                  boxShadow: 'shadowHigh',
-                  transform: 'translateY(-2px)',
-                  borderColor: 'colorBorderPrimary'
-                }}
-                style={{
-                  boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
-                  cursor: 'pointer'
-                }}
-                onClick={() => window.open('#', '_blank')}
-              >
-                {/* Human Image */}
-                <Box
-                  width="120px"
-                  height="120px"
-                  marginRight="space60"
-                  flexShrink={0}
-                >
-                  <img 
-                    src="/images/connie-service-team-sq.png" 
-                    alt="Connie Professional Services Team" 
-                    width="120" 
-                    height="120"
-                    style={{ 
-                      borderRadius: '15px', 
-                      objectFit: 'cover',
-                      border: '2px solid #e2e8f0'
-                    }}
-                  />
-                </Box>
-
-                {/* Hero Text */}
-                <Box flexGrow={1} display="flex" flexDirection="column" justifyContent="center">
-                  <Text as="h3" fontSize="fontSize70" fontWeight="fontWeightBold" marginBottom="space30">
-                    GET PROFESSIONAL Services
-                  </Text>
-                  <Text as="p" fontSize="fontSize40" color="colorTextWeak" marginBottom="space40">
-                    Expert consulting, custom implementations, and dedicated support for your organization.
-                  </Text>
-                  <Text as="p" fontSize="fontSize30" color="colorTextWeak">
-                    ✓ Custom Setup & Configuration  ✓ Staff Training  ✓ Ongoing Consulting
-                  </Text>
-                </Box>
-
-                {/* Action Buttons */}
-                <Box marginLeft="space60" flexShrink={0}>
-                  <Stack orientation="vertical" spacing="space30">
-                    <Button 
-                      variant="primary" 
-                      size="default"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open('#', '_blank');
-                      }}
-                    >
-                      Learn More
-                    </Button>
-                    <Button 
-                      variant="secondary" 
-                      size="default"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open('#', '_blank');
-                      }}
-                    >
-                      Chat Now
-                    </Button>
-                  </Stack>
-                </Box>
-              </Box>
-            </Stack>
-          </Card>
         </Stack>
       </Box>
     </>
