@@ -32,3 +32,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# private documentation
+.docs/
+
+# development utilities
+.utils/

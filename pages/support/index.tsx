@@ -387,7 +387,8 @@ const SupportPortal: NextPage = () => {
                         minWidth: '200px',
                         cursor: 'pointer'
                       }}
-                      onClick={() => alert('Slack community coming soon!')}
+                      // Slack Community invite link (expires in 30 days - regenerate as needed)
+                      onClick={() => window.open('https://join.slack.com/t/connie-xqe6685/shared_invite/zt-3cyphps44-jQ_XaSmM1tSkk03fbXiaVg', '_blank')}
                     >
                       {/* Development Badge */}
                       <Box
